@@ -1,0 +1,3 @@
+include ':media'
+include ':instantsearch'
+project(':instantsearch').projectDir = new File(settingsDir, "../instantsearch-android/instantsearch")
