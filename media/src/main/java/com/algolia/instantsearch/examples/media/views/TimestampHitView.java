@@ -2,14 +2,17 @@ package com.algolia.instantsearch.examples.media.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.algolia.instantsearch.views.AlgoliaHitView;
-import com.github.curioustechizen.ago.RelativeTimeTextView;
 
 import org.json.JSONObject;
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.util.Date;
 
 
-public class TimestampHitView extends RelativeTimeTextView implements AlgoliaHitView {
+public class TimestampHitView extends TextView implements AlgoliaHitView {
     public TimestampHitView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -17,6 +20,6 @@ public class TimestampHitView extends RelativeTimeTextView implements AlgoliaHit
     @Override
     public void onUpdateView(JSONObject result) {
         String timestamp = result.optString("published");
-        setReferenceTime(Long.parseLong(timestamp) * 1000 /* milliseconds timestamp required */);
+        setText(new PrettyTime().format(new Date(Long.parseLong(timestamp) * 1000)));
     }
 }
