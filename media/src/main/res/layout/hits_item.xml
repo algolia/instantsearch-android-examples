@@ -31,22 +31,21 @@
             android:textSize="18sp"
             algolia:attribute='@{"title"}'/>
 
-        <TextView
+        <com.algolia.instantsearch.examples.media.TimestampHitView
             android:id="@+id/hit_year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/hit_title"
             android:layout_toRightOf="@id/hit_image"
-            android:text="1984"
-            algolia:attribute='@{"published"}'/>
+            android:text="15mn ago"/>
 
         <RatingBar
-            style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:id="@+id/ratingBar"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="10dp"
             algolia:attribute='@{"rating"}'/>
     </RelativeLayout>
