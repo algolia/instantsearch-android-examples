@@ -11,8 +11,8 @@ import com.algolia.search.saas.Client;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ALGOLIA_APP_ID = "latency";
-    private static final String ALGOLIA_INDEX_NAME = "movies";
-    private static final String ALGOLIA_API_KEY = "6be0576ff61c053d5f9a3225e2a90f76";
+    private static final String ALGOLIA_INDEX_NAME = "youtube";
+    private static final String ALGOLIA_API_KEY = "0c9899197c49f80b183adc0f68ea8d78";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

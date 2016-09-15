@@ -1,25 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <LinearLayout xmlns:algolia="http://schemas.android.com/apk/res-auto"
-                  xmlns:android="http://schemas.android.com/apk/res/android"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout xmlns:algolia="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/hit_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="12dp"
+            android:src="@android:drawable/sym_def_app_icon"
+            algolia:attribute='@{"thumbnail"}'/>
 
         <TextView
             android:id="@+id/hit_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@id/hit_image"
+            android:layout_toEndOf="@id/hit_image"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Hit title"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
             algolia:attribute='@{"title"}'/>
+
         <TextView
             android:id="@+id/hit_year"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            algolia:attribute='@{"year"}'/>
-        <TextView
-            android:id="@+id/hit_rating"
-            android:layout_width="match_parent"
+            android:layout_below="@id/hit_title"
+            android:layout_toRightOf="@id/hit_image"
+            android:text="1984"
+            algolia:attribute='@{"published"}'/>
+
+        <RatingBar
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             algolia:attribute='@{"rating"}'/>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
