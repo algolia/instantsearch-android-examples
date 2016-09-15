@@ -16,6 +16,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginEnd="12dp"
             android:src="@android:drawable/sym_def_app_icon"
+            android:maxWidth="125dp"
+            android:adjustViewBounds="true"
             algolia:attribute='@{"thumbnail"}'/>
 
         <TextView
@@ -29,10 +31,11 @@
             android:text="Hit title"
             android:textColor="@android:color/black"
             android:textSize="18sp"
-            algolia:attribute='@{"title"}'/>
+            algolia:attribute='@{"title"}'
+            algolia:highlighted='@{true}'/>
 
         <com.algolia.instantsearch.examples.media.views.TimestampHitView
-            android:id="@+id/hit_year"
+            android:id="@+id/hit_published"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/hit_title"
@@ -43,8 +46,10 @@
             android:id="@+id/hit_views"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/hit_year"
-            android:layout_toEndOf="@id/hit_year"
+            android:layout_alignTop="@id/hit_published"
+            android:layout_toEndOf="@id/hit_published"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="Hit views"/>
 
         <RatingBar
@@ -52,9 +57,9 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@id/hit_published"
             android:layout_alignParentEnd="true"
-            android:layout_marginBottom="10dp"
+            android:layout_marginTop="6dp"
             algolia:attribute='@{"rating"}'/>
     </RelativeLayout>
 </layout>
