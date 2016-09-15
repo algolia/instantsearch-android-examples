@@ -31,13 +31,21 @@
             android:textSize="18sp"
             algolia:attribute='@{"title"}'/>
 
-        <com.algolia.instantsearch.examples.media.TimestampHitView
+        <com.algolia.instantsearch.examples.media.views.TimestampHitView
             android:id="@+id/hit_year"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/hit_title"
             android:layout_toRightOf="@id/hit_image"
             android:text="15mn ago"/>
+
+        <com.algolia.instantsearch.examples.media.views.HumanViewCountHitView
+            android:id="@+id/hit_views"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/hit_year"
+            android:layout_toEndOf="@id/hit_year"
+            android:text="Hit views"/>
 
         <RatingBar
             android:id="@+id/ratingBar"

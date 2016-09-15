@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.examples.media;
+package com.algolia.instantsearch.examples.media.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
