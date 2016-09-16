@@ -15,11 +15,10 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginEnd="12dp"
-            android:src="@android:drawable/sym_def_app_icon"
-            android:maxWidth="125dp"
             android:adjustViewBounds="true"
+            android:maxWidth="125dp"
+            android:src="@drawable/placeholder_video"
             algolia:attribute='@{"thumbnail"}'/>
-
         <TextView
             android:id="@+id/hit_title"
             android:layout_width="match_parent"
@@ -48,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/hit_published"
             android:layout_toEndOf="@id/hit_published"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
             android:text="Hit views"/>
 
         <RatingBar
@@ -57,14 +56,14 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/hit_published"
             android:layout_alignParentEnd="true"
+            android:layout_below="@id/hit_published"
             android:layout_marginTop="6dp"
-            android:stepSize="0.1"
-            android:progressTint="@android:color/darker_gray"
-            android:progressBackgroundTint="@android:color/darker_gray"
-            android:secondaryProgressTint="@android:color/darker_gray"
             android:numStars="5"
+            android:progressBackgroundTint="@android:color/darker_gray"
+            android:progressTint="@android:color/darker_gray"
+            android:secondaryProgressTint="@android:color/darker_gray"
+            android:stepSize="0.1"
             algolia:attribute='@{"rating"}'/>
     </RelativeLayout>
 </layout>
