@@ -60,6 +60,11 @@
             android:layout_below="@id/hit_published"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="6dp"
+            android:stepSize="0.1"
+            android:progressTint="@android:color/darker_gray"
+            android:progressBackgroundTint="@android:color/darker_gray"
+            android:secondaryProgressTint="@android:color/darker_gray"
+            android:numStars="5"
             algolia:attribute='@{"rating"}'/>
     </RelativeLayout>
 </layout>
