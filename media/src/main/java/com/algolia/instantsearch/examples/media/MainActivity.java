@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         final Searcher searcher = new Searcher(new Client(ALGOLIA_APP_ID, ALGOLIA_API_KEY).initIndex(ALGOLIA_INDEX_NAME));
-        new InstantSearchHelper(this, menu, R.id.action_search,
-                searcher);
-        searcher.search();
+        new InstantSearchHelper(this, menu, R.id.action_search, searcher);
+        searcher.search(); //Show results for empty query on startup
+        menu.findItem(R.id.action_search).expandActionView(); //open SearchBar on startup
         return true;
     }
 
