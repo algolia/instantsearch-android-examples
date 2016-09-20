@@ -46,7 +46,13 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.action_filter) {
             final FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.findFragmentByTag(FilterResultsFragment.TAG) == null) {
-                new FilterResultsFragment().setSearcher(searcher).show(fragmentManager, FilterResultsFragment.TAG);
+                new FilterResultsFragment().with(this, searcher)
+                        .addSeekBar("views", 0, 1000000000, 100)
+                        .addSeekBar("rating", "stars", 0, 5, 100)
+                        .addCheckBox("cc", "Closed Captions (CC)", true)
+                        .addCheckBox("4k", "4K", true)
+                        .addCheckBox("hd", "HD", true)
+                        .show(fragmentManager, FilterResultsFragment.TAG);
             }
             return true;
         }
