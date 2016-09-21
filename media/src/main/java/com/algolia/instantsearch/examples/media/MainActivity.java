@@ -3,6 +3,8 @@ package com.algolia.instantsearch.examples.media;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
 import com.algolia.instantsearch.events.ErrorEvent;
 import com.algolia.instantsearch.ui.FilterResultsFragment;
+import com.algolia.instantsearch.views.Hits;
 import com.algolia.search.saas.Client;
 
 import org.greenrobot.eventbus.EventBus;
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Searcher searcher;
     private FilterResultsFragment filterResultsFragment;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,17 +38,33 @@ public class MainActivity extends AppCompatActivity {
         filterResultsFragment = new FilterResultsFragment().with(this, searcher)
                 .addSeekBar("views", 100)
                 .addSeekBar("rating", "stars", 100)
-                .addCheckBox("cc", "Closed Captions (CC)", true) //TODO: Can we disable a checkbox when results say empty
+                .addCheckBox("cc", "Closed Captions (CC)", true)
                 .addCheckBox("4k", "4K", true)
                 .addCheckBox("hd", "HD", true);
+
+        // Hide keyboard when the user scrolls the Hits
+        ((Hits) findViewById(R.id.hits)).addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                Log.d("scroll", "Scrolled(" + dx + "," + dy + ")!");
+                if (dx != 0 || dy != 0) {
+                    hideKeyboard();
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         new InstantSearchHelper(this, menu, R.id.action_search, searcher);
+
+        final MenuItem itemSearch = menu.findItem(R.id.action_search);
+        searchView = (SearchView) itemSearch.getActionView();
+
+        itemSearch.expandActionView(); //open SearchBar on startup
         searcher.search(); //Show results for empty query on startup
-        menu.findItem(R.id.action_search).expandActionView(); //open SearchBar on startup
         return true;
     }
 
@@ -54,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             final FragmentManager fragmentManager = getSupportFragmentManager();
             if (fragmentManager.findFragmentByTag(FilterResultsFragment.TAG) == null) {
                 filterResultsFragment.show(fragmentManager, FilterResultsFragment.TAG);
+                hideKeyboard();
             }
             return true;
         }
@@ -63,5 +84,9 @@ public class MainActivity extends AppCompatActivity {
     @Subscribe
     public void onErrorEvent(ErrorEvent event) {
         Log.e("PLN", "Error searching" + event.query.getQuery() + ":" + event.error.getLocalizedMessage());
+    }
+
+    private void hideKeyboard() {
+        searchView.clearFocus();
     }
 }
