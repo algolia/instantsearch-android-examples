@@ -5,9 +5,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         ((Hits) findViewById(R.id.hits)).addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                Log.d("scroll", "Scrolled(" + dx + "," + dy + ")!");
                 if (dx != 0 || dy != 0) {
                     hideKeyboard();
                 }
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe
     public void onErrorEvent(ErrorEvent event) {
-        Log.e("PLN", "Error searching" + event.query.getQuery() + ":" + event.error.getLocalizedMessage());
+        Toast.makeText(this, "Error searching" + event.query.getQuery() + ":" + event.error.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
     }
 
     private void hideKeyboard() {
