@@ -34,8 +34,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
+        // Initialize a Searcher with your credentials and an index name
         searcher = new Searcher(new Client(ALGOLIA_APP_ID, ALGOLIA_API_KEY).initIndex(ALGOLIA_INDEX_NAME));
-        filterResultsFragment = new FilterResultsFragment().with(this, searcher)
+        searcher.search(); //Show results for empty query on startup
+
+        // Create the FilterResultsFragment here so it can set the appropriate facets on the Searcher
+        filterResultsFragment = new FilterResultsFragment().with(searcher)
                 .addSeekBar("views", 100)
                 .addSeekBar("rating", "stars", 100)
                 .addCheckBox("cc", "Closed Captions (CC)", true)
@@ -61,9 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);
         searchView = (SearchView) itemSearch.getActionView();
-
         itemSearch.expandActionView(); //open SearchBar on startup
-        searcher.search(); //Show results for empty query on startup
         return true;
     }
 
