@@ -6,24 +6,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/product_image"
+        <LinearLayout
+            android:id="@+id/product_image_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:maxWidth="60dp"
-            android:minWidth="60dp"
-            android:maxHeight="60dp"
-            android:layout_marginEnd="6dp"
-            android:src="@drawable/product_placeholder"
-            algolia:attribute='@{"image"}'/>
+            android:minHeight="120dp"
+            android:minWidth="100dp">
+
+            <ImageView
+                android:id="@+id/product_image"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginEnd="6dp"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:maxHeight="120dp"
+                android:maxWidth="120dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/product_placeholder"
+                algolia:attribute='@{"image"}'/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_toEndOf="@id/product_image"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/product_image_box"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="Product Name"
@@ -37,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/product_name"
             android:layout_marginTop="12dp"
-            android:layout_toEndOf="@id/product_image"
+            android:layout_toEndOf="@id/product_image_box"
             android:text="Product Type"
             algolia:attribute='@{"type"}'/>
 
@@ -48,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/product_type"
             android:layout_marginTop="12dp"
-            android:layout_toEndOf="@id/product_image"
+            android:layout_toEndOf="@id/product_image_box"
             android:progressTint="@color/colorAccent"
             android:rating="4"
             android:secondaryProgressTint="@color/colorAccentSoft"
