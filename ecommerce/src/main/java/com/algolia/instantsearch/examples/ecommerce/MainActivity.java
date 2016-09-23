@@ -10,8 +10,8 @@ import com.algolia.search.saas.Client;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ALGOLIA_APP_ID = "latency";
-    private static final String ALGOLIA_INDEX_NAME = "ikea";
-    private static final String ALGOLIA_API_KEY = "6be0576ff61c053d5f9a3225e2a90f76";
+    private static final String ALGOLIA_INDEX_NAME = "bestbuy";
+    private static final String ALGOLIA_API_KEY = "249078a3d4337a8231f1665ec5a44966";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

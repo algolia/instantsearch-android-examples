@@ -41,7 +41,7 @@
             android:text="Product Type"
             algolia:attribute='@{"type"}'/>
 
-        <RatingBar
+        <com.algolia.instantsearch.examples.ecommerce.PreprocessedRatingBar
             android:id="@+id/product_rating"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
@@ -51,10 +51,8 @@
             android:layout_toEndOf="@id/product_image"
             android:progressTint="@color/colorAccent"
             android:rating="4"
-            android:secondaryProgressTint="@color/colorPrimary"
-            android:stepSize="1"
-            algolia:attribute='@{"rating"}'/>
-
+            android:secondaryProgressTint="@color/colorAccentSoft"
+            android:stepSize="0.1"/>
 
         <TextView
             android:id="@+id/product_price"
@@ -68,6 +66,6 @@
             android:gravity="end"
             android:text="99$"
             android:textSize="18sp"
-            algolia:attribute='@{"price"}'/>
+            algolia:attribute='@{"salePrice"}'/>
     </RelativeLayout>
 </layout>
