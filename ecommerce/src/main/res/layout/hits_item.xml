@@ -3,6 +3,7 @@
 
     <RelativeLayout xmlns:algolia="http://schemas.android.com/apk/res-auto"
                     xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -15,8 +16,6 @@
 
             <ImageView
                 android:id="@+id/product_image"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_horizontal"
@@ -25,6 +24,8 @@
                 android:adjustViewBounds="true"
                 android:maxHeight="120dp"
                 android:maxWidth="120dp"
+                android:paddingBottom="6dp"
+                android:paddingTop="6dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/product_placeholder"
                 algolia:attribute='@{"image"}'/>
@@ -34,6 +35,7 @@
             android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
             android:layout_marginTop="6dp"
             android:layout_toEndOf="@id/product_image_box"
             android:ellipsize="end"
@@ -43,14 +45,25 @@
             android:textSize="18sp"
             algolia:attribute='@{"name"}'/>
 
-        <TextView
-            android:id="@+id/product_type"
-            android:layout_width="match_parent"
+        <com.algolia.instantsearch.examples.ecommerce.PrefixTextView
+            android:id="@+id/product_manufacturer"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_name"
-            android:layout_marginTop="12dp"
             android:layout_toEndOf="@id/product_image_box"
+            android:text="By Manufacturer"
+            algolia:attribute='@{"manufacturer"}'
+            app:prefix="By "/>
+
+        <TextView
+            android:id="@+id/product_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/product_name"
+            android:layout_marginStart="12dp"
             android:text="Product Type"
+            android:textColor="@android:color/darker_gray"
             algolia:attribute='@{"type"}'/>
 
         <com.algolia.instantsearch.examples.ecommerce.PreprocessedRatingBar
@@ -59,14 +72,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/product_type"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="6dp"
             android:layout_toEndOf="@id/product_image_box"
             android:progressTint="@color/colorAccent"
             android:rating="4"
             android:secondaryProgressTint="@color/colorAccentSoft"
             android:stepSize="0.1"/>
 
-        <TextView
+        <com.algolia.instantsearch.examples.ecommerce.PrefixTextView
             android:id="@+id/product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -76,8 +89,8 @@
             android:layout_marginTop="6dp"
             android:layout_toEndOf="@id/product_rating"
             android:gravity="end"
-            android:text="99$"
             android:textSize="18sp"
-            algolia:attribute='@{"salePrice"}'/>
+            algolia:attribute='@{"salePrice"}'
+            app:prefix="$"/>
     </RelativeLayout>
 </layout>
