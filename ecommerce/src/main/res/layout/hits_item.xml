@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <RelativeLayout xmlns:algolia="http://schemas.android.com/apk/res-auto"
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/product_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:maxWidth="60dp"
+            android:minWidth="60dp"
+            android:maxHeight="60dp"
+            android:layout_marginEnd="6dp"
+            android:src="@drawable/product_placeholder"
+            algolia:attribute='@{"image"}'/>
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@id/product_image"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Product Name"
+            android:textColor="#111"
+            android:textSize="18sp"
+            algolia:attribute='@{"name"}'/>
+
+        <TextView
+            android:id="@+id/product_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_name"
+            android:layout_marginTop="12dp"
+            android:layout_toEndOf="@id/product_image"
+            android:text="Product Type"
+            algolia:attribute='@{"type"}'/>
+
+        <RatingBar
+            android:id="@+id/product_rating"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/product_type"
+            android:layout_marginTop="12dp"
+            android:layout_toEndOf="@id/product_image"
+            android:progressTint="@color/colorAccent"
+            android:rating="4"
+            android:secondaryProgressTint="@color/colorPrimary"
+            android:stepSize="1"
+            algolia:attribute='@{"rating"}'/>
+
+
+        <TextView
+            android:id="@+id/product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/product_rating"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/product_type"
+            android:layout_marginTop="6dp"
+            android:layout_toEndOf="@id/product_rating"
+            android:gravity="end"
+            android:text="99$"
+            android:textSize="18sp"
+            algolia:attribute='@{"price"}'/>
+    </RelativeLayout>
+</layout>
