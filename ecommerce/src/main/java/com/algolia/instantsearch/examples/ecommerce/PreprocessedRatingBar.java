@@ -29,8 +29,15 @@ public class PreprocessedRatingBar extends RatingBar implements AlgoliaHitView {
     @Override
     public void onUpdateView(JSONObject result) {
         try {
-            float rank = getRankForResult(result);
-            setRating(rank);
+            final int customerReviewCount = result.optInt("customerReviewCount", 0);
+
+            if (customerReviewCount == 0) {
+                setVisibility(GONE);
+            } else {
+                setVisibility(VISIBLE);
+                float rank = getRankForResult(result);
+                setRating(rank);
+            }
         } catch (JSONException e) {
             Log.e("DividingRatingBar", "Error while getting attribute bestSellingRank");
             e.printStackTrace();
@@ -39,10 +46,8 @@ public class PreprocessedRatingBar extends RatingBar implements AlgoliaHitView {
 
     private float getRankForResult(JSONObject result) throws JSONException {
         final int bestSellingRank = result.getInt("bestSellingRank");
-        float rank;
-        if (bestSellingRank > MAX_BEST_SELLING_RANK) {
-            rank = 0;
-        } else {
+        float rank = 0;
+        if (bestSellingRank <= MAX_BEST_SELLING_RANK) {
             float percentRank = (MIN_BEST_SELLING_RANK + MAX_BEST_SELLING_RANK - bestSellingRank) / MAX_BEST_SELLING_RANK;
             rank = percentRank * 5;
         }
