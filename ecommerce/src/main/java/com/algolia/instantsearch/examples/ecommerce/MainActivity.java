@@ -10,8 +10,8 @@ import com.algolia.search.saas.Client;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ALGOLIA_APP_ID = "latency";
-    private static final String ALGOLIA_INDEX_NAME = "bestbuy";
-    private static final String ALGOLIA_API_KEY = "249078a3d4337a8231f1665ec5a44966";
+    private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
+    private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Searcher searcher = new Searcher(new Client(ALGOLIA_APP_ID, ALGOLIA_API_KEY).initIndex(ALGOLIA_INDEX_NAME))
                 .search(); // Show results for empty query on app launch
-        InstantSearchHelper helper = new InstantSearchHelper(this, searcher);
+        new InstantSearchHelper(this, searcher);
     }
 }
