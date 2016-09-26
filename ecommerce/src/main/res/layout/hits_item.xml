@@ -40,18 +40,16 @@
             android:layout_toEndOf="@id/product_image_box"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Product Name"
             android:textColor="#111"
             android:textSize="18sp"
             algolia:attribute='@{"name"}'/>
 
-        <com.algolia.instantsearch.examples.ecommerce.PrefixTextView
+        <com.algolia.instantsearch.examples.ecommerce.WrappedTextView
             android:id="@+id/product_manufacturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_name"
             android:layout_toEndOf="@id/product_image_box"
-            android:text="By Manufacturer"
             algolia:attribute='@{"manufacturer"}'
             app:prefix="By "/>
 
@@ -62,7 +60,6 @@
             android:layout_alignParentEnd="true"
             android:layout_below="@id/product_name"
             android:layout_marginStart="12dp"
-            android:text="Product Type"
             android:textColor="@android:color/darker_gray"
             algolia:attribute='@{"type"}'/>
 
@@ -79,14 +76,25 @@
             android:secondaryProgressTint="@color/colorAccentSoft"
             android:stepSize="0.1"/>
 
-        <com.algolia.instantsearch.examples.ecommerce.PrefixTextView
+        <com.algolia.instantsearch.examples.ecommerce.WrappedTextView
+            android:id="@+id/product_reviews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_below="@id/product_type"
+            android:layout_toEndOf="@id/product_rating"
+            algolia:attribute='@{"customerReviewCount"}'
+            app:prefix="("
+            app:suffix=")"/>
+
+        <com.algolia.instantsearch.examples.ecommerce.WrappedTextView
             android:id="@+id/product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/product_rating"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/product_type"
-            android:layout_marginTop="6dp"
             android:layout_toEndOf="@id/product_rating"
             android:gravity="end"
             android:textSize="18sp"
