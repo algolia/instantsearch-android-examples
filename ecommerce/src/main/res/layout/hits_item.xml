@@ -73,12 +73,20 @@
             android:gravity="end"
             android:textSize="18sp"/>
 
+        <com.algolia.instantsearch.examples.ecommerce.PromoView
+            android:id="@+id/product_promo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_price"
+            android:layout_toEndOf="@id/product_image_box"
+            android:textSize="15sp"/>
+
         <com.algolia.instantsearch.examples.ecommerce.PreprocessedRatingBar
             android:id="@+id/product_rating"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/product_price"
+            android:layout_below="@+id/product_promo"
             android:layout_marginTop="6dp"
             android:layout_toEndOf="@id/product_image_box"
             android:progressTint="@color/colorAccent"
@@ -90,7 +98,7 @@
             android:id="@+id/product_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/product_price"
+            android:layout_below="@id/product_promo"
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:layout_toEndOf="@id/product_rating"
