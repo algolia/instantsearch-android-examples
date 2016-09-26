@@ -46,7 +46,7 @@
             algolia:attribute='@{"name"}'
             algolia:highlightingColor='@{"@color/colorAccentSoft"}'/>
 
-        <com.algolia.instantsearch.examples.ecommerce.WrappedTextView
+        <com.algolia.instantsearch.examples.ecommerce.WrappedNotNullView
             android:id="@+id/product_manufacturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
             android:secondaryProgressTint="@color/colorAccentSoft"
             android:stepSize="0.1"/>
 
-        <com.algolia.instantsearch.examples.ecommerce.WrappedTextView
+        <com.algolia.instantsearch.examples.ecommerce.WrappedNotNullView
             android:id="@+id/product_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
