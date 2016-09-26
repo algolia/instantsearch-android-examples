@@ -19,6 +19,7 @@
             android:maxWidth="125dp"
             android:src="@drawable/placeholder_video"
             algolia:attribute='@{"thumbnail"}'/>
+
         <TextView
             android:id="@+id/hit_title"
             android:layout_width="match_parent"
@@ -31,7 +32,7 @@
             android:textColor="@android:color/black"
             android:textSize="18sp"
             algolia:attribute='@{"title"}'
-            algolia:highlightingColor='@{"@color/highlightingColor"}'/>
+            algolia:highlighted='@{true}'/>
 
         <com.algolia.instantsearch.examples.media.views.TimestampHitView
             android:id="@+id/hit_published"

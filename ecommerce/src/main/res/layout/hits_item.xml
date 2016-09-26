@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout xmlns:algolia="http://schemas.android.com/apk/res-auto"
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:layout_width="match_parent"
-                    android:paddingTop="12dp"
-                    android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp">
 
         <LinearLayout
             android:id="@+id/product_image_box"
@@ -43,7 +43,8 @@
             android:maxLines="2"
             android:textColor="#111"
             android:textSize="18sp"
-            algolia:attribute='@{"name"}'/>
+            algolia:attribute='@{"name"}'
+            algolia:highlightingColor='@{"@color/colorAccentSoft"}'/>
 
         <com.algolia.instantsearch.examples.ecommerce.WrappedTextView
             android:id="@+id/product_manufacturer"
@@ -52,17 +53,21 @@
             android:layout_below="@id/product_name"
             android:layout_toEndOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
+            algolia:highlighted='@{true}'
             app:prefix="By "/>
 
-        <TextView
-            android:id="@+id/product_type"
+        <com.algolia.instantsearch.examples.ecommerce.NotNullView
+            android:id="@+id/product_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/product_name"
             android:layout_marginStart="12dp"
+            android:gravity="end"
+            android:maxWidth="90dp"
             android:textColor="@android:color/darker_gray"
-            algolia:attribute='@{"type"}'/>
+            android:textSize="12sp"
+            algolia:attribute='@{"category"}'/>
 
         <com.algolia.instantsearch.examples.ecommerce.PriceView
             android:id="@+id/product_price"
