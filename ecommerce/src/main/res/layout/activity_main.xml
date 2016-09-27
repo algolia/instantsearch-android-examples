@@ -23,7 +23,7 @@
         android:queryHint="Search">
     </com.algolia.instantsearch.views.SearchBox>
 
-    <com.algolia.instantsearch.examples.ecommerce.HitCountView
+    <com.algolia.instantsearch.examples.ecommerce.views.HitCountView
         android:id="@+id/hitCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

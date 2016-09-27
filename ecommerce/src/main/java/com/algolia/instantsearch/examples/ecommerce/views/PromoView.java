@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.examples.ecommerce;
+package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,12 +9,13 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.algolia.instantsearch.examples.ecommerce.R;
 import com.algolia.instantsearch.views.AlgoliaHitView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static com.algolia.instantsearch.examples.ecommerce.PriceView.SYMBOL_MONEY;
+import static com.algolia.instantsearch.examples.ecommerce.views.PriceView.SYMBOL_MONEY;
 
 public class PromoView extends TextView implements AlgoliaHitView {
     private final Context context;

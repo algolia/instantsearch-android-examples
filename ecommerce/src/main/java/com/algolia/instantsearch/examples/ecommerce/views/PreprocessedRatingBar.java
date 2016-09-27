@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.examples.ecommerce;
+package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

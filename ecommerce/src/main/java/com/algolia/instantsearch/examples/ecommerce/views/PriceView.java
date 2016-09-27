@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.examples.ecommerce;
+package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,10 +9,10 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.algolia.instantsearch.examples.ecommerce.R;
 import com.algolia.instantsearch.views.AlgoliaHitView;
 
 import org.json.JSONException;
@@ -36,7 +36,6 @@ public class PriceView extends TextView implements AlgoliaHitView {
             double promoPrice = result.getDouble("promoPrice");
             double lowestPrice = Math.min(salePrice, promoPrice);
 
-            Log.e("PLN", result.optString("name") + ": " + salePrice + "->" + promoPrice + " only!");
             final String priceText = SYMBOL_MONEY + lowestPrice;
             final SpannableStringBuilder finalText = new SpannableStringBuilder(priceText);
 

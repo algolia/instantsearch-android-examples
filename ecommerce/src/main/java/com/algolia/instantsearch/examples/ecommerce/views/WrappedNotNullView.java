@@ -1,9 +1,11 @@
-package com.algolia.instantsearch.examples.ecommerce;
+package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.TextView;
+
+import com.algolia.instantsearch.examples.ecommerce.R;
 
 
 public class WrappedNotNullView extends NotNullView {
