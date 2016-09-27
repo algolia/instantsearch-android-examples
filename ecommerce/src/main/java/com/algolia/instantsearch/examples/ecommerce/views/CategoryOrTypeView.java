@@ -1,8 +1,10 @@
 package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.content.Context;
+import android.text.Spannable;
 import android.util.AttributeSet;
 
+import com.algolia.instantsearch.ui.Highlighter;
 import com.algolia.instantsearch.views.AlgoliaHitView;
 
 import org.json.JSONException;
@@ -18,12 +20,10 @@ public class CategoryOrTypeView extends NotNullView implements AlgoliaHitView {
     public void onUpdateView(JSONObject result) {
         try {
             String category = result.getString("category");
-            if (!isNull(category)) {
-                setText(category);
-            } else {
-                final String type = result.getString("type");
-                setText(type);
-            }
+            final String attributeToHighlight = !isNull(category) ? "category" : "type";
+
+            final Spannable highlightedAttribute = Highlighter.getDefault().renderHighlightColor(result, attributeToHighlight, getContext());
+            setText(highlightedAttribute);
         } catch (JSONException e) {
             e.printStackTrace();
         }
