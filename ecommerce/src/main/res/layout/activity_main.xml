@@ -6,44 +6,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.algolia.instantsearch.examples.ecommerce.MainActivity">
 
-    <com.algolia.instantsearch.views.SearchBox
-        android:id="@+id/searchBox"
+    <LinearLayout
+        android:id="@+id/box_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/shape_search"
-        android:iconifiedByDefault="false"
-        android:queryHint="Search">
-    </com.algolia.instantsearch.views.SearchBox>
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal"
+        android:paddingBottom="6dp"
+        android:paddingEnd="6dp"
+        android:paddingStart="6dp"
+        android:paddingTop="6dp">
 
-    <com.algolia.instantsearch.examples.ecommerce.views.HitCountView
-        android:id="@+id/hitCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/searchBox"/>
+        <com.algolia.instantsearch.views.SearchBox
+            android:id="@+id/searchBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/shape_search"
+            android:iconifiedByDefault="false"
+            android:queryHint="Search">
+        </com.algolia.instantsearch.views.SearchBox>
 
-    <com.algolia.instantsearch.views.Hits
-        android:id="@+id/hits"
+        <Button
+            android:id="@+id/btn_filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:drawableEnd="@android:drawable/arrow_down_float"
+            android:text="Filter"/>
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:requiresFadingEdge="vertical"
-        android:layout_below="@id/hitCount"
-        algolia:hitsPerPage="10"
-        algolia:itemLayout="@layout/hits_item">
-    </com.algolia.instantsearch.views.Hits>
+        android:layout_below="@id/box_search"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="6dp"
+        tools:context="com.algolia.instantsearch.examples.ecommerce.MainActivity">
 
-    <TextView
-        android:id="@id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/searchBox"
-        android:text="Sorry, no results..."
-        android:visibility="gone"/>
+        <com.algolia.instantsearch.examples.ecommerce.views.HitCountView
+            android:id="@+id/hitCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.algolia.instantsearch.views.Hits
+            android:id="@+id/hits"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/hitCount"
+            android:requiresFadingEdge="vertical"
+            algolia:hitsPerPage="10"
+            algolia:itemLayout="@layout/hits_item">
+        </com.algolia.instantsearch.views.Hits>
+
+        <TextView
+            android:id="@id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/hitCount"
+            android:text="Sorry, no results..."
+            android:visibility="gone"/>
+    </RelativeLayout>
 </RelativeLayout>
