@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
+import com.algolia.instantsearch.views.SearchBox;
 import com.algolia.search.saas.Client;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,5 +21,7 @@ public class MainActivity extends AppCompatActivity {
         Searcher searcher = new Searcher(new Client(ALGOLIA_APP_ID, ALGOLIA_API_KEY).initIndex(ALGOLIA_INDEX_NAME))
                 .search(); // Show results for empty query on app launch
         new InstantSearchHelper(this, searcher);
+
+        ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landscape
     }
 }
