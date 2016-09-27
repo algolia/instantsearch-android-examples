@@ -44,7 +44,9 @@ public class WrappedNotNullView extends NotNullView {
         if (isNull(text)) {
             super.setText(text, type);
         } else {
-            super.setText(prefix + text + suffix, type);
+            super.setText(prefix, type);
+            super.append(text);
+            super.append(suffix);
         }
         this.text = text;
     }
