@@ -2,11 +2,12 @@ package com.algolia.instantsearch.examples.ecommerce;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 
 import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
-import com.algolia.instantsearch.ui.FilterResultsWindow;
+import com.algolia.instantsearch.filters.FilterResultsWindow;
 import com.algolia.instantsearch.views.SearchBox;
 import com.algolia.search.saas.Client;
 
@@ -15,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
+
+    private FilterResultsWindow filterResultsWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,36 @@ public class MainActivity extends AppCompatActivity {
 
         ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landscape
 
-        new FilterResultsWindow(this, searcher)
-                .addSeekBar("salePrice", "price", 0d, 10000d, 100) //TODO: Accept int/float as well
-                .setToggleButton((Button) findViewById(R.id.btn_filter));
+        filterResultsWindow = new FilterResultsWindow.Builder(this, searcher)
+                .addSeekBar("salePrice", "initial price", 100)
+                .addSeekBar("customerReviewCount", "reviews", 100)
+                .addCheckBox("promoted", "Has a discount", true)
+                .addSeekBar("promoPrice", "price with discount", 100)
+                .build();
+
+        final Button b = (Button) findViewById(R.id.btn_filter);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (filterResultsWindow.isShowing()) {
+                    filterResultsWindow.dismiss();
+                } else {
+                    filterResultsWindow.showAsDropDown(b);
+
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onStop() {
+        filterResultsWindow.dismiss();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        filterResultsWindow.dismiss();
+        super.onDestroy();
     }
 }
