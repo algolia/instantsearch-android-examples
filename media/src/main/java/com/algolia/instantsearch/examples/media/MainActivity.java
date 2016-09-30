@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
 import com.algolia.instantsearch.events.ErrorEvent;
-import com.algolia.instantsearch.filters.FilterResultsFragment;
 import com.algolia.instantsearch.views.Hits;
 import com.algolia.search.saas.Client;
 
