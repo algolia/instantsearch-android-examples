@@ -7,7 +7,6 @@ import android.widget.Button;
 
 import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
-import com.algolia.instantsearch.filters.FilterResultsWindow;
 import com.algolia.instantsearch.views.SearchBox;
 import com.algolia.search.saas.Client;
 
