@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:queryBackground="@drawable/shape_search"
             android:background="@drawable/shape_search"
             android:iconifiedByDefault="false"
             android:queryHint="Search">
