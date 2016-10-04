@@ -13,7 +13,6 @@ import com.algolia.instantsearch.InstantSearchHelper;
 import com.algolia.instantsearch.Searcher;
 import com.algolia.instantsearch.events.ErrorEvent;
 import com.algolia.instantsearch.views.Hits;
-import com.algolia.search.saas.Client;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         // Initialize a Searcher with your credentials and an index name
-        searcher = new Searcher(new Client(ALGOLIA_APP_ID, ALGOLIA_API_KEY).initIndex(ALGOLIA_INDEX_NAME));
+        searcher = new Searcher(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
         searcher.search(); //Show results for empty query on startup
         // Create the FilterResultsFragment here so it can set the appropriate facets on the Searcher
         filterResultsFragment = FilterResultsFragment.get(searcher)

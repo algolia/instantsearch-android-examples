@@ -27,6 +27,7 @@
             android:queryBackground="@drawable/shape_search"
             android:background="@drawable/shape_search"
             android:iconifiedByDefault="false"
+            algolia:autofocus="true"
             android:queryHint="Search">
         </com.algolia.instantsearch.views.SearchBox>
 
