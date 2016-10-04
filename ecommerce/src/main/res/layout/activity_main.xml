@@ -28,6 +28,7 @@
             android:background="@drawable/shape_search"
             android:iconifiedByDefault="false"
             algolia:autofocus="true"
+            algolia:submitButtonEnabled="false"
             android:queryHint="Search">
         </com.algolia.instantsearch.views.SearchBox>
 
@@ -50,10 +51,12 @@
         android:paddingTop="6dp"
         tools:context="com.algolia.instantsearch.examples.ecommerce.MainActivity">
 
-        <com.algolia.instantsearch.examples.ecommerce.views.HitCountView
+        <com.algolia.instantsearch.views.Stats
             android:id="@+id/hitCount"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            algolia:resultTemplate="{nbHits} first results"
+            algolia:errorTemplate="Error, please try again"/>
 
         <com.algolia.instantsearch.views.Hits
             android:id="@+id/hits"
