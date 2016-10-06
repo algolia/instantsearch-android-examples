@@ -14,7 +14,7 @@ public class NotNullView extends TextView {
     }
 
     public static boolean isNull(CharSequence text) {
-        return text == null || text.equals("") || text.equals("null");
+        return text == null || text.equals("") || String.valueOf(text).equals("null");
     }
 
     @Override
