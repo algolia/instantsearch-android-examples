@@ -30,14 +30,6 @@
             android:queryHint="Search"
             algolia:autofocus="false"
             algolia:submitButtonEnabled="false"/>
-
-        <Button
-            android:id="@+id/btn_filter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:drawableEnd="@android:drawable/arrow_down_float"
-            android:text="Filter"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -50,18 +42,41 @@
         android:paddingTop="6dp"
         tools:context="com.algolia.instantsearch.examples.ecommerce.MainActivity">
 
-        <com.algolia.instantsearch.ui.views.Stats
-            android:id="@+id/hitCount"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/box_filter"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            algolia:errorTemplate="Error, please try again"
-            algolia:resultTemplate="{nbHits} first results"/>
+            android:background="@drawable/border_bottom"
+            android:orientation="horizontal">
+
+            <com.algolia.instantsearch.ui.views.Stats
+                android:id="@+id/hitCount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                algolia:errorTemplate="Error, please try again"
+                algolia:resultTemplate="{nbHits} first results"/>
+
+            <Button
+                android:id="@+id/btn_filter"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="0dp"
+                android:drawableEnd="@drawable/arrow_down_flat"
+                android:drawableStart="@android:drawable/dark_header"
+                android:drawablePadding="5dp"
+                android:text="Filter"/>
+
+
+        </LinearLayout>
+
 
         <com.algolia.instantsearch.ui.views.Hits
             android:id="@+id/hits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/hitCount"
+            android:layout_below="@id/box_filter"
             android:requiresFadingEdge="vertical"
             algolia:hitsPerPage="10"
             algolia:itemLayout="@layout/hits_item"/>
@@ -70,7 +85,7 @@
             android:id="@android:id/empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/hitCount"
+            android:layout_below="@id/box_filter"
             android:text="Sorry, no results..."
             android:visibility="gone"/>
     </RelativeLayout>
