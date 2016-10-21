@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
-import com.algolia.instantsearch.views.AlgoliaHitView;
+import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 
 import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;

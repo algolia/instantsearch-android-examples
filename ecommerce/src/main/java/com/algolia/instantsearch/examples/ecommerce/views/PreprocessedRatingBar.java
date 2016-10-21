@@ -5,7 +5,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.RatingBar;
 
-import com.algolia.instantsearch.views.AlgoliaHitView;
+import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 
 import org.json.JSONException;
 import org.json.JSONObject;

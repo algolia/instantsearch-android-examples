@@ -4,15 +4,15 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.algolia.instantsearch.InstantSearchHelper;
-import com.algolia.instantsearch.Searcher;
 import com.algolia.instantsearch.events.ErrorEvent;
-import com.algolia.instantsearch.views.Hits;
+import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.InstantSearchHelper;
+import com.algolia.instantsearch.ui.views.Hits;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FilterResultsFragment filterResultsFragment;
     private SearchView searchView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

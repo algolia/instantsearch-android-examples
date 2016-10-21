@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.algolia.instantsearch.InstantSearchHelper;
-import com.algolia.instantsearch.Searcher;
-import com.algolia.instantsearch.views.SearchBox;
+import com.algolia.instantsearch.ui.InstantSearchHelper;
+import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.views.SearchBox;
 
 public class MainActivity extends AppCompatActivity {
 

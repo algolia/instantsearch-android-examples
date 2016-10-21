@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algolia.instantsearch.examples.ecommerce.R;
-import com.algolia.instantsearch.views.AlgoliaHitView;
+import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
