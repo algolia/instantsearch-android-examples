@@ -1,12 +1,13 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.algolia.instantsearch.ui.InstantSearchHelper;
 import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.InstantSearchHelper;
 import com.algolia.instantsearch.ui.views.SearchBox;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +17,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
 
     private FilterResultsWindow filterResultsWindow;
+    private Drawable arrowDown;
+    private Drawable arrowUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +42,31 @@ public class MainActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (filterResultsWindow.isShowing()) {
-                    filterResultsWindow.dismiss();
-                } else {
+                final boolean willDisplay = !filterResultsWindow.isShowing();
+                if (willDisplay) {
                     filterResultsWindow.showAsDropDown(b);
-
+                } else {
+                    filterResultsWindow.dismiss();
                 }
+                toggleArrow(willDisplay);
+            }
+
+            private void toggleArrow(boolean up) {
+                final Drawable[] currentDrawables = b.getCompoundDrawables();
+                final Drawable newDrawable;
+                if (up) {
+                    if (arrowUp == null) {
+                        arrowUp = getResources().getDrawable(R.drawable.arrow_up_flat);
+                    }
+                    newDrawable = arrowUp;
+                } else {
+                    if (arrowDown == null) {
+                        arrowDown = getResources().getDrawable(R.drawable.arrow_down_flat);
+                    }
+                    newDrawable = arrowDown;
+                }
+                b.setCompoundDrawablesWithIntrinsicBounds(currentDrawables[0], currentDrawables[1], newDrawable, currentDrawables[3]);
+
             }
         });
     }
