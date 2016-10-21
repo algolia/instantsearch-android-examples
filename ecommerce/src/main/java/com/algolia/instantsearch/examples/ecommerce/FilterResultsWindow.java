@@ -150,7 +150,7 @@ public class FilterResultsWindow extends PopupWindow {
             }
         });
 
-        updateSeekBarText(tv, currentFilter != null ? currentFilter : new NumericRefinement(name, NumericRefinement.OPERATOR_GT, minValue), null, minValue);
+        updateSeekBarText(tv, currentFilter != null ? currentFilter : new NumericRefinement(name, NumericRefinement.OPERATOR_GT, minValue), name, minValue);
         filterViews.put(description.position, seekBarLayout);
     }
 
