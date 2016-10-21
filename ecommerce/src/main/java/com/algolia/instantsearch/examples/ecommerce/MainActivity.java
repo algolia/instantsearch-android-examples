@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private FilterResultsWindow filterResultsWindow;
     private Drawable arrowDown;
     private Drawable arrowUp;
+    private Button buttonFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,35 +39,17 @@ public class MainActivity extends AppCompatActivity {
                 .addSeekBar("promoPrice", "price with discount", 100)
                 .build();
 
-        final Button b = (Button) findViewById(R.id.btn_filter);
-        b.setOnClickListener(new View.OnClickListener() {
+        buttonFilter = (Button) findViewById(R.id.btn_filter);
+        buttonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final boolean willDisplay = !filterResultsWindow.isShowing();
                 if (willDisplay) {
-                    filterResultsWindow.showAsDropDown(b);
+                    filterResultsWindow.showAsDropDown(buttonFilter);
                 } else {
                     filterResultsWindow.dismiss();
                 }
-                toggleArrow(willDisplay);
-            }
-
-            private void toggleArrow(boolean up) {
-                final Drawable[] currentDrawables = b.getCompoundDrawables();
-                final Drawable newDrawable;
-                if (up) {
-                    if (arrowUp == null) {
-                        arrowUp = getResources().getDrawable(R.drawable.arrow_up_flat);
-                    }
-                    newDrawable = arrowUp;
-                } else {
-                    if (arrowDown == null) {
-                        arrowDown = getResources().getDrawable(R.drawable.arrow_down_flat);
-                    }
-                    newDrawable = arrowDown;
-                }
-                b.setCompoundDrawablesWithIntrinsicBounds(currentDrawables[0], currentDrawables[1], newDrawable, currentDrawables[3]);
-
+                toggleArrow(buttonFilter, willDisplay);
             }
         });
     }
@@ -74,12 +57,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         filterResultsWindow.dismiss();
+        toggleArrow(buttonFilter, false);
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         filterResultsWindow.dismiss();
+        toggleArrow(buttonFilter, false);
         super.onDestroy();
+    }
+
+    private void toggleArrow(Button b, boolean up) {
+        final Drawable[] currentDrawables = b.getCompoundDrawables();
+        final Drawable newDrawable;
+        if (up) {
+            if (arrowUp == null) {
+                arrowUp = getResources().getDrawable(R.drawable.arrow_up_flat);
+            }
+            newDrawable = arrowUp;
+        } else {
+            if (arrowDown == null) {
+                arrowDown = getResources().getDrawable(R.drawable.arrow_down_flat);
+            }
+            newDrawable = arrowDown;
+        }
+        b.setCompoundDrawablesWithIntrinsicBounds(currentDrawables[0], currentDrawables[1], newDrawable, currentDrawables[3]);
+
     }
 }
