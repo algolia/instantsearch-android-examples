@@ -10,7 +10,7 @@ __Your feedback is very welcome!__ Don't hesitate to tell us what you think or r
 ## Examples
 We have built two demo applications to give you an idea of what you can build with InstantSearch Android:
 
-## [Media application](media-url)
+## [Media application][media-url]
 <img src="./docs/media.gif" align="right"/>
 
 This example mimics the classical video search interface, with a modal to refine your search.
@@ -28,7 +28,7 @@ This example mimics the classical video search interface, with a modal to refine
 <br />
 <br />
 <br />
-## [E-commerce application](ecommerce-url)
+## [E-commerce application][ecommerce-url]
 <img src="./docs/ecommerce.gif" align="right"/>
 
 This example imitates a product search interface like well-known e-commerce applications.
