@@ -19,18 +19,17 @@
         android:paddingStart="6dp"
         android:paddingTop="6dp">
 
-        <com.algolia.instantsearch.views.SearchBox
+        <com.algolia.instantsearch.ui.views.SearchBox
             android:id="@+id/searchBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:queryBackground="@drawable/shape_search"
             android:background="@drawable/shape_search"
             android:iconifiedByDefault="false"
+            android:queryBackground="@drawable/shape_search"
+            android:queryHint="Search"
             algolia:autofocus="true"
-            algolia:submitButtonEnabled="false"
-            android:queryHint="Search">
-        </com.algolia.instantsearch.views.SearchBox>
+            algolia:submitButtonEnabled="false"/>
 
         <Button
             android:id="@+id/btn_filter"
@@ -51,22 +50,21 @@
         android:paddingTop="6dp"
         tools:context="com.algolia.instantsearch.examples.ecommerce.MainActivity">
 
-        <com.algolia.instantsearch.views.Stats
+        <com.algolia.instantsearch.ui.views.Stats
             android:id="@+id/hitCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            algolia:resultTemplate="{nbHits} first results"
-            algolia:errorTemplate="Error, please try again"/>
+            algolia:errorTemplate="Error, please try again"
+            algolia:resultTemplate="{nbHits} first results"/>
 
-        <com.algolia.instantsearch.views.Hits
+        <com.algolia.instantsearch.ui.views.Hits
             android:id="@+id/hits"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/hitCount"
             android:requiresFadingEdge="vertical"
             algolia:hitsPerPage="10"
-            algolia:itemLayout="@layout/hits_item">
-        </com.algolia.instantsearch.views.Hits>
+            algolia:itemLayout="@layout/hits_item"/>
 
         <TextView
             android:id="@android:id/empty"
