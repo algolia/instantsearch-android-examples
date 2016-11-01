@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:background="@drawable/shape_search"
             android:iconifiedByDefault="false"
-            android:queryBackground="@drawable/shape_search"
+            android:queryBackground="@drawable/shape_search_query"
             android:queryHint="Search"
             algolia:autofocus="false"
             algolia:submitButtonEnabled="false"/>
