@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize a Searcher with your credentials and an index name
         searcher = new Searcher(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
         searcher.setQuery(new Query().setRestrictSearchableAttributes("title"));
-        searcher.search(); //Show results for empty query on startup
         // Create the FilterResultsFragment here so it can set the appropriate facets on the Searcher
         filterResultsFragment = FilterResultsFragment.get(searcher)
                 .addSeekBar("views", 100)
@@ -61,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        new InstantSearchHelper(this, menu, R.id.action_search, searcher);
+        new InstantSearchHelper(this, menu, R.id.action_search, searcher) // link the Searcher to the UI
+                .search(); //Show results for empty query on startup
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);
         searchView = (SearchView) itemSearch.getActionView();
