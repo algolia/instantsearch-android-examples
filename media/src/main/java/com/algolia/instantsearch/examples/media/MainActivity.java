@@ -65,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);
         searchView = (SearchView) itemSearch.getActionView();
-        itemSearch.expandActionView(); //open SearchBar on startup
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            itemSearch.expandActionView(); //open SearchBar on startup
+        }
         return true;
     }
 
