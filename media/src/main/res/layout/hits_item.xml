@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/hit_image"
+            android:layout_toRightOf="@id/hit_image"
             android:layout_toEndOf="@id/hit_image"
             android:ellipsize="end"
             android:maxLines="3"
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/hit_title"
             android:layout_toRightOf="@id/hit_image"
+            android:layout_toEndOf="@id/hit_image"
             android:text="15mn ago"/>
 
         <com.algolia.instantsearch.examples.media.views.HumanViewCountHitView
@@ -48,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/hit_published"
             android:layout_toEndOf="@id/hit_published"
+            android:layout_toRightOf="@id/hit_published"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Hit views"/>
@@ -57,6 +60,7 @@
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/hit_published"
             android:layout_marginTop="6dp"
