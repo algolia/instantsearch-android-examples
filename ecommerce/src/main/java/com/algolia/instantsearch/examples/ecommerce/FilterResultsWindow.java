@@ -14,7 +14,6 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.algolia.instantsearch.R;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.model.FacetStat;
 import com.algolia.instantsearch.model.NumericRefinement;
