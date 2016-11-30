@@ -53,7 +53,7 @@
             android:layout_toRightOf="@id/hit_published"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Hit views"/>
+            android:text="1000 views"/>
 
         <RatingBar
             android:id="@+id/ratingBar"
