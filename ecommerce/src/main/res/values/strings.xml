@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Amazing</string>
     <string name="text_savings">You save</string>
+    <string name="placeholder_checkbox_attribute">Attribute</string>
 </resources>
