@@ -147,8 +147,13 @@ public class FilterResultsWindow extends PopupWindow {
                 int newProgressValue = seekBar.getProgress(); // avoid double search on ProgressChanged + StopTrackingTouch
                 if (newProgressValue != lastProgressValue[0]) {
                     final double actualValue = updateSeekBarText(tv, seekBar, name, minValue, maxValue, steps);
-                    searcher.addNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue))
-                            .search();
+                    if (newProgressValue == 0) {
+                        searcher.removeNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue))
+                                .search();
+                    } else {
+                        searcher.addNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue))
+                                .search();
+                    }
                 }
                 lastProgressValue[0] = newProgressValue;
             }
