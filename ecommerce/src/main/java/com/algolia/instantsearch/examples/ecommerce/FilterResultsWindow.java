@@ -127,6 +127,7 @@ public class FilterResultsWindow extends PopupWindow {
             seekBar.setProgress(progressValue);
         }
         seekBar.setMax(steps);
+        final int[] lastProgressValue = {seekBar.getProgress()};
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -143,9 +144,13 @@ public class FilterResultsWindow extends PopupWindow {
             }
 
             private void onUpdate(final SeekBar seekBar) {
-                final double actualValue = updateSeekBarText(tv, seekBar, name, minValue, maxValue, steps);
-                searcher.addNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue))
-                        .search();
+                int newProgressValue = seekBar.getProgress(); // avoid double search on ProgressChanged + StopTrackingTouch
+                if (newProgressValue != lastProgressValue[0]) {
+                    final double actualValue = updateSeekBarText(tv, seekBar, name, minValue, maxValue, steps);
+                    searcher.addNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue))
+                            .search();
+                }
+                lastProgressValue[0] = newProgressValue;
             }
         });
 
