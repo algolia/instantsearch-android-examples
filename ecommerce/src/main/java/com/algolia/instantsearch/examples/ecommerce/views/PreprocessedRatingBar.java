@@ -36,21 +36,39 @@ public class PreprocessedRatingBar extends AppCompatRatingBar implements Algolia
             } else {
                 setVisibility(VISIBLE);
                 float rank = getRankForResult(result);
+                Log.d("PreprocessedRatingBar", "customerReviewCount " + customerReviewCount + " -> rating=" + rank);
                 setRating(rank);
             }
         } catch (JSONException e) {
-            Log.e("DividingRatingBar", "Error while getting attribute bestSellingRank");
+            Log.e("PreprocessedRatingBar", "Error while getting attribute bestSellingRank");
             e.printStackTrace();
         }
     }
 
     private float getRankForResult(JSONObject result) throws JSONException {
         final int bestSellingRank = result.getInt("bestSellingRank");
-        float rank = 0;
-        if (bestSellingRank <= MAX_BEST_SELLING_RANK) {
-            float percentRank = (MIN_BEST_SELLING_RANK + MAX_BEST_SELLING_RANK - bestSellingRank) / MAX_BEST_SELLING_RANK;
-            rank = percentRank * 5;
+        if (bestSellingRank < 50) {
+            return 5;
+        } else if (bestSellingRank < 500) {
+            return 4.5f;
+        } else if (bestSellingRank < 2500) {
+            return 4.0f;
+        } else if (bestSellingRank < 5000) {
+            return 3.5f;
+        } else if (bestSellingRank < 10000) {
+            return 3.0f;
+        } else if (bestSellingRank < 15000) {
+            return 2.5f;
+        } else if (bestSellingRank < 20000) {
+            return 2.0f;
+        } else if (bestSellingRank < 25000) {
+            return 1.5f;
+        } else if (bestSellingRank < 30000) {
+            return 1.0f;
+        } else if (bestSellingRank < MAX_BEST_SELLING_RANK) {
+            return 0.5f;
+        } else {
+            return 0;
         }
-        return rank;
     }
 }
