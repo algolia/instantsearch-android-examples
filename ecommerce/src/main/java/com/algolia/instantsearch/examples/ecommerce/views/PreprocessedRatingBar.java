@@ -1,9 +1,9 @@
 package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatRatingBar;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.RatingBar;
 
 import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 
@@ -16,7 +16,7 @@ import org.json.JSONObject;
  * For most products, bestSellingRank goes from 4 to 32K,
  * this widget will display it as a 0 to 5 rating.
  */
-public class PreprocessedRatingBar extends RatingBar implements AlgoliaHitView {
+public class PreprocessedRatingBar extends AppCompatRatingBar implements AlgoliaHitView {
 
     public static final float MIN_BEST_SELLING_RANK = 4;
     public static final float MAX_BEST_SELLING_RANK = 32691;
