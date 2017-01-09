@@ -63,8 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:drawableEnd="@drawable/arrow_down_flat"
-                android:drawableStart="@android:drawable/dark_header"
+                android:drawableRight="@drawable/arrow_down_flat"
+                android:drawableLeft="@android:drawable/dark_header"
                 android:drawablePadding="5dp"
                 android:text="Filter"/>
 
