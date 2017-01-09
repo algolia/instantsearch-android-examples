@@ -17,14 +17,11 @@
 
             <ImageView
                 android:id="@+id/product_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginEnd="6dp"
+                android:layout_marginRight="6dp"
                 android:layout_marginTop="12dp"
-                android:adjustViewBounds="true"
-                android:maxHeight="120dp"
-                android:maxWidth="120dp"
                 android:paddingBottom="6dp"
                 android:paddingTop="6dp"
                 android:scaleType="fitCenter"
