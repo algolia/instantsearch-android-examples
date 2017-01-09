@@ -51,7 +51,7 @@
             android:layout_toRightOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
             algolia:highlighted='@{true}'
-            app:prefix="By "/>
+            app:prefix="by "/>
 
         <com.algolia.instantsearch.examples.ecommerce.views.CategoryOrTypeView
             android:id="@+id/product_category"
