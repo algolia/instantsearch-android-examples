@@ -36,9 +36,9 @@
             android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="6dp"
+            android:layout_marginRight="6dp"
             android:layout_marginTop="6dp"
-            android:layout_toEndOf="@id/product_image_box"
+            android:layout_toRightOf="@id/product_image_box"
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="#111"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_name"
-            android:layout_toEndOf="@id/product_image_box"
+            android:layout_toRightOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
             algolia:highlighted='@{true}'
             app:prefix="By "/>
@@ -60,9 +60,9 @@
             android:id="@+id/product_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_below="@id/product_name"
-            android:layout_marginStart="12dp"
+            android:layout_marginLeft="12dp"
             android:gravity="end"
             android:maxWidth="90dp"
             android:textColor="@android:color/darker_gray"
@@ -73,8 +73,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_manufacturer"
-            android:layout_toEndOf="@id/product_image_box"
-            android:gravity="end"
+            android:layout_toRightOf="@id/product_image_box"
+            android:gravity="right"
             android:textSize="18sp"/>
 
         <com.algolia.instantsearch.examples.ecommerce.views.PromoView
@@ -82,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_price"
-            android:layout_toEndOf="@id/product_image_box"
+            android:layout_toRightOf="@id/product_image_box"
             android:textSize="15sp"/>
 
         <com.algolia.instantsearch.examples.ecommerce.views.PreprocessedRatingBar
@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/product_promo"
             android:layout_marginTop="6dp"
-            android:layout_toEndOf="@id/product_image_box"
+            android:layout_toRightOf="@id/product_image_box"
             android:progressTint="@color/colorAccent"
             android:rating="4"
             android:secondaryProgressTint="@color/colorAccentSoft"
@@ -103,9 +103,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_promo"
-            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
-            android:layout_toEndOf="@id/product_rating"
+            android:layout_toRightOf="@id/product_rating"
             algolia:attribute='@{"customerReviewCount"}'
             app:prefix="("
             app:suffix=")"/>
