@@ -2,6 +2,7 @@ package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -44,9 +45,11 @@ public class WrappedNotNullView extends NotNullView {
         if (isNull(text)) {
             super.setText(text, type);
         } else {
-            super.setText(prefix, type);
-            super.append(text);
-            super.append(suffix);
+            super.setText(new SpannableStringBuilder()
+                    .append(prefix)
+                    .append(text)
+                    .append(suffix)
+                    .toString(), type);
         }
         this.text = text;
     }
