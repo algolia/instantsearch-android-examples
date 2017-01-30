@@ -13,6 +13,10 @@ buildscript {
 }
 
 allprojects {
+    ext {
+        VERSION_INSTANTSEARCH = "0.5.3"
+    }
+
     repositories {
         jcenter()
     }
