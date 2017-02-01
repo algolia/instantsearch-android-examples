@@ -15,7 +15,7 @@ buildscript {
 allprojects {
     ext {
         VERSION_BUILD_TOOLS = "25.0.2"
-        VERSION_INSTANTSEARCH = "0.5.3"
+        VERSION_INSTANTSEARCH = "0.6.0"
         VERSION_SUPPORT = "25.1.0"
 
         VERSION_COMPILE_SDK = 25
