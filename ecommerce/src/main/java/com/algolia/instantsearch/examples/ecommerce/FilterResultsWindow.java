@@ -24,7 +24,6 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class FilterResultsWindow extends PopupWindow {
-    //TODO: Generalize and merge with FilterResultsFragment
     private final Activity activity;
     private Searcher searcher;
 
@@ -76,7 +75,7 @@ public class FilterResultsWindow extends PopupWindow {
         return activity.getLayoutInflater().inflate(layoutId, null);
     }
 
-    void createCheckBox(final CheckBoxDescription description) {
+    private void createCheckBox(final CheckBoxDescription description) {
         final String attribute = description.attribute;
         final String name = description.name;
         final boolean checkedIsTrue = description.checkedIsTrue;
@@ -109,7 +108,7 @@ public class FilterResultsWindow extends PopupWindow {
         filterViews.put(description.position, checkBoxLayout);
     }
 
-    void createSeekBar(SeekBarDescription description) {
+    private void createSeekBar(SeekBarDescription description) {
         final String attribute = description.attribute;
         final String name = description.name;
         final double minValue = description.min;
@@ -191,7 +190,7 @@ public class FilterResultsWindow extends PopupWindow {
         }
     }
 
-    protected Searcher getSearcher() {
+    private Searcher getSearcher() {
         return searcher;
     }
 

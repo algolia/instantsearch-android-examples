@@ -35,8 +35,7 @@ public class FilterResultsFragment extends DialogFragment {
 
     private Searcher searcher;
 
-    private List<SeekBarRequirements> futureSeekBars = new ArrayList<>();
-    private List<CheckBoxRequirements> futureCheckBoxes = new ArrayList<>();
+    private List<FilterDescription> futureFilters = new ArrayList<>();
     private SparseArray<View> filterViews = new SparseArray<>();
     private int filterCount = 0;
 
@@ -83,11 +82,8 @@ public class FilterResultsFragment extends DialogFragment {
         layout.setOrientation(LinearLayout.VERTICAL);
 
         filterViews.clear();
-        for (SeekBarRequirements seekBar : futureSeekBars) {
-            seekBar.create();
-        }
-        for (CheckBoxRequirements checkBox : futureCheckBoxes) {
-            checkBox.create();
+        for (FilterDescription filter : futureFilters) {
+            filter.create();
         }
         for (int i = 0; i < filterViews.size(); i++) {
             View v = filterViews.get(i);
@@ -149,7 +145,7 @@ public class FilterResultsFragment extends DialogFragment {
      * @return the fragment to allow chaining calls.
      */
     public FilterResultsFragment addSeekBar(final String attribute, final String name, final Double min, final Double max, final int steps) {
-        futureSeekBars.add(new SeekBarRequirements(attribute, name, min, max, steps, filterCount++));
+        futureFilters.add(new SeekBarDescription(attribute, name, min, max, steps, filterCount++));
         searcher.addFacet(attribute);
         return this;
     }
@@ -163,7 +159,7 @@ public class FilterResultsFragment extends DialogFragment {
      * @return the fragment to allow chaining calls.
      */
     public FilterResultsFragment addCheckBox(final String attribute, final String name, final boolean checkedIsTrue) {
-        futureCheckBoxes.add(new CheckBoxRequirements(attribute, name, checkedIsTrue, filterCount++));
+        futureFilters.add(new CheckBoxDescription(attribute, name, checkedIsTrue, filterCount++));
         searcher.addFacet(attribute);
         return this;
     }
@@ -174,84 +170,78 @@ public class FilterResultsFragment extends DialogFragment {
         return inflater.inflate(layoutId, null);
     }
 
-    private void createCheckBox(final CheckBoxRequirements requirements) {
+    private void createFilter(final FilterDescription filter) {
         checkHasSearcher();
 
-        final String attribute = requirements.attribute;
-        final String name = requirements.name;
-        final boolean checkedIsTrue = requirements.checkedIsTrue;
+        final String attribute = filter.attribute;
+        final String name = filter.name;
+        boolean isSeekBar = filter instanceof SeekBarDescription;
 
-        final View checkBoxLayout = getInflatedLayout(R.layout.layout_checkbox);
+        final View filterLayout = getInflatedLayout(isSeekBar ? R.layout.layout_seekbar : R.layout.layout_checkbox);
 
-        final TextView tv = (TextView) checkBoxLayout.findViewById(R.id.dialog_checkbox_text);
-        final CheckBox checkBox = (CheckBox) checkBoxLayout.findViewById(R.id.dialog_checkbox_box);
-        final Boolean currentFilter = searcher.getBooleanFilter(attribute);
-        final FacetStat stats = searcher.getFacetStat(attribute);
-        final boolean hasOnlyOneValue = stats != null && stats.min == stats.max;
+        if (isSeekBar) {
+            final double minValue = ((SeekBarDescription) filter).min;
+            final double maxValue = ((SeekBarDescription) filter).max;
+            final int steps = ((SeekBarDescription) filter).steps;
 
-        if (currentFilter != null) { // If the attribute is currently filtered, show its state
-            checkBox.setChecked(currentFilter);
-        } else if (hasOnlyOneValue) { // If the attribute is not filtered and has only one value, disable its checkbox
-            checkBox.setChecked(stats.min != 0); // If min=max=1, we check the box before disabling
-            checkBox.setEnabled(false);
-        }
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    searcher.addBooleanFilter(attribute, checkedIsTrue);
-                } else {
-                    searcher.removeBooleanFilter(attribute);
+            final TextView tv = (TextView) filterLayout.findViewById(R.id.dialog_seekbar_text);
+            final SeekBar seekBar = (SeekBar) filterLayout.findViewById(R.id.dialog_seekbar_bar);
+            final NumericRefinement currentFilter = searcher.getNumericRefinement(attribute, NumericRefinement.OPERATOR_GT);
+
+            if (currentFilter != null && currentFilter.value != 0) {
+                final int progressValue = (int) ((currentFilter.value - minValue) * steps / (maxValue - minValue));
+                seekBar.setProgress(progressValue);
+            }
+            seekBar.setMax(steps);
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    onUpdate(seekBar);
                 }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    onUpdate(seekBar);
+                }
+
+                private void onUpdate(final SeekBar seekBar) {
+                    final double actualValue = updateSeekBarText(tv, seekBar, name, minValue, maxValue, steps);
+                    searcher.addNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue));
+                }
+            });
+
+            updateSeekBarText(tv, name, currentFilter != null ? currentFilter.value : minValue, minValue);
+        } else {
+            final TextView tv = (TextView) filterLayout.findViewById(R.id.dialog_checkbox_text);
+            final CheckBox checkBox = (CheckBox) filterLayout.findViewById(R.id.dialog_checkbox_box);
+            final Boolean currentFilter = searcher.getBooleanFilter(attribute);
+            final FacetStat stats = searcher.getFacetStat(attribute);
+            final boolean hasOnlyOneValue = stats != null && stats.min == stats.max;
+            final boolean checkedIsTrue = ((CheckBoxDescription) filter).checkedIsTrue;
+
+            if (currentFilter != null) { // If the attribute is currently filtered, show its state
+                checkBox.setChecked(currentFilter);
+            } else if (hasOnlyOneValue) { // If the attribute is not filtered and has only one value, disable its checkbox
+                checkBox.setChecked(stats.min != 0); // If min=max=1, we check the box before disabling
+                checkBox.setEnabled(false);
             }
-        });
-        tv.setText(name != null ? name : attribute);
-        filterViews.put(requirements.position, checkBoxLayout);
-    }
-
-    private void createSeekBar(SeekBarRequirements requirements) {
-        checkHasSearcher();
-
-        final String attribute = requirements.attribute;
-        final String name = requirements.name;
-        final double minValue = requirements.min;
-        final double maxValue = requirements.max;
-        final int steps = requirements.steps;
-
-        final View seekBarLayout = getInflatedLayout(R.layout.layout_seekbar);
-
-        final TextView tv = (TextView) seekBarLayout.findViewById(R.id.dialog_seekbar_text);
-        final SeekBar seekBar = (SeekBar) seekBarLayout.findViewById(R.id.dialog_seekbar_bar);
-        final NumericRefinement currentFilter = searcher.getNumericRefinement(attribute, NumericRefinement.OPERATOR_GT);
-
-        if (currentFilter != null && currentFilter.value != 0) {
-            final int progressValue = (int) ((currentFilter.value - minValue) * steps / (maxValue - minValue));
-            seekBar.setProgress(progressValue);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        searcher.addBooleanFilter(attribute, checkedIsTrue);
+                    } else {
+                        searcher.removeBooleanFilter(attribute);
+                    }
+                }
+            });
+            tv.setText(name != null ? name : attribute);
         }
-        seekBar.setMax(steps);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                onUpdate(seekBar);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                onUpdate(seekBar);
-            }
-
-            private void onUpdate(final SeekBar seekBar) {
-                final double actualValue = updateSeekBarText(tv, seekBar, name, minValue, maxValue, steps);
-                searcher.addNumericRefinement(new NumericRefinement(attribute, NumericRefinement.OPERATOR_GT, actualValue));
-            }
-        });
-
-        updateSeekBarText(tv, name, currentFilter != null ? currentFilter.value : minValue, minValue);
-        filterViews.put(requirements.position, seekBarLayout);
+        filterViews.put(filter.position, filterLayout);
     }
 
     private double updateSeekBarText(final TextView textView, final SeekBar seekBar, final String name, final double minValue, final double maxValue, int steps) {
@@ -283,24 +273,36 @@ public class FilterResultsFragment extends DialogFragment {
         }
     }
 
-    private class SeekBarRequirements {
-        private final String attribute;
-        private final String name;
-        private Double min;
-        private Double max;
-        private final int steps;
-        private final int position;
+    abstract class FilterDescription {
+        final String attribute;
+        final String name;
+        final int position;
 
-        SeekBarRequirements(String attribute, String name, Double min, Double max, int steps, int position) {
+        FilterDescription(String attribute, String name, int position) {
             this.attribute = attribute;
             this.name = name;
-            this.min = min;
-            this.max = max;
-            this.steps = steps;
             this.position = position;
         }
 
-        void create() {
+        protected void create() {
+            createFilter(this);
+        }
+    }
+
+    private class SeekBarDescription extends FilterDescription {
+        private Double min;
+        private Double max;
+        private final int steps;
+
+        SeekBarDescription(String attribute, String name, Double min, Double max, int steps, int position) {
+            super(attribute, name, position);
+            this.min = min;
+            this.max = max;
+            this.steps = steps;
+        }
+
+        @Override
+        protected void create() {
             if (min == null || max == null) {
                 FacetStat stats = searcher.getFacetStat(attribute);
                 if (stats == null) {
@@ -309,25 +311,17 @@ public class FilterResultsFragment extends DialogFragment {
                 min = min == null ? stats.min : min;
                 max = max == null ? stats.max : max;
             }
-            createSeekBar(this);
+            super.create();
         }
     }
 
-    private class CheckBoxRequirements {
-        private final String attribute;
-        private final String name;
+    private class CheckBoxDescription extends FilterDescription {
         private final boolean checkedIsTrue;
-        private final int position;
 
-        CheckBoxRequirements(String attribute, String name, boolean checkedIsTrue, int position) {
-            this.attribute = attribute;
-            this.name = name;
+        CheckBoxDescription(String attribute, String name, boolean checkedIsTrue, int position) {
+            super(attribute, name, position);
             this.checkedIsTrue = checkedIsTrue;
-            this.position = position;
         }
 
-        void create() {
-            createCheckBox(this);
-        }
     }
 }
