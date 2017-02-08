@@ -75,9 +75,7 @@ public class FilterResultsFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         final int searcherId = getArguments().getInt(KEY_SEARCHER);
         searcher = Searcher.get(searcherId);
-        if (searcher == null) {
-            throw new IllegalStateException("This fragment has no searcher. Did you use FilterResultsFragment.get(Searcher) as required?");
-        }
+        checkHasSearcher();
 
         final FragmentActivity activity = getActivity();
         AlertDialog.Builder b = new AlertDialog.Builder(activity);
@@ -177,7 +175,7 @@ public class FilterResultsFragment extends DialogFragment {
     }
 
     private void createCheckBox(final CheckBoxRequirements requirements) {
-        checkWith();
+        checkHasSearcher();
 
         final String attribute = requirements.attribute;
         final String name = requirements.name;
@@ -212,7 +210,7 @@ public class FilterResultsFragment extends DialogFragment {
     }
 
     private void createSeekBar(SeekBarRequirements requirements) {
-        checkWith();
+        checkHasSearcher();
 
         final String attribute = requirements.attribute;
         final String name = requirements.name;
@@ -279,9 +277,9 @@ public class FilterResultsFragment extends DialogFragment {
         }
     }
 
-    private void checkWith() {
+    private void checkHasSearcher() {
         if (searcher == null) {
-            throw new RuntimeException("You need to prepare the fragment by calling with(activity, searcher) before you can use this method.");
+            throw new IllegalStateException("This fragment has no searcher. Did you use FilterResultsFragment.get(Searcher) as required?");
         }
     }
 
