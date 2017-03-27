@@ -28,7 +28,7 @@ This example mimics the classical video search interface, with a modal to refine
 <br />
 <br />
 <br />
-## [E-commerce application][ecommerce-url]
+## [E-commerce application](https://github.com/algolia/instantsearch-android-examples/tree/master/ecommerce)
 <img src="./docs/ecommerce.gif" align="right"/>
 
 This example imitates a product search interface like well-known e-commerce applications.
@@ -39,4 +39,3 @@ This example imitates a product search interface like well-known e-commerce appl
 - Filtering in a `PopupWindow` with immediate feedback to let the user see its influence on the search results
 
 [media-url]: https://github.com/algolia/instantsearch-android-examples/tree/master/media
-[ecommerce-url]: https://github.com/algolia/instantsearch-android-examples/tree/master/ecommerce
