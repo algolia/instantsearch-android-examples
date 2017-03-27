@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.algolia.instantsearch.helpers.Searcher;
-import com.algolia.instantsearch.ui.InstantSearchHelper;
+import com.algolia.instantsearch.ui.InstantSearch;
 import com.algolia.instantsearch.ui.views.SearchBox;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Searcher searcher = new Searcher(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
-        new InstantSearchHelper(this, searcher); // Initialize InstantSearch in this activity with searcher
+        new InstantSearch(this, searcher); // Initialize InstantSearch in this activity with searcher
 
         searcher.search(); // Show results for empty query on app launch
 

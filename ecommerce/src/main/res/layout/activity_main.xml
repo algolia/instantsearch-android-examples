@@ -63,9 +63,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:drawableRight="@drawable/arrow_down_flat"
                 android:drawableLeft="@android:drawable/dark_header"
                 android:drawablePadding="5dp"
+                android:drawableRight="@drawable/arrow_down_flat"
                 android:text="Filter"/>
 
 
@@ -78,6 +78,7 @@
             android:layout_height="match_parent"
             android:layout_below="@id/box_filter"
             android:requiresFadingEdge="vertical"
+            algolia:autoHideKeyboard="true"
             algolia:hitsPerPage="10"
             algolia:itemLayout="@layout/hits_item"/>
 

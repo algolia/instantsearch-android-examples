@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,8 +11,7 @@ import android.widget.Toast;
 
 import com.algolia.instantsearch.events.ErrorEvent;
 import com.algolia.instantsearch.helpers.Searcher;
-import com.algolia.instantsearch.ui.InstantSearchHelper;
-import com.algolia.instantsearch.ui.views.Hits;
+import com.algolia.instantsearch.ui.InstantSearch;
 import com.algolia.search.saas.Query;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,23 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 .addCheckBox("cc", "Closed Captions (CC)", true)
                 .addCheckBox("4k", "4K", true)
                 .addCheckBox("hd", "HD", true);
-
-        // Hide keyboard when the user scrolls the Hits
-        ((Hits) findViewById(R.id.hits)).addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dx != 0 || dy != 0) {
-                    hideKeyboard();
-                }
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        new InstantSearchHelper(this, menu, R.id.action_search, searcher) // link the Searcher to the UI
+        new InstantSearch(this, menu, R.id.action_search, searcher) // link the Searcher to the UI
                 .search(); //Show results for empty query on startup
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);

@@ -16,6 +16,7 @@
         android:id="@+id/hits"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        algolia:autoHideKeyboard="true"
         algolia:hitsPerPage="10"
         algolia:itemLayout="@layout/hits_item"/>
 
