@@ -2,9 +2,8 @@ package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
-public class NotNullView extends TextView {
+public class NotNullView extends android.support.v7.widget.AppCompatTextView {
     public NotNullView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
@@ -13,7 +12,7 @@ public class NotNullView extends TextView {
         super(context, attrs, defStyleAttr);
     }
 
-    public static boolean isNull(CharSequence text) {
+    static boolean isNull(CharSequence text) {
         return text == null || text.equals("") || String.valueOf(text).equals("null");
     }
 
