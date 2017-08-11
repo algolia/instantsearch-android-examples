@@ -31,7 +31,6 @@ import java.util.List;
 
 public class FilterResultsFragment extends DialogFragment {
     public static final String TAG = "FilterResultsFragment";
-    public static final String KEY_SEARCHER = "searcherId";
 
     private Searcher searcher;
 
@@ -56,10 +55,6 @@ public class FilterResultsFragment extends DialogFragment {
     public static FilterResultsFragment get(Searcher searcher) {
         final FilterResultsFragment fragment = new FilterResultsFragment();
         fragment.searcher = searcher; //storing the searcher for method calls before onCreateDialog, like addSeekBar
-
-        final Bundle bundle = new Bundle();
-        bundle.putInt(KEY_SEARCHER, searcher.getId());
-        fragment.setArguments(bundle); //storing the searcher's id for restoring it in onCreateDialog
         return fragment;
     }
 
@@ -72,8 +67,7 @@ public class FilterResultsFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final int searcherId = getArguments().getInt(KEY_SEARCHER);
-        searcher = Searcher.get(searcherId);
+        searcher = Searcher.get();
         checkHasSearcher();
 
         final FragmentActivity activity = getActivity();
