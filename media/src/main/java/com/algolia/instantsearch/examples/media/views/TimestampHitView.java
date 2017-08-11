@@ -1,8 +1,8 @@
 package com.algolia.instantsearch.examples.media.views;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
-import android.widget.TextView;
 
 import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 
@@ -12,7 +12,7 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.util.Date;
 
 
-public class TimestampHitView extends TextView implements AlgoliaHitView {
+public class TimestampHitView extends AppCompatTextView implements AlgoliaHitView {
     public TimestampHitView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
