@@ -32,7 +32,8 @@ dependencies {
     compile "com.android.support:appcompat-v7:$VERSION_SUPPORT"
     compile "com.android.support:design:$VERSION_SUPPORT"
     compile "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
-    compile 'org.ocpsoft.prettytime:prettytime:4.0.0.Final'
+//    compile project(":instantsearch")
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 
     testCompile 'junit:junit:4.12'
 }
