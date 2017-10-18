@@ -3,7 +3,7 @@
 
 Example of a bed and breakfast search interface.
 
-- Search in a place by **location**
+- Search a place by the **user's location** aka geo-search
 - Filter with Numeric filters by **price**
 - Custom interaction for linking the search results with `GoogleMap` and `MapFragment`
 

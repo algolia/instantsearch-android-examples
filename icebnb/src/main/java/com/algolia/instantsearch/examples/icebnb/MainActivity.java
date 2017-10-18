@@ -1,7 +1,12 @@
 package com.algolia.instantsearch.examples.icebnb;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -15,27 +20,43 @@ import com.algolia.instantsearch.events.ErrorEvent;
 import com.algolia.instantsearch.examples.icebnb.widgets.MapWidget;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.helpers.InstantSearch;
+import com.algolia.search.saas.AbstractQuery;
 import com.algolia.search.saas.Query;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.SupportMapFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "airbnb";
     private static final String ALGOLIA_API_KEY = "6be0576ff61c053d5f9a3225e2a90f76";
+    private static final int REQUEST_LOCATION = 1;
 
     private Searcher searcher;
 
     private FilterResultsFragment filterResultsFragment;
     private SearchView searchView;
     private MapWidget mapWidget;
+    private LocationRequest mLocationRequest;
+    private Location lastLocation;
+    GoogleApiClient mGoogleApiClient;
+    private long UPDATE_INTERVAL = 20000;  /* 20 secs */
+    private long FASTEST_INTERVAL = 10000; /* 10 secs */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setupGoogleAPI();
+
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
         // Initialize a Searcher with your credentials and an index name
@@ -87,5 +108,105 @@ public class MainActivity extends AppCompatActivity {
 
     private void hideKeyboard() {
         searchView.clearFocus();
+    }
+
+    private void setupGoogleAPI() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (mGoogleApiClient != null) {
+            mGoogleApiClient.connect();
+        }
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        startLocation();
+    }
+
+    private void startLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION);
+            return;
+        }
+
+        lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        updateSearch();
+        startLocationUpdates();
+        if (mapWidget.googleMap != null) {
+            mapWidget.googleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        lastLocation = location;
+        updateSearch();
+        if (mapWidget.googleMap != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            mapWidget.googleMap.setMyLocationEnabled(true);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    startLocation();
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+        }
+    }
+
+    protected void startLocationUpdates() {
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getApplicationContext(), "Enable Permissions", Toast.LENGTH_LONG).show();
+        }
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    protected void updateSearch() {
+        if (lastLocation != null) {
+            final AbstractQuery.LatLng coords =  new AbstractQuery.LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
+            searcher.getQuery().setAroundLatLng(coords);
+            searcher.search();
+        }
     }
 }

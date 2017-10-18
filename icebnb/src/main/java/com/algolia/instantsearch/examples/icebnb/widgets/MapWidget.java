@@ -1,7 +1,10 @@
 package com.algolia.instantsearch.examples.icebnb.widgets;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
 import com.algolia.instantsearch.examples.icebnb.model.HitMarker;
@@ -29,7 +32,7 @@ import java.util.List;
 public class MapWidget implements OnMapReadyCallback, AlgoliaResultsListener {
 
     @NonNull final SupportMapFragment mapFragment;
-    GoogleMap googleMap;
+    public GoogleMap googleMap;
     @NonNull private List<JSONObject> hits = new ArrayList<>();
 
     public MapWidget(@NonNull final SupportMapFragment mapFragment) {
