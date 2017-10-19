@@ -51,6 +51,6 @@ Example of a bed and breakfast search interface.
 
 - Search a place by the **user's location** aka geo-search
 - Filter with Numeric filters by **price**
-- Custom interaction for linking the search results with `GoogleMap` and `MapFragment`
+- Custom [MapWidget](https://github.com/algolia/instantsearch-android-examples/blob/master/icebnb/src/main/java/com/algolia/instantsearch/examples/icebnb/widgets/MapWidget.java) for linking the search results with a `GoogleMap` and `MapFragment`
 
 
