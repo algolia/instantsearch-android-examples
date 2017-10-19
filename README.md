@@ -36,3 +36,21 @@ This example imitates a product search interface like well-known e-commerce appl
 - Custom views using [`AlgoliaHitView`](https://github.com/algolia/instantsearch-android/blob/master/instantsearch/src/main/java/com/algolia/instantsearch/ui/views/AlgoliaHitView.java) for displaying the promotions, ratings, ...
 - Filtering in a `PopupWindow` with immediate feedback to let the user see its influence on the search results
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+## [Tourism application](https://github.com/algolia/instantsearch-ios-examples/tree/master/Icebnb)
+<img src="./docs/icebnb.gif" align="right" width="300"/>
+
+Example of a bed and breakfast search interface.
+
+- Search a place by the **user's location** aka geo-search
+- Filter with Numeric filters by **price**
+- Custom interaction for linking the search results with `GoogleMap` and `MapFragment`
+
+
