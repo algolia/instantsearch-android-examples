@@ -6,9 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.helpers.InstantSearch;
+import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
+import com.squareup.leakcanary.RefWatcher;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         filterResultsWindow.dismiss();
         toggleArrow(buttonFilter, false);
         super.onDestroy();
+        RefWatcher refWatcher = EcommerceApplication.getRefWatcher(this);
+        refWatcher.watch(this);
+        refWatcher.watch(findViewById(R.id.hits));
     }
 
     private void toggleArrow(Button b, boolean up) {
