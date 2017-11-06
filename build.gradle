@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -14,17 +15,18 @@ buildscript {
 
 allprojects {
     ext {
-        VERSION_BUILD_TOOLS = "25.0.2"
+        VERSION_BUILD_TOOLS = "26.0.2"
         VERSION_INSTANTSEARCH = "1.1.1"
-        VERSION_SUPPORT = "25.3.1"
+        VERSION_SUPPORT = "26.1.0"
 
-        VERSION_COMPILE_SDK = 25
-        VERSION_MIN_SDK = 11
-        VERSION_TARGET_SDK = 25
+        VERSION_COMPILE_SDK = 26
+        VERSION_MIN_SDK = 14
+        VERSION_TARGET_SDK = 26
     }
 
     repositories {
         jcenter()
+        google()
     }
 }
 
