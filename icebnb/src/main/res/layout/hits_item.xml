@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Hit price"
+            android:text="Hit room type"
             android:textColor="@android:color/darker_gray"
             android:textSize="18sp"
             algolia:attribute='@{"room_type"}'
