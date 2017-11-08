@@ -1,5 +1,7 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,16 +23,23 @@ public class MainActivity extends AppCompatActivity {
     private Drawable arrowDown;
     private Drawable arrowUp;
     private Button buttonFilter;
+    private Searcher searcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Searcher searcher = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
+        String query = "";
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            query = intent.getStringExtra(SearchManager.QUERY);
+        }
+
+        searcher = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
         new InstantSearch(this, searcher); // Initialize InstantSearch in this activity with searcher
 
-        searcher.search(); // Show results for empty query on app launch
+        searcher.search(query); // Show results for empty query (on app launch) / voice query (from intent)
 
         ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landscape
 
