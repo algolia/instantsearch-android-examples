@@ -13,7 +13,7 @@ import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.squareup.leakcanary.RefWatcher;
 
-public class MainActivity extends AppCompatActivity {
+public class EcommerceActivity extends AppCompatActivity {
 
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_ecommerce);
 
         String query = "";
         Intent intent = getIntent();
