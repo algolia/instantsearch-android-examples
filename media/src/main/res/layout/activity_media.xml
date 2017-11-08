@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.algolia.instantsearch.examples.media.MainActivity">
+    tools:context="com.algolia.instantsearch.examples.media.MediaActivity">
 
     <com.algolia.instantsearch.ui.views.Hits
         android:id="@+id/hits"
