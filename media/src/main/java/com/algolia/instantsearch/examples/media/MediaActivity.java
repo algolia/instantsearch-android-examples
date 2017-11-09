@@ -80,4 +80,10 @@ public class MediaActivity extends AppCompatActivity {
     private void hideKeyboard() {
         searchView.clearFocus();
     }
+
+    @Override
+    public void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
 }

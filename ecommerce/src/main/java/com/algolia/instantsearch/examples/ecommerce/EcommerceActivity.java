@@ -75,11 +75,9 @@ public class EcommerceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         filterResultsWindow.dismiss();
+        searcher.destroy();
         toggleArrow(buttonFilter, false);
         super.onDestroy();
-        RefWatcher refWatcher = EcommerceApplication.getRefWatcher(this);
-        refWatcher.watch(this);
-        refWatcher.watch(findViewById(R.id.hits));
     }
 
     private void toggleArrow(Button b, boolean up) {
