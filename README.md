@@ -44,7 +44,7 @@ This example imitates a product search interface like well-known e-commerce appl
 <br />
 <br />
 
-## [Tourism application](https://github.com/algolia/instantsearch-ios-examples/tree/master/Icebnb)
+## [Tourism application](https://github.com/algolia/instantsearch-android-examples/tree/master/icebnb)
 <img src="./docs/icebnb.gif" align="right" width="300"/>
 
 Example of a bed and breakfast search interface.
