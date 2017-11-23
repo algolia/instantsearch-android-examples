@@ -54,8 +54,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                algolia:errorTemplate="Error, please try again"
-                algolia:resultTemplate="{nbHits} first results"/>
+                algolia:errorTemplate="@string/error_template"
+                algolia:resultTemplate="@string/result_template"/>
 
             <Button
                 android:id="@+id/btn_filter"
@@ -66,7 +66,7 @@
                 android:drawableLeft="@android:drawable/dark_header"
                 android:drawablePadding="5dp"
                 android:drawableRight="@drawable/arrow_down_flat"
-                android:text="Filter"/>
+                android:text="@string/filter_menu_text"/>
 
 
         </LinearLayout>
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/box_filter"
-            android:text="Sorry, no results..."
+            android:text="@string/empty_text"
             android:visibility="gone"/>
     </RelativeLayout>
 </RelativeLayout>
