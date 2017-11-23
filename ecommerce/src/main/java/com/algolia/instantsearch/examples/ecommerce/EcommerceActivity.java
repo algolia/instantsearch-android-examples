@@ -8,10 +8,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.algolia.instantsearch.events.QueryTextChangeEvent;
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.squareup.leakcanary.RefWatcher;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class EcommerceActivity extends AppCompatActivity {
 
@@ -25,24 +28,24 @@ public class EcommerceActivity extends AppCompatActivity {
     private Button buttonFilter;
     private Searcher searcher;
 
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        searchIfSearchIntent(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ecommerce);
 
-        String query = "";
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            query = intent.getStringExtra(SearchManager.QUERY);
-        }
-
         searcher = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
         new InstantSearch(this, searcher); // Initialize InstantSearch in this activity with searcher
 
-        searcher.search(query); // Show results for empty query (on app launch) / voice query (from intent)
+        if (!searchIfSearchIntent(getIntent())) { // Show results for empty query (on app launch) / voice query (from intent)
+            searcher.search(); //TODO: searcher.search(intent) and migrate searchIfSearchIntent
+        }
 
         ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landscape
-
         filterResultsWindow = new FilterResultsWindow.Builder(this, searcher)
                 .addSeekBar("salePrice", "initial price", 100)
                 .addSeekBar("customerReviewCount", "reviews", 100)
@@ -50,7 +53,7 @@ public class EcommerceActivity extends AppCompatActivity {
                 .addSeekBar("promoPrice", "price with discount", 100)
                 .build();
 
-        buttonFilter = (Button) findViewById(R.id.btn_filter);
+        buttonFilter = findViewById(R.id.btn_filter);
         buttonFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,6 +68,16 @@ public class EcommerceActivity extends AppCompatActivity {
         });
     }
 
+    private boolean searchIfSearchIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            final String query = intent.getStringExtra(SearchManager.QUERY);
+            EventBus.getDefault().post(new QueryTextChangeEvent(query/*, intent*/));
+            searcher.search(query);
+            return true;
+        }
+        return false;
+    }
+
     @Override
     protected void onStop() {
         filterResultsWindow.dismiss();
@@ -75,6 +88,7 @@ public class EcommerceActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         filterResultsWindow.dismiss();
+        searcher.destroy();
         toggleArrow(buttonFilter, false);
         super.onDestroy();
         RefWatcher refWatcher = EcommerceApplication.getRefWatcher(this);
