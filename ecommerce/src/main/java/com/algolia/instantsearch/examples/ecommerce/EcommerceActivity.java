@@ -71,7 +71,7 @@ public class EcommerceActivity extends AppCompatActivity {
     private boolean searchIfSearchIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             final String query = intent.getStringExtra(SearchManager.QUERY);
-            EventBus.getDefault().post(new QueryTextChangeEvent(query/*, intent*/));
+            EventBus.getDefault().post(new QueryTextChangeEvent(query, intent));
             searcher.search(query);
             return true;
         }
