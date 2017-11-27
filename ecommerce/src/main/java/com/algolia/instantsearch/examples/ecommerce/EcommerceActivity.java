@@ -1,6 +1,5 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -8,13 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.algolia.instantsearch.events.QueryTextChangeEvent;
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.squareup.leakcanary.RefWatcher;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class EcommerceActivity extends AppCompatActivity {
 
@@ -30,7 +26,7 @@ public class EcommerceActivity extends AppCompatActivity {
 
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        searchIfSearchIntent(intent);
+        searcher.search(intent);
     }
 
     @Override
@@ -40,10 +36,7 @@ public class EcommerceActivity extends AppCompatActivity {
 
         searcher = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
         new InstantSearch(this, searcher); // Initialize InstantSearch in this activity with searcher
-
-        if (!searchIfSearchIntent(getIntent())) { // Show results for empty query (on app launch) / voice query (from intent)
-            searcher.search(); //TODO: searcher.search(intent) and migrate searchIfSearchIntent
-        }
+        searcher.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
 
         ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landscape
         filterResultsWindow = new FilterResultsWindow.Builder(this, searcher)
@@ -66,16 +59,6 @@ public class EcommerceActivity extends AppCompatActivity {
                 toggleArrow(buttonFilter, willDisplay);
             }
         });
-    }
-
-    private boolean searchIfSearchIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            final String query = intent.getStringExtra(SearchManager.QUERY);
-            EventBus.getDefault().post(new QueryTextChangeEvent(query, intent));
-            searcher.search(query);
-            return true;
-        }
-        return false;
     }
 
     @Override
