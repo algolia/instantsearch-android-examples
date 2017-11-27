@@ -1,6 +1,5 @@
 package com.algolia.instantsearch.examples.media;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,9 +11,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.algolia.instantsearch.events.ErrorEvent;
-import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.helpers.InstantSearch;
-import com.algolia.search.saas.Query;
+import com.algolia.instantsearch.helpers.Searcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,17 +32,11 @@ public class MediaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_media);
-
-        String query = "";
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            query = intent.getStringExtra(SearchManager.QUERY);
-        }
-
         EventBus.getDefault().register(this);
+
         // Initialize a Searcher with your credentials and an index name
         searcher = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
-        searcher.setQuery(new Query(query).setRestrictSearchableAttributes("title"));
+
         // Create the FilterResultsFragment here so it can set the appropriate facets on the Searcher
         filterResultsFragment = FilterResultsFragment.get(searcher)
                 .addSeekBar("views", 100)
@@ -54,11 +46,19 @@ public class MediaActivity extends AppCompatActivity {
                 .addCheckBox("hd", "HD", true);
     }
 
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        searcher.search(intent); // Show results for voice query (from intent)
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        new InstantSearch(this, menu, R.id.action_search, searcher) // link the Searcher to the UI
-                .search(); //Show results for empty query on startup
+
+        // TODO: Guide about InstantSearch with Menu searchBar
+        new InstantSearch(this, menu, R.id.action_search, searcher); // link the Searcher to the UI
+
+        searcher.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);
         searchView = (SearchView) itemSearch.getActionView();
