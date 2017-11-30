@@ -24,11 +24,6 @@ public class EcommerceActivity extends AppCompatActivity {
     private Button buttonFilter;
     private Searcher searcher;
 
-    @Override protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        searcher.search(intent);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +54,11 @@ public class EcommerceActivity extends AppCompatActivity {
                 toggleArrow(buttonFilter, willDisplay);
             }
         });
+    }
+
+    @Override protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        searcher.search(intent);
     }
 
     @Override
