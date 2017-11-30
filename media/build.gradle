@@ -25,20 +25,19 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Support Library
-    compile "com.android.support:appcompat-v7:$VERSION_SUPPORT"
-    compile "com.android.support:design:$VERSION_SUPPORT"
+    implementation "com.android.support:appcompat-v7:$VERSION_SUPPORT"
+    implementation "com.android.support:design:$VERSION_SUPPORT"
 
     // UI
-    compile "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
-    //compile project(":instantsearch")
-    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+    //compile "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
+    implementation project(':instantsearch')
+    implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 
     // Tests
-    testCompile 'junit:junit:4.12'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 }
