@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.algolia.instantsearch.events.ErrorEvent;
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.views.SearchBox;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,7 +27,7 @@ public class MediaActivity extends AppCompatActivity {
     private Searcher searcher;
 
     private FilterResultsFragment filterResultsFragment;
-    private SearchView searchView;
+    private SearchView searchBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +56,11 @@ public class MediaActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        // TODO: Guide about InstantSearch with Menu searchBar
         new InstantSearch(this, menu, R.id.action_search, searcher); // link the Searcher to the UI
-
         searcher.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);
-        searchView = (SearchView) itemSearch.getActionView();
+        searchBox = (SearchBox) itemSearch.getActionView();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             itemSearch.expandActionView(); //open SearchBar on startup
         }
@@ -87,7 +86,7 @@ public class MediaActivity extends AppCompatActivity {
     }
 
     private void hideKeyboard() {
-        searchView.clearFocus();
+        searchBox.clearFocus();
     }
 
     @Override
