@@ -32,7 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class IcebnbActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "airbnb";
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         setupGoogleAPI();
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_icebnb);
         EventBus.getDefault().register(this);
         // Initialize a Searcher with your credentials and an index name
         searcher = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_NAME);
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_icebnb, menu);
         new InstantSearch(this, menu, R.id.action_search, searcher) // link the Searcher to the UI
                 .search(); //Show results for empty query on startup
 

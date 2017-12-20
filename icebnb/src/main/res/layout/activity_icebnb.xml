@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/activity_main2"
+    android:id="@+id/activity_icebnb"
     xmlns:algolia="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,7 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.algolia.instantsearch.examples.icebnb.MainActivity">
+    tools:context="com.algolia.instantsearch.examples.icebnb.IcebnbActivity">
     <View
         android:id="@+id/activity_main_center"
         android:layout_width="1dp"
