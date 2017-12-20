@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="354dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Guardians of the Galaxy"
+            android:textAlignment="viewStart"
+            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            algolia:attribute='@{"title"}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/movieYear"
+            android:layout_width="69dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="1994"
+            android:textAlignment="center"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            algolia:attribute='@{"year"}'
+            algolia:layout_constraintTop_toBottomOf="@+id/movieTitle"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+
+        <RatingBar
+            android:id="@+id/movieRating"
+            android:layout_width="178dp"
+            android:layout_height="51dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:rating="4"
+            algolia:attribute='@{"rating"}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/movieTitle"/>
+    </android.support.constraint.ConstraintLayout>
+</layout>
