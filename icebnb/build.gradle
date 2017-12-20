@@ -34,8 +34,8 @@ dependencies {
     compile "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
     //compile project(":instantsearch")
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-    compile 'com.google.android.gms:play-services-maps:10.0.0'
-    compile 'com.google.android.gms:play-services-location:10.0.0'
+    compile 'com.google.android.gms:play-services-maps:11.6.2'
+    compile 'com.google.android.gms:play-services-location:11.6.2'
 
     testCompile 'junit:junit:4.12'
     compile 'org.jetbrains:annotations-java5:15.0'
