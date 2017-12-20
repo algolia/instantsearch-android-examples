@@ -54,7 +54,7 @@ public class MediaActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_media, menu);
 
         new InstantSearch(this, menu, R.id.action_search, searcher); // link the Searcher to the UI
         searcher.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
