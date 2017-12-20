@@ -4,8 +4,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.algolia.instantsearch.examples.icebnb.model.HitMarker;
+import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.model.AlgoliaResultsListener;
+import com.algolia.instantsearch.model.AlgoliaSearcherListener;
 import com.algolia.instantsearch.model.SearchResults;
+import com.algolia.search.saas.Query;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,7 +27,7 @@ import java.util.List;
  * Created by robertmogos on 11/09/2017.
  */
 
-public class MapWidget implements OnMapReadyCallback, AlgoliaResultsListener {
+public class MapWidget implements OnMapReadyCallback, AlgoliaSearcherListener, AlgoliaResultsListener {
 
     @NonNull final SupportMapFragment mapFragment;
     public GoogleMap googleMap;
@@ -94,5 +97,9 @@ public class MapWidget implements OnMapReadyCallback, AlgoliaResultsListener {
         int padding = 10;
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
         googleMap.animateCamera(cu);
+    }
+
+    @Override public void initWithSearcher(@NonNull Searcher searcher) {
+        searcher.setQuery(searcher.getQuery().setAroundRadius(Query.RADIUS_ALL));
     }
 }
