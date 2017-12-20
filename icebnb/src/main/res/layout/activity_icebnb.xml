@@ -26,6 +26,7 @@
 
     <com.algolia.instantsearch.ui.views.Hits
         android:id="@+id/hits"
+        android:requiresFadingEdge="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_main_center"
