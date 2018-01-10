@@ -3,6 +3,7 @@ package com.algolia.instantsearch.examples.movies;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,13 +12,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.views.SearchBox;
 
 public class MoviesActivity extends AppCompatActivity {
 
@@ -42,8 +42,12 @@ public class MoviesActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Searcher searcherMovies;
     private Searcher searcherActors;
+    private Searcher searcherMovies2;
+    private Searcher searcherActors2;
     private MoviesFragment moviesFragment;
     private ActorsFragment actorsFragment;
+    private Movies2Fragment moviesFragment2;
+    private Actors2Fragment actorsFragment2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,8 @@ public class MoviesActivity extends AppCompatActivity {
         // Initialize a Searcher with your credentials and an index name
         searcherMovies = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
         searcherActors = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_ACTORS);
+        searcherMovies2 = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
+        searcherActors2 = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_ACTORS);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -72,43 +78,29 @@ public class MoviesActivity extends AppCompatActivity {
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_movies, menu);
-
-        // link the Searchers to the UI
-        new InstantSearch(this, searcherMovies, moviesFragment).registerSearchView(this, menu, R.id.action_search);
-        new InstantSearch(this, searcherActors, actorsFragment).registerSearchView(this, menu, R.id.action_search);
-
-        // Show results for empty query (on app launch) / voice query (from intent)
-        searcherMovies.search(getIntent());
-        searcherActors.search(getIntent());
-
-        final MenuItem itemSearch = menu.findItem(R.id.action_search);
-        itemSearch.expandActionView(); //open SearchBar on startup
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     protected void onDestroy() {
         searcherMovies.destroy();
         searcherActors.destroy();
+        searcherMovies2.destroy();
+        searcherActors2.destroy();
         super.onDestroy();
+    }
+
+    private void linkFragmentToSearcher(LayoutFragment layoutFragment) {
+        Searcher searcher = searcherActors;
+        if (layoutFragment instanceof MoviesFragment) {
+            searcher = searcherMovies;
+        } else if (layoutFragment instanceof Actors2Fragment) {
+            searcher = searcherActors2;
+        } else if (layoutFragment instanceof Movies2Fragment) {
+            searcher = searcherMovies2;
+        }
+
+        // link the Searcher to the Fragment's UI
+        final SearchBox searchBox = findViewById(R.id.searchBox);
+        new InstantSearch(this, searcher, layoutFragment).registerSearchView(this, searchBox);
+        // Show results for empty query (on app launch) / voice query (from intent)
+        searcher.search(getIntent());
     }
 
     public static abstract class LayoutFragment extends Fragment {
@@ -118,13 +110,20 @@ public class MoviesActivity extends AppCompatActivity {
             this.layout = layout;
         }
 
-
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             return inflater.inflate(layout, container, false);
         }
+
+        @Override
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            super.onViewCreated(view, savedInstanceState);
+            final MoviesActivity activity = (MoviesActivity) getActivity();
+            activity.linkFragmentToSearcher(this);
+        }
     }
+
 
     public static class MoviesFragment extends LayoutFragment {
         public MoviesFragment() {
@@ -137,18 +136,18 @@ public class MoviesActivity extends AppCompatActivity {
             super(R.layout.fragment_actors);
         }
     }
-//
-//    public static class Movies2Fragment extends LayoutFragment {
-//        public Movies2Fragment() {
-//            super(R.layout.fragment_movies2);
-//        }
-//    }
-//
-//    public static class Actors2Fragment extends LayoutFragment {
-//        public Actors2Fragment() {
-//            super(R.layout.fragment_actors2);
-//        }
-//    }
+
+    public static class Movies2Fragment extends LayoutFragment {
+        public Movies2Fragment() {
+            super(R.layout.fragment_movies2);
+        }
+    }
+
+    public static class Actors2Fragment extends LayoutFragment {
+        public Actors2Fragment() {
+            super(R.layout.fragment_actors2);
+        }
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -167,19 +166,21 @@ public class MoviesActivity extends AppCompatActivity {
                 case 0:
                     moviesFragment = new MoviesFragment();
                     return moviesFragment;
-//                case 1:
-//                    return new Movies2Fragment();
-//                case 2:
-//                    return new Actors2Fragment();
-                default:
+                case 1:
                     actorsFragment = new ActorsFragment();
                     return actorsFragment;
+                case 2:
+                    moviesFragment2 = new Movies2Fragment();
+                    return moviesFragment2;
+                default:
+                    actorsFragment2 = new Actors2Fragment();
+                    return actorsFragment2;
             }
         }
 
         @Override
         public int getCount() {
-            return 2;
+            return 4;
         }
     }
 }
