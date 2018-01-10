@@ -26,24 +26,8 @@ public class MoviesActivity extends AppCompatActivity {
     private static final String ALGOLIA_INDEX_MOVIES = "movies";
     private static final String ALGOLIA_API_KEY = "d0a23086ed4be550f70be98c0acf7d74";
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
     private Searcher searcherMovies;
     private Searcher searcherActors;
-    private MoviesFragment moviesFragment;
-    private ActorsFragment actorsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,17 +41,13 @@ public class MoviesActivity extends AppCompatActivity {
         searcherMovies = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
         searcherActors = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_ACTORS);
 
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        // Set up the ViewPager with an adapter that will return a fragment
+        // for each of the two primary sections of the activity.
+        ViewPager viewPager = findViewById(R.id.container);
+        viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
         TabLayout tabLayout = findViewById(R.id.tabs);
-
-        mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
     }
 
 
@@ -105,6 +85,7 @@ public class MoviesActivity extends AppCompatActivity {
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
             final MoviesActivity activity = (MoviesActivity) getActivity();
+            assert activity != null;
             activity.linkFragmentToSearcher(this);
         }
     }
@@ -128,7 +109,7 @@ public class MoviesActivity extends AppCompatActivity {
      */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -137,11 +118,9 @@ public class MoviesActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             switch (position) {
                 case 0:
-                    moviesFragment = new MoviesFragment();
-                    return moviesFragment;
+                    return new MoviesFragment();
                 default:
-                    actorsFragment = new ActorsFragment();
-                    return actorsFragment;
+                    return new ActorsFragment();
             }
         }
 
