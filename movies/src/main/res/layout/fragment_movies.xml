@@ -8,6 +8,7 @@
                                              tools:context="com.algolia.instantsearch.examples.movies.MoviesActivity$MoviesFragment">
 
     <com.algolia.instantsearch.ui.views.Hits
+        android:id="@+id/hits_movies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
