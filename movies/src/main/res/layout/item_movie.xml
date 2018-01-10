@@ -42,6 +42,7 @@
             android:layout_width="178dp"
             android:layout_height="51dp"
             android:layout_marginEnd="16dp"
+            android:isIndicator="true"
             android:layout_marginTop="8dp"
             android:rating="4"
             algolia:attribute='@{"rating"}'
