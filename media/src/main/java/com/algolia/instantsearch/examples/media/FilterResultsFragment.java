@@ -67,7 +67,7 @@ public class FilterResultsFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        searcher = Searcher.get();
+        searcher = Searcher.get(MediaActivity.ALGOLIA_INDEX_NAME);
         checkHasSearcher();
 
         final FragmentActivity activity = getActivity();
