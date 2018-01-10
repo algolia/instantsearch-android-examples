@@ -40,8 +40,10 @@ public class MoviesActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private Searcher searcherActors;
     private Searcher searcherMovies;
+    private Searcher searcherActors;
+    private MoviesFragment moviesFragment;
+    private ActorsFragment actorsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +54,8 @@ public class MoviesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Initialize a Searcher with your credentials and an index name
+        searcherMovies = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
         searcherActors = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_ACTORS);
-//        searcherMovies = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -74,10 +76,13 @@ public class MoviesActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_movies, menu);
 
-        new InstantSearch(this, menu, R.id.action_search, searcherActors);// link the Searcher to the UI
-//        new InstantSearch(this, menu, R.id.action_search, searcherMovies);// link the Searcher to the UI
-        searcherActors.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
-//        searcherMovies.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
+        // link the Searchers to the UI
+        new InstantSearch(this, searcherMovies, moviesFragment).registerSearchView(this, menu, R.id.action_search);
+        new InstantSearch(this, searcherActors, actorsFragment).registerSearchView(this, menu, R.id.action_search);
+
+        // Show results for empty query (on app launch) / voice query (from intent)
+        searcherMovies.search(getIntent());
+        searcherActors.search(getIntent());
 
         final MenuItem itemSearch = menu.findItem(R.id.action_search);
         itemSearch.expandActionView(); //open SearchBar on startup
@@ -132,6 +137,18 @@ public class MoviesActivity extends AppCompatActivity {
             super(R.layout.fragment_actors);
         }
     }
+//
+//    public static class Movies2Fragment extends LayoutFragment {
+//        public Movies2Fragment() {
+//            super(R.layout.fragment_movies2);
+//        }
+//    }
+//
+//    public static class Actors2Fragment extends LayoutFragment {
+//        public Actors2Fragment() {
+//            super(R.layout.fragment_actors2);
+//        }
+//    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -148,9 +165,15 @@ public class MoviesActivity extends AppCompatActivity {
             // getItem is called to instantiate the fragment for the given page.
             switch (position) {
                 case 0:
-                    return new MoviesFragment();
+                    moviesFragment = new MoviesFragment();
+                    return moviesFragment;
+//                case 1:
+//                    return new Movies2Fragment();
+//                case 2:
+//                    return new Actors2Fragment();
                 default:
-                    return new ActorsFragment();
+                    actorsFragment = new ActorsFragment();
+                    return actorsFragment;
             }
         }
 
