@@ -17,6 +17,7 @@
             android:text="Catherine"
             android:textAppearance="@android:style/TextAppearance.Material.Headline"
             algolia:attribute='@{"name"}'
+            algolia:variant='@{"actors"}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -27,7 +28,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
             android:background="@android:drawable/sym_def_app_icon"
-            algolia:attribute='"@{"image_path"}'
+            algolia:attribute='@{"image_path"}'
+            algolia:variant='@{"actors"}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>
