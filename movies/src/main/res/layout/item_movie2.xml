@@ -9,7 +9,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/movieTitle"
+            android:id="@+id/movieTitle2"
             android:layout_width="354dp"
             android:layout_height="38dp"
             android:layout_marginEnd="8dp"
@@ -19,37 +19,25 @@
             android:textAlignment="viewStart"
             android:textAppearance="@android:style/TextAppearance.Material.Headline"
             algolia:attribute='@{"title"}'
-            algolia:variant='@{"movies"}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
-            android:id="@+id/movieYear"
-            android:layout_width="69dp"
+            android:id="@+id/movieActors"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="1994"
-            android:textAlignment="center"
+            android:text="Clooney, Belucci, ..."
+            android:textAlignment="textStart"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
-            algolia:attribute='@{"year"}'
-            algolia:variant='@{"movies"}'
+            algolia:attribute='@{"actors"}'
+            algolia:layout_constraintEnd_toEndOf="parent"
+            algolia:layout_constraintHorizontal_bias="0.0"
             algolia:layout_constraintTop_toBottomOf="@+id/movieTitle"
             app:layout_constraintStart_toStartOf="parent"/>
 
-
-        <RatingBar
-            android:id="@+id/movieRating"
-            android:layout_width="178dp"
-            android:layout_height="51dp"
-            android:layout_marginEnd="16dp"
-            android:isIndicator="true"
-            android:layout_marginTop="8dp"
-            android:rating="4"
-            algolia:attribute='@{"rating"}'
-            algolia:variant='@{"movies"}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/movieTitle"/>
     </android.support.constraint.ConstraintLayout>
 </layout>
