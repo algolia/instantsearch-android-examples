@@ -42,12 +42,8 @@ public class MoviesActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private Searcher searcherMovies;
     private Searcher searcherActors;
-    private Searcher searcherMovies2;
-    private Searcher searcherActors2;
     private MoviesFragment moviesFragment;
     private ActorsFragment actorsFragment;
-    private Movies2Fragment moviesFragment2;
-    private Actors2Fragment actorsFragment2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +56,6 @@ public class MoviesActivity extends AppCompatActivity {
         // Initialize a Searcher with your credentials and an index name
         searcherMovies = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
         searcherActors = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_ACTORS);
-        searcherMovies2 = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_MOVIES);
-        searcherActors2 = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_ACTORS);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -81,20 +75,11 @@ public class MoviesActivity extends AppCompatActivity {
     protected void onDestroy() {
         searcherMovies.destroy();
         searcherActors.destroy();
-        searcherMovies2.destroy();
-        searcherActors2.destroy();
         super.onDestroy();
     }
 
     private void linkFragmentToSearcher(LayoutFragment layoutFragment) {
-        Searcher searcher = searcherActors;
-        if (layoutFragment instanceof MoviesFragment) {
-            searcher = searcherMovies;
-        } else if (layoutFragment instanceof Actors2Fragment) {
-            searcher = searcherActors2;
-        } else if (layoutFragment instanceof Movies2Fragment) {
-            searcher = searcherMovies2;
-        }
+        Searcher searcher = (layoutFragment instanceof MoviesFragment) ? searcherMovies : searcherActors;
 
         // link the Searcher to the Fragment's UI
         final SearchBox searchBox = findViewById(R.id.searchBox);
@@ -137,18 +122,6 @@ public class MoviesActivity extends AppCompatActivity {
         }
     }
 
-    public static class Movies2Fragment extends LayoutFragment {
-        public Movies2Fragment() {
-            super(R.layout.fragment_movies2);
-        }
-    }
-
-    public static class Actors2Fragment extends LayoutFragment {
-        public Actors2Fragment() {
-            super(R.layout.fragment_actors2);
-        }
-    }
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -166,21 +139,15 @@ public class MoviesActivity extends AppCompatActivity {
                 case 0:
                     moviesFragment = new MoviesFragment();
                     return moviesFragment;
-                case 1:
+                default:
                     actorsFragment = new ActorsFragment();
                     return actorsFragment;
-                case 2:
-                    moviesFragment2 = new Movies2Fragment();
-                    return moviesFragment2;
-                default:
-                    actorsFragment2 = new Actors2Fragment();
-                    return actorsFragment2;
             }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
     }
 }
