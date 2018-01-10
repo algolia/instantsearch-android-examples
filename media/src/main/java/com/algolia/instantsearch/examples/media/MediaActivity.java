@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.Subscribe;
 public class MediaActivity extends AppCompatActivity {
 
     private static final String ALGOLIA_APP_ID = "latency";
-    private static final String ALGOLIA_INDEX_NAME = "youtube";
+    public static final String ALGOLIA_INDEX_NAME = "youtube";
     private static final String ALGOLIA_API_KEY = "0c9899197c49f80b183adc0f68ea8d78";
 
     private Searcher searcher;
