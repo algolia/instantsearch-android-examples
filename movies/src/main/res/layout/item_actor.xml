@@ -27,9 +27,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:background="@android:drawable/sym_def_app_icon"
+            android:src="@android:drawable/sym_def_app_icon"
             algolia:attribute='@{"image_path"}'
             algolia:variant='@{"actors"}'
+            algolia:prefix='@{"https://image.tmdb.org/t/p/w300"}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout
+    xmlns:algolia="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <android.support.constraint.ConstraintLayout
@@ -28,28 +29,48 @@
             android:id="@+id/movieYear"
             android:layout_width="69dp"
             android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:text="1994"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
             algolia:attribute='@{"year"}'
-            algolia:variant='@{"movies"}'
+            algolia:layout_constraintBottom_toBottomOf="parent"
             algolia:layout_constraintTop_toBottomOf="@+id/movieTitle"
+            algolia:variant='@{"movies"}'
             app:layout_constraintStart_toStartOf="parent"/>
 
 
         <RatingBar
             android:id="@+id/movieRating"
-            android:layout_width="178dp"
-            android:layout_height="51dp"
-            android:layout_marginEnd="16dp"
-            android:isIndicator="true"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:isIndicator="true"
             android:rating="4"
             algolia:attribute='@{"rating"}'
+            algolia:layout_constraintBottom_toBottomOf="parent"
+            algolia:layout_constraintHorizontal_bias="0.0"
+            algolia:layout_constraintStart_toEndOf="@+id/movieYear"
             algolia:variant='@{"movies"}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movieTitle"/>
+
+        <ImageView
+            android:id="@+id/movieImage"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            algolia:attribute='@{"image"}'
+            algolia:layout_constraintEnd_toEndOf="parent"
+            algolia:layout_constraintTop_toTopOf="parent"
+            algolia:srcCompat="@android:drawable/ic_menu_gallery"
+            algolia:variant='@{"movies"}'/>
     </android.support.constraint.ConstraintLayout>
 </layout>
