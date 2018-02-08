@@ -5,7 +5,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context="com.algolia.instantsearch.examples.movies.MoviesActivity$MoviesFragment">
+                                             tools:context="com.algolia.instantsearch.examples.movies.MoviesTabsActivity$MoviesFragment">
 
     <com.algolia.instantsearch.ui.views.Hits
         android:id="@+id/hits_actors"
