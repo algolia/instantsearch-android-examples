@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/constraintLayout"
+    xmlns:algolia="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.algolia.instantsearch.examples.movies.MoviesSectionsActivity"
+    tools:showIn="@layout/activity_movies_sections">
+
+    <include layout="@layout/searchbox" android:id="@+id/include_searchbox"/>
+
+    <com.algolia.instantsearch.ui.views.Hits
+        android:id="@+id/hits_movies"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="0dp"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="always"
+        algolia:itemLayout="@layout/item_movie"
+        algolia:variant="movies"
+        app:layout_constraintBottom_toTopOf="@+id/hits_actors"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include_searchbox"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"/>
+
+    <com.algolia.instantsearch.ui.views.Hits
+        android:id="@+id/hits_actors"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:overScrollMode="always"
+        algolia:itemLayout="@layout/item_actor"
+        algolia:layout_constraintHorizontal_bias="0.0"
+        algolia:variant="actors"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hits_movies"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1"/>
+</android.support.constraint.ConstraintLayout>
