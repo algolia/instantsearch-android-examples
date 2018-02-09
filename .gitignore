@@ -9,6 +9,7 @@ projectFilesBackup
 /.idea/libraries
 /build
 /captures
+.gradletasknamecache
 
 # Local setup
 /local.properties
