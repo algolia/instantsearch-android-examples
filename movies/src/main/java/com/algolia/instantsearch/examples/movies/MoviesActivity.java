@@ -7,7 +7,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.model.SearchBoxViewModel;
@@ -48,13 +47,10 @@ public abstract class MoviesActivity extends AppCompatActivity {
         this.<FloatingActionButton>findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String query = searcherMovies.getQuery().getQuery();
-                Toast.makeText(MoviesActivity.this, "Keeping query " + query, Toast.LENGTH_SHORT).show();
-
                 startActivity(new Intent(MoviesActivity.this,
                         (MoviesTabsActivity.class.isInstance(MoviesActivity.this)) ?
                                 MoviesSectionsActivity.class : MoviesTabsActivity.class)
-                        .putExtra(EXTRA_QUERY, query));
+                        .putExtra(EXTRA_QUERY, searcherMovies.getQuery().getQuery()));
             }
         });
         if (searchBoxViewModel == null) {
@@ -67,7 +63,6 @@ public abstract class MoviesActivity extends AppCompatActivity {
     protected void setQueryFromIntent(Intent intent) {
         if (intent.hasExtra(EXTRA_QUERY)) {
             final String query = intent.getStringExtra(EXTRA_QUERY);
-            Toast.makeText(this, "Applying query " + query, Toast.LENGTH_SHORT).show();
             searchBox.setQuery(query, query != null);
         }
     }
