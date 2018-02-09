@@ -19,7 +19,6 @@ import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.Hits;
 
 public class MoviesTabsActivity extends MoviesActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -24,6 +24,7 @@ public abstract class MoviesActivity extends AppCompatActivity {
     protected Searcher searcherMovies;
     protected Searcher searcherActors;
     protected SearchBoxViewModel searchBoxViewModel;
+    private SearchBox searchBox;
 
 
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +58,8 @@ public abstract class MoviesActivity extends AppCompatActivity {
             }
         });
         if (searchBoxViewModel == null) {
-            searchBoxViewModel = new SearchBoxViewModel(this.<SearchBox>findViewById(R.id.include_searchbox));
+            searchBox = this.findViewById(R.id.include_searchbox);
+            searchBoxViewModel = new SearchBoxViewModel(searchBox);
         }
     }
 
@@ -66,7 +68,7 @@ public abstract class MoviesActivity extends AppCompatActivity {
         if (intent.hasExtra(EXTRA_QUERY)) {
             final String query = intent.getStringExtra(EXTRA_QUERY);
             Toast.makeText(this, "Applying query " + query, Toast.LENGTH_SHORT).show();
-            this.<SearchBox>findViewById(R.id.include_searchbox).setQuery(query, query != null);
+            searchBox.setQuery(query, query != null);
         }
     }
 
