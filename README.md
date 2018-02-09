@@ -54,3 +54,23 @@ Example of a bed and breakfast search interface.
 - Custom [`MapWidget`](https://github.com/algolia/instantsearch-android-examples/blob/master/icebnb/src/main/java/com/algolia/instantsearch/examples/icebnb/widgets/MapWidget.java) for linking the search results with a `GoogleMap` and `MapFragment`
 
 
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+## [Movies application](https://github.com/algolia/instantsearch-android-examples/tree/master/movies)
+<img src="./docs/multi-index.gif" align="right" width="300"/>
+
+Example of a movies search interface.
+
+- Search movies and actors using either a movie's or an actor's name
+- Multiple indices searched at the same time
+- Offers two layout options: as tabs or as sections
