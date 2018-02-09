@@ -11,10 +11,8 @@ public class MoviesSectionsActivity extends MoviesActivity {
         setContentView(R.layout.activity_movies_sections);
         initWithLayout();
 
-        InstantSearch instantSearchMovies = new InstantSearch(this, searcherMovies);
-        instantSearchMovies.registerSearchView(this, searchBoxViewModel);
-        InstantSearch instantSearchActors = new InstantSearch(this, searcherActors);
-        instantSearchActors.registerSearchView(this, searchBoxViewModel);
+        new InstantSearch(this, searcherMovies).registerSearchView(this, searchBoxViewModel);
+        new InstantSearch(this, searcherActors).registerSearchView(this, searchBoxViewModel);
 
         // If the activity was started with an intent, apply any query it contains
         setQueryFromIntent(getIntent());
