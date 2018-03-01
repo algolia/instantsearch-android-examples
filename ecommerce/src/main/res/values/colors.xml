@@ -5,4 +5,5 @@
     <color name="colorAccent">#d26213</color>
     <color name="colorAccentSoft">#79d25b06</color>
     <color name="colorPrice">#97100b</color>
+    <color name="colorFilterBackground">#e0e0e0</color>
 </resources>

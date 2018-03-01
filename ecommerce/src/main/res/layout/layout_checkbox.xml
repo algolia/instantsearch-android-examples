@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/dialog_padding"
-                android:paddingTop="@dimen/dialog_padding"
-                android:paddingRight="@dimen/dialog_padding">
+                android:paddingLeft="@dimen/default_padding"
+                android:paddingTop="@dimen/default_padding"
+                android:paddingRight="@dimen/default_padding">
 
     <TextView
         android:id="@+id/dialog_checkbox_text"
@@ -16,8 +16,8 @@
         android:id="@+id/dialog_checkbox_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingRight="@dimen/dialog_padding"
-        android:paddingEnd="@dimen/dialog_padding"
+        android:paddingRight="@dimen/default_padding"
+        android:paddingEnd="@dimen/default_padding"
         android:layout_alignBaseline="@+id/dialog_checkbox_text"
         android:layout_alignBottom="@+id/dialog_checkbox_text"
         android:layout_alignParentRight="true"
