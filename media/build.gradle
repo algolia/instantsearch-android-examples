@@ -31,8 +31,8 @@ dependencies {
     implementation "com.android.support:design:$VERSION_SUPPORT"
 
     // UI
-    //compile "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
-    implementation project(':instantsearch')
+    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
+//    implementation project(':instantsearch')
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
 
     // Tests
