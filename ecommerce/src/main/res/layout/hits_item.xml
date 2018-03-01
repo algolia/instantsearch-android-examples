@@ -41,7 +41,7 @@
             android:textColor="#111"
             android:textSize="18sp"
             algolia:attribute='@{"name"}'
-            algolia:highlightingColor='@{"@color/colorAccentSoft"}'/>
+            algolia:highlightingColor='@{@color/colorAccentSoft}'/>
 
         <com.algolia.instantsearch.examples.ecommerce.views.WrappedNotNullView
             android:id="@+id/product_manufacturer"
