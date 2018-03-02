@@ -1,4 +1,4 @@
-# [Media application][media-url]
+# Media application
 <img src="../docs/media.gif" align="right"/>
 
 This example mimics the classical video search interface, with a modal to refine your search.
@@ -8,5 +8,3 @@ This example mimics the classical video search interface, with a modal to refine
 - Automatic focus on the SearchBox
 - Automatic closing of the keyboard when scrolling through the videos
 - Filtering in a `DialogFragment` applied only when the users submit their final filters
-
-[media-url]: https://github.com/algolia/instantsearch-android-examples/tree/master/media
