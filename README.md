@@ -67,7 +67,7 @@ Example of a bed and breakfast search interface.
 <br />
 
 ## [Movies application](https://github.com/algolia/instantsearch-android-examples/tree/master/movies)
-<img src="./docs/multi-index.gif" align="right" width="300"/>
+<img src="./docs/movies.gif" align="right" width="300"/>
 
 Example of a movies search interface.
 
