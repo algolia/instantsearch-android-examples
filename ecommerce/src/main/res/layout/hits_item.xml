@@ -43,7 +43,7 @@
             algolia:attribute='@{"name"}'
             algolia:highlightingColor='@{@color/colorAccentSoft}'/>
 
-        <com.algolia.instantsearch.examples.ecommerce.views.WrappedNotNullView
+        <com.algolia.instantsearch.examples.ecommerce.views.NotNullView
             android:id="@+id/product_manufacturer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_toRightOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
             algolia:highlighted='@{true}'
-            app:prefix="by "/>
+            algolia:prefix='@{"by "}'/>
 
         <com.algolia.instantsearch.examples.ecommerce.views.CategoryOrTypeView
             android:id="@+id/product_category"
@@ -95,7 +95,7 @@
             android:secondaryProgressTint="@color/colorAccentSoft"
             android:stepSize="0.1"/>
 
-        <com.algolia.instantsearch.examples.ecommerce.views.WrappedNotNullView
+        <com.algolia.instantsearch.examples.ecommerce.views.NotNullView
             android:id="@+id/product_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -104,7 +104,7 @@
             android:layout_marginTop="4dp"
             android:layout_toRightOf="@id/product_rating"
             algolia:attribute='@{"customerReviewCount"}'
-            app:prefix="("
-            app:suffix=")"/>
+            algolia:prefix='@{"("}'
+            algolia:suffix='@{")"}'/>
     </RelativeLayout>
 </layout>
