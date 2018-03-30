@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp">
+
+        <TextView
+            android:id="@+id/product_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="6dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#111"
+            android:textSize="18sp"
+            algolia:attribute='@{"_source.name"}'
+            algolia:highlightingColor='@{@color/colorAccentSoft}'/>
+
+        <com.algolia.custombackend.views.CategoryOrTypeView
+            android:id="@+id/product_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/product_name"
+            android:layout_marginLeft="12dp"
+            android:gravity="end"
+            android:maxWidth="90dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"/>
+
+        <com.algolia.custombackend.views.WrappedNotNullView
+            android:id="@+id/product_manufacturer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_name"
+            algolia:attribute='@{"_source.location"}'
+            app:prefix="At: "/>
+
+        <com.algolia.custombackend.views.WrappedNotNullView
+            android:id="@+id/product_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_manufacturer"
+            algolia:attribute='@{"_source.date"}'
+            app:prefix="Date: "/>
+
+    </RelativeLayout>
+</layout>

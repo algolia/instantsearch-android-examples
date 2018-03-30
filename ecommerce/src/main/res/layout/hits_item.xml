@@ -40,7 +40,7 @@
             android:maxLines="2"
             android:textColor="#111"
             android:textSize="18sp"
-            algolia:attribute='@{"name"}'
+            algolia:attribute='@{"_type"}'
             algolia:highlightingColor='@{@color/colorAccentSoft}'/>
 
         <com.algolia.instantsearch.examples.ecommerce.views.WrappedNotNullView
