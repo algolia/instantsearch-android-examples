@@ -5,10 +5,10 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.TextView
 
-class NotNullTextView : android.support.v7.widget.AppCompatTextView {
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+open class NotNullTextView : android.support.v7.widget.AppCompatTextView {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     override fun setText(text: CharSequence?, type: TextView.BufferType) {
         if (isNull(text)) {
