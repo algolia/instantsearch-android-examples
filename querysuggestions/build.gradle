@@ -32,7 +32,9 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$VERSION_KOTLIN"
 
-//    implementation 'com.android.support:appcompat-v7:27.0.2'
+    // DESIGN
+    implementation "com.android.support:appcompat-v7:$VERSION_SUPPORT"
+    implementation "com.android.support:design:$VERSION_SUPPORT"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
 //    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
