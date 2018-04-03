@@ -37,10 +37,11 @@
             android:layout_toRightOf="@id/product_image_box"
             android:ellipsize="end"
             android:maxLines="2"
+            android:text="Product name"
             android:textColor="#111"
             android:textSize="18sp"
             algolia:attribute='@{"name"}'
-            algolia:highlightingColor='@{@color/colorAccent}'
+            algolia:highlighted='@{true}'
             algolia:variant='@{"hits"}'/>
 
         <com.algolia.instantsearch.examples.querysuggestions.NotNullTextView
@@ -54,58 +55,28 @@
             algolia:prefix='@{"by "}'
             algolia:variant='@{"hits"}'/>
 
-        <!--<com.algolia.instantsearch.examples.ecommerce.views.CategoryOrTypeView-->
-            <!--android:id="@+id/product_category"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_below="@id/product_name"-->
-            <!--android:layout_marginLeft="12dp"-->
-            <!--android:gravity="end"-->
-            <!--android:maxWidth="90dp"-->
-            <!--android:textColor="@android:color/darker_gray"-->
-            <!--android:textSize="12sp"/>-->
+        <com.algolia.instantsearch.examples.querysuggestions.CategoryOrTypeView
+            android:id="@+id/product_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingEnd="8dp"
+            android:layout_below="@id/product_name"
+            android:layout_marginLeft="12dp"
+            android:text="Category"
+            android:gravity="end"
+            android:maxWidth="90dp"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"/>
 
-        <!--<com.algolia.instantsearch.examples.ecommerce.views.PriceView-->
-            <!--android:id="@+id/product_price"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/product_manufacturer"-->
-            <!--android:layout_toRightOf="@id/product_image_box"-->
-            <!--android:gravity="right"-->
-            <!--android:textSize="18sp"/>-->
-
-        <!--<com.algolia.instantsearch.examples.ecommerce.views.PromoView-->
-            <!--android:id="@+id/product_promo"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/product_price"-->
-            <!--android:layout_toRightOf="@id/product_image_box"-->
-            <!--android:textSize="15sp"/>-->
-
-        <!--<com.algolia.instantsearch.examples.ecommerce.views.PreprocessedRatingBar-->
-            <!--android:id="@+id/product_rating"-->
-            <!--style="@style/Base.Widget.AppCompat.RatingBar.Small"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/product_promo"-->
-            <!--android:layout_marginTop="6dp"-->
-            <!--android:layout_toRightOf="@id/product_image_box"-->
-            <!--android:progressTint="@color/colorAccent"-->
-            <!--android:rating="4"-->
-            <!--android:secondaryProgressTint="@color/colorAccentSoft"-->
-            <!--android:stepSize="0.1"/>-->
-
-        <!--<com.algolia.instantsearch.examples.ecommerce.views.WrappedNotNullView-->
-            <!--android:id="@+id/product_reviews"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@id/product_promo"-->
-            <!--android:layout_marginLeft="4dp"-->
-            <!--android:layout_marginTop="4dp"-->
-            <!--android:layout_toRightOf="@id/product_rating"-->
-            <!--algolia:attribute='@{"customerReviewCount"}'-->
-            <!--app:prefix="("-->
-            <!--app:suffix=")"/>-->
+        <com.algolia.instantsearch.examples.querysuggestions.PriceView
+            android:id="@+id/product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/product_manufacturer"
+            android:text="$ 18"
+            android:layout_toRightOf="@id/product_image_box"
+            android:gravity="right"
+            android:textSize="18sp"/>
     </RelativeLayout>
 </layout>
