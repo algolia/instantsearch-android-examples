@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import com.algolia.instantsearch.model.SearchResults;
+import com.algolia.custombackend.helpers.Helpers;
 import com.algolia.instantsearch.transformer.SearchResultsHandler;
 import com.algolia.instantsearch.transformer.SearchTransformer;
 import com.algolia.search.saas.AlgoliaException;
@@ -18,15 +18,11 @@ import com.algolia.search.saas.Request;
 import com.algolia.search.saas.RequestOptions;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
@@ -91,19 +87,19 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
                 final byte[] rawResponse;
                 String encoding = hostConnection.getContentEncoding();
                 if (encoding != null && encoding.equals("gzip")) {
-                    rawResponse = _toByteArray(new GZIPInputStream(stream));
+                    rawResponse = Helpers._toByteArray(new GZIPInputStream(stream));
                 } else {
-                    rawResponse = _toByteArray(stream);
+                    rawResponse = Helpers._toByteArray(stream);
                 }
 
                 // handle http errors
                 if (codeIsError) {
                     if (code / 100 == 4) {
-                        throw new AlgoliaException(_getJSONObject(rawResponse).getString("message"), code);
+                        throw new RuntimeException(Helpers._getJSONObject(rawResponse).getString("message"));
                     }
                 }
 
-                JSONObject results = _getJSONObject(rawResponse);
+                JSONObject results = Helpers._getJSONObject(rawResponse);
                 this.completionHandler.requestCompleted(results, null);
                 return results;
 
@@ -121,55 +117,6 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
                 }
             }
         }
-
-        /**
-         * Reads the InputStream as UTF-8
-         *
-         * @param stream the InputStream to read
-         * @return the stream's content as a String
-         * @throws IOException if the stream can't be read, decoded as UTF-8 or closed
-         */
-        private String _toCharArray(InputStream stream) throws IOException {
-            InputStreamReader is = new InputStreamReader(stream, "UTF-8");
-            StringBuilder builder = new StringBuilder();
-            char[] buf = new char[1000];
-            int l = 0;
-            while (l >= 0) {
-                builder.append(buf, 0, l);
-                l = is.read(buf);
-            }
-            is.close();
-            return builder.toString();
-        }
-
-        /**
-         * Reads the InputStream into a byte array
-         *
-         * @param stream the InputStream to read
-         * @return the stream's content as a byte[]
-         * @throws AlgoliaException if the stream can't be read or flushed
-         */
-        private byte[] _toByteArray(InputStream stream) throws AlgoliaException {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            int read;
-            byte[] buffer = new byte[1024];
-
-            try {
-                while ((read = stream.read(buffer, 0, buffer.length)) != -1) {
-                    out.write(buffer, 0, read);
-                }
-
-                out.flush();
-                return out.toByteArray();
-            } catch (IOException e) {
-                throw new AlgoliaException("Error while reading stream: " + e.getMessage());
-            }
-        }
-
-        protected JSONObject _getJSONObject(byte[] array) throws JSONException, UnsupportedEncodingException {
-            return new JSONObject(new String(array, "UTF-8"));
-        }
-
     }
 
     @Override

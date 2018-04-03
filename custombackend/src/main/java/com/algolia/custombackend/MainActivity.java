@@ -7,13 +7,9 @@ import com.algolia.custombackend.elasticbackend.ElasticTransformer;
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
-import com.algolia.search.saas.Index;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String ALGOLIA_APP_ID = "latency";
-    private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
-    private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
     private Searcher searcher;
 
     @Override
