@@ -30,7 +30,7 @@ class QuerySuggestionsActivity : AppCompatActivity() {
         InstantSearch(this, searcherSuggestions).registerSearchView(this, searchBox)
 
         findViewById<Hits>(R.id.suggestions).setOnItemClickListener({ _: RecyclerView?, _: Int, v: View? ->
-            searchBox.searchView.setQuery(v!!.findViewById<TextView>(R.id.suggestion_query).text, true)
+            searchBox.searchView.setQuery(v!!.findViewById<TextView>(R.id.suggestion_query).text.toString(), true)
         })
 
         searcherProducts.search()
