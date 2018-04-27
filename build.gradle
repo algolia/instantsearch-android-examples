@@ -19,8 +19,8 @@ buildscript {
 allprojects {
     ext {
         VERSION_BUILD_TOOLS = "26.0.2"
-        VERSION_INSTANTSEARCH = "1.5.0"
-        VERSION_SUPPORT = "27.0.2"
+        VERSION_INSTANTSEARCH = "1.7.24"
+        VERSION_SUPPORT = "27.1.1"
         VERSION_KOTLIN = rootProject.VERSION_KOTLIN
 
 
