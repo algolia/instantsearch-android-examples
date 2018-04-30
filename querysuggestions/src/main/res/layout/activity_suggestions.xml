@@ -15,27 +15,12 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/suggestions"
+        app:layout_constraintBottom_toTopOf="@+id/hits"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </com.algolia.instantsearch.ui.views.SearchBox>
-
-    <com.algolia.instantsearch.ui.views.Hits
-        android:id="@+id/suggestions"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        algolia:itemLayout="@layout/layout_suggestion"
-        algolia:variant="suggestions"
-        app:layout_constraintBottom_toTopOf="@id/hits"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchBox"/>
 
     <com.algolia.instantsearch.ui.views.Hits
         android:id="@+id/hits"
@@ -49,6 +34,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/suggestions"/>
+        app:layout_constraintTop_toBottomOf="@id/searchBox"/>
 
 </android.support.constraint.ConstraintLayout>
