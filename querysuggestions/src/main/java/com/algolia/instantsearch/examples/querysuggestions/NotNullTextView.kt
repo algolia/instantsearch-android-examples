@@ -13,6 +13,7 @@ open class NotNullTextView : android.support.v7.widget.AppCompatTextView {
     override fun setText(text: CharSequence?, type: TextView.BufferType) {
         if (isNull(text)) {
             visibility = View.GONE
+            super.setText("", type)
         } else {
             visibility = View.VISIBLE
             super.setText(text!!, type)
