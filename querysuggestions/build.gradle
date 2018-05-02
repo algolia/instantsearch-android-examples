@@ -13,9 +13,12 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        buildConfigField "String", "ALGOLIA_APP_ID", '"latency"'
+        buildConfigField "String", "ALGOLIA_INDEX_PRODUCTS", '"instant_search"'
+        buildConfigField "String", "ALGOLIA_INDEX_SUGGESTIONS", '"instantsearch_query_suggestions"'
+        buildConfigField "String", "ALGOLIA_API_KEY", '"afc3dd66dd1293e2e2736a5a51b05c0a"'
     }
 
     buildTypes {
@@ -24,7 +27,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
 }
 
 dependencies {
