@@ -31,7 +31,6 @@
         <provider
             android:name="com.algolia.instantsearch.examples.querysuggestions.QSContentProvider"
             android:authorities="com.algolia.instantsearch.examples.querysuggestions.QSContentProvider"
-            android:enabled="true"
             android:exported="false" />
     </application>
 
