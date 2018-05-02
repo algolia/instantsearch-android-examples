@@ -7,10 +7,14 @@ import com.algolia.search.saas.Index
 
 class QSContentProvider : QuerySuggestionsContentProvider() {
     override fun getLimit(): Int {
-        return 4
+        return 5
     }
 
-    override fun getIndex(): Index? {
+    override fun initIndex(): Index? {
         return Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_SUGGESTIONS, "suggestions").index
+    }
+
+    override fun shouldReturnHighlightResult(): Boolean {
+        return true
     }
 }

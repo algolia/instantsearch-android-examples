@@ -17,21 +17,10 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/RtlOverlay.Widget.AppCompat.Search.DropDown"
     android:layout_width="match_parent"
-    android:layout_height="58dip">
-
-    <!-- Icons come first in the layout, since their placement doesn't depend on
-         the placement of the text views. -->
-    <ImageView
-        android:id="@android:id/icon1"
-        style="@style/RtlOverlay.Widget.AppCompat.Search.DropDown.Icon1"
-        android:layout_width="@dimen/abc_dropdownitem_icon_width"
-        android:layout_height="48dip"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:scaleType="centerInside"
-        android:visibility="invisible" />
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/edit_query"
@@ -44,17 +33,16 @@
         android:scaleType="centerInside"
         android:visibility="gone" />
 
-    <TextView
+    <com.algolia.instantsearch.examples.querysuggestions.HighlightedTextView
+
         android:id="@android:id/text1"
-        android:textColor="@color/colorAccent"
         style="?android:attr/dropDownItemStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@android:id/text2"
-        android:textSize="12sp"
-        android:textStyle="italic"
         android:layout_centerVertical="true"
         android:singleLine="true"
-        android:textAppearance="?android:attr/textAppearanceSearchResultTitle" />
+        android:textStyle="normal"
+        tools:text="Suggestion" />
 
 </RelativeLayout>
