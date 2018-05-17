@@ -19,15 +19,15 @@ buildscript {
 allprojects {
     ext {
         VERSION_BUILD_TOOLS = "27.0.3"
-        VERSION_INSTANTSEARCH = "1.7.24"
-        VERSION_SUPPORT = "27.1.1"
-        VERSION_KOTLIN = rootProject.VERSION_KOTLIN
-
-
         VERSION_COMPILE_SDK = 27
         VERSION_MIN_SDK = 14
         VERSION_TARGET_SDK = 27
-    }
+     
+        VERSION_INSTANTSEARCH = "1.+"
+        VERSION_SUPPORT = "27.1.1"
+        VERSION_KOTLIN = rootProject.VERSION_KOTLIN
+
+        }
 
     repositories {
         jcenter()
