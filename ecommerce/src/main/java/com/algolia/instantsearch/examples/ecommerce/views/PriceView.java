@@ -3,13 +3,13 @@ package com.algolia.instantsearch.examples.ecommerce.views;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StrikethroughSpan;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algolia.instantsearch.examples.ecommerce.R;
@@ -18,7 +18,7 @@ import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PriceView extends TextView implements AlgoliaHitView {
+public class PriceView extends AppCompatTextView implements AlgoliaHitView {
     private final Context context;
 
     public static final String SYMBOL_MONEY = "$";

@@ -2,11 +2,11 @@ package com.algolia.instantsearch.examples.ecommerce.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algolia.instantsearch.examples.ecommerce.R;
@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import static com.algolia.instantsearch.examples.ecommerce.views.PriceView.SYMBOL_MONEY;
 
-public class PromoView extends TextView implements AlgoliaHitView {
+public class PromoView extends AppCompatTextView implements AlgoliaHitView {
     private final Context context;
 
     public PromoView(Context context, AttributeSet attrs) {
