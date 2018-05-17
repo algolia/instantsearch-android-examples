@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+
+    dataBinding.enabled true
+
+    defaultConfig {
+        applicationId "com.algolia.instantsearch.examples.querysuggestions"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "ALGOLIA_APP_ID", '"latency"'
+        buildConfigField "String", "ALGOLIA_INDEX_PRODUCTS", '"instant_search"'
+        buildConfigField "String", "ALGOLIA_INDEX_SUGGESTIONS", '"instantsearch_query_suggestions"'
+        buildConfigField "String", "ALGOLIA_API_KEY", '"afc3dd66dd1293e2e2736a5a51b05c0a"'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$VERSION_KOTLIN"
+
+    // DESIGN
+    implementation "com.android.support:appcompat-v7:$VERSION_SUPPORT"
+    implementation "com.android.support:design:$VERSION_SUPPORT"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+
+//    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
+    implementation project(":instantsearch")
+}
+repositories {
+    mavenCentral()
+}
+
