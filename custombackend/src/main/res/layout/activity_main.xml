@@ -78,7 +78,6 @@
             android:layout_below="@id/box_filter"
             android:requiresFadingEdge="vertical"
             algolia:autoHideKeyboard="true"
-            algolia:hitsPerPage="10"
             algolia:itemLayout="@layout/hits_item"/>
 
         <TextView
