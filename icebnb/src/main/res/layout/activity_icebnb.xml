@@ -31,7 +31,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/activity_main_center"
         algolia:autoHideKeyboard="false"
-        algolia:hitsPerPage="10"
         algolia:itemLayout="@layout/hits_item"/>
 
     <TextView
