@@ -22,7 +22,8 @@ public class CategoryOrTypeView extends NotNullView implements AlgoliaHitView {
             String category = result.getString("category");
             final String attributeToHighlight = !isNull(category) ? "category" : "type";
 
-            final Spannable highlightedAttribute = Highlighter.getDefault().renderHighlightColor(result, attributeToHighlight, getContext());
+            final Spannable highlightedAttribute = Highlighter.getDefault()
+                    .setInput(result, attributeToHighlight).setStyle(getContext()).render();
             setText(highlightedAttribute);
         } catch (JSONException e) {
             e.printStackTrace();
