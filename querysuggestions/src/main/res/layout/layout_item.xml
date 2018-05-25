@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +38,7 @@
             android:layout_toRightOf="@id/product_image_box"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="Product name"
+            tools:text="Product name"
             android:textColor="#111"
             android:textSize="18sp"
             algolia:attribute='@{"name"}'
@@ -63,7 +64,7 @@
             android:paddingEnd="8dp"
             android:layout_below="@id/product_name"
             android:layout_marginLeft="12dp"
-            android:text="Category"
+            tools:text="Category"
             android:gravity="end"
             android:maxWidth="90dp"
             android:textColor="@android:color/darker_gray"
@@ -74,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/product_manufacturer"
-            android:text="$ 18"
+            tools:text="$ 18"
             android:layout_toRightOf="@id/product_image_box"
             android:gravity="right"
             android:textSize="18sp"/>
