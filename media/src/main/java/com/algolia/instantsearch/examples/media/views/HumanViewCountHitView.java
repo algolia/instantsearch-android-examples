@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import java.text.DecimalFormat;
 
 
-public class HumanViewCountHitView extends TextView implements AlgoliaHitView {
+public class HumanViewCountHitView extends android.support.v7.widget.AppCompatTextView implements AlgoliaHitView {
     public HumanViewCountHitView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }

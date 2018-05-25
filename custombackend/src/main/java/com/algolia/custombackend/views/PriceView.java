@@ -18,7 +18,7 @@ import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PriceView extends TextView implements AlgoliaHitView {
+public class PriceView extends android.support.v7.widget.AppCompatTextView implements AlgoliaHitView {
     private final Context context;
 
     public static final String SYMBOL_MONEY = "$";
