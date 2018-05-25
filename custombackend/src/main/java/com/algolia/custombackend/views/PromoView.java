@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 import static com.algolia.custombackend.views.PriceView.SYMBOL_MONEY;
 
-public class PromoView extends TextView implements AlgoliaHitView {
+public class PromoView extends android.support.v7.widget.AppCompatTextView implements AlgoliaHitView {
     private final Context context;
 
     public PromoView(Context context, AttributeSet attrs) {
