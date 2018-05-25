@@ -19,7 +19,7 @@
             android:textColor="#111"
             android:textSize="18sp"
             algolia:attribute='@{"_source.name"}'
-            algolia:highlightingColor='@{@color/colorAccentSoft}'/>
+            algolia:highlightColor='@{@color/colorAccentSoft}'/>
 
         <com.algolia.custombackend.views.CategoryOrTypeView
             android:id="@+id/product_category"
