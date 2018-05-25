@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginStart="8dp"
-            android:text="Guardians of the Super Very Long Title"
+            tools:text="Guardians of the Super Very Long Title"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Headline"
             algolia:attribute='@{"title"}'
@@ -43,7 +43,7 @@
             android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
-            android:text="1994"
+            tools:text="1994"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material.Medium"
             algolia:attribute='@{"year"}'

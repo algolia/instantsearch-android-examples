@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout xmlns:algolia="http://schemas.android.com/apk/res-auto"
                     android:layout_width="match_parent"
@@ -30,7 +31,7 @@
             android:layout_toEndOf="@id/hit_image"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Hit title"
+            tools:text="Hit title"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             algolia:attribute='@{"name"}'
@@ -42,7 +43,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Hit location"
+            tools:text="Hit location"
             android:textColor="@android:color/darker_gray"
             android:textSize="18sp"
             algolia:attribute='@{"smart_location"}'
@@ -56,7 +57,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Hit price"
+            tools:text="Hit price"
             android:textColor="@android:color/darker_gray"
             android:textSize="18sp"
             algolia:attribute='@{"price_formatted"}'
@@ -70,7 +71,7 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Hit room type"
+            tools:text="Hit room type"
             android:textColor="@android:color/darker_gray"
             android:textSize="18sp"
             algolia:attribute='@{"room_type"}'
