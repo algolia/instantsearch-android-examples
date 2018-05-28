@@ -20,7 +20,7 @@ allprojects {
         VERSION_COMPILE_SDK = 27
         VERSION_MIN_SDK = 14
         VERSION_TARGET_SDK = 27
-     
+
         VERSION_INSTANTSEARCH = "1.+"
         VERSION_SUPPORT = "27.1.1"
         VERSION_KOTLIN = rootProject.VERSION_KOTLIN
