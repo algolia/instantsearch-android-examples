@@ -125,19 +125,19 @@ public class EcommerceActivity extends AppCompatActivity {
                 .setAction("Give permission", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            Snackbar.make(micView, "On the next screen, tap Permissions then Microphone.", Snackbar.LENGTH_SHORT)
-                                    .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                        @Override
-                                        public void onDismissed(Snackbar transientBottomBar, int event) {
-                                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                            intent.setData(uri);
-                                            startActivity(intent);
-                                            final Toast toast = Toast.makeText(EcommerceActivity.this, "Tap Permissions then Microphone.", Toast.LENGTH_SHORT);
-                                            toast.setGravity(Gravity.CENTER, 0, 0);
-                                            toast.show();
-                                        }
-                                    }).show();
+                        Snackbar.make(micView, "On the next screen, tap Permissions then Microphone.", Snackbar.LENGTH_SHORT)
+                                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                    @Override
+                                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                        final Toast toast = Toast.makeText(EcommerceActivity.this, "Tap Permissions then Microphone.", Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 0);
+                                        toast.show();
+                                    }
+                                }).show();
                     }
                 });
         ((TextView) s.getView().findViewById(android.support.design.R.id.snackbar_text)).setMaxLines(2);
