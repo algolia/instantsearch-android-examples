@@ -30,6 +30,15 @@
             android:queryHint="Search"
             algolia:autofocus="false"
             algolia:submitButtonEnabled="false"/>
+
+        <Button
+            android:id="@+id/mic"
+            android:layout_margin="12dp"
+            android:layout_gravity="center"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:onClick="onTapMic"
+            android:background="@drawable/ic_mic"/>
     </LinearLayout>
 
     <RelativeLayout
