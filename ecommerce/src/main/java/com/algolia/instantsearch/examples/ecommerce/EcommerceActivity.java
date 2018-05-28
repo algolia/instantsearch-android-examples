@@ -1,22 +1,39 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BaseTransientBottomBar;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.squareup.leakcanary.RefWatcher;
 
+import static android.Manifest.permission.RECORD_AUDIO;
+
 public class EcommerceActivity extends AppCompatActivity {
 
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
+    public static final int ID_REQ_VOICE_PERM = 1;
 
     private FilterResultsWindow filterResultsWindow;
     private Drawable arrowDown;
@@ -24,6 +41,7 @@ public class EcommerceActivity extends AppCompatActivity {
     private Button buttonFilter;
     private Searcher searcher;
 
+    // region Lifecycle
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +74,8 @@ public class EcommerceActivity extends AppCompatActivity {
         });
     }
 
-    @Override protected void onNewIntent(Intent intent) {
+    @Override
+    protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         searcher.search(intent);
     }
@@ -79,6 +98,56 @@ public class EcommerceActivity extends AppCompatActivity {
         refWatcher.watch(findViewById(R.id.hits));
     }
 
+    // endregion
+
+    // region Permission handling
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == ID_REQ_VOICE_PERM && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                showVoiceOverlay();
+            } else { // can only be PERMISSION_DENIED
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+                    Log.e("TAG", "onRequestPermissionsResult: SHOULDSHOW!");
+                    showPermissionRationale();
+                } else {
+                    Log.e("TAG", "onRequestPermissionsResult: NOTSHOW!");
+                    showPermissionManualInstructions();
+                }
+            }
+        }
+    }
+
+    private void showPermissionManualInstructions() {
+        final View micView = findViewById(R.id.mic);
+        Snackbar s = Snackbar.make(micView, "To use voice search you need to allow recording.", Snackbar.LENGTH_LONG)
+                .setAction("Give permission", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                            Snackbar.make(micView, "On the next screen, tap Permissions then Microphone.", Snackbar.LENGTH_SHORT)
+                                    .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                        @Override
+                                        public void onDismissed(Snackbar transientBottomBar, int event) {
+                                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                                            intent.setData(uri);
+                                            startActivity(intent);
+                                            final Toast toast = Toast.makeText(EcommerceActivity.this, "Tap Permissions then Microphone.", Toast.LENGTH_SHORT);
+                                            toast.setGravity(Gravity.CENTER, 0, 0);
+                                            toast.show();
+                                        }
+                                    }).show();
+                    }
+                });
+        ((TextView) s.getView().findViewById(android.support.design.R.id.snackbar_text)).setMaxLines(2);
+        s.show();
+    }
+
+
+    // endregion
+    // region UI
+
     private void toggleArrow(Button b, boolean up) {
         final Drawable[] currentDrawables = b.getCompoundDrawables();
         final Drawable newDrawable;
@@ -96,4 +165,34 @@ public class EcommerceActivity extends AppCompatActivity {
         b.setCompoundDrawablesWithIntrinsicBounds(currentDrawables[0], currentDrawables[1], newDrawable, currentDrawables[3]);
 
     }
+
+    private void showVoiceOverlay() {
+        DialogFragment frag = new VoiceDialogFragment();
+        frag.show(getSupportFragmentManager(), "voice");
+    }
+
+    private void showPermissionOverlay() {
+        DialogFragment frag = new PermissionDialogFragment();
+        frag.show(getSupportFragmentManager(), "permission");
+    }
+
+    private void showPermissionRationale() {
+        Snackbar.make(findViewById(R.id.mic), "Voice search requires this permission.", Snackbar.LENGTH_LONG)
+                .setAction("Request again?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
+                    }
+                }).show();
+    }
+
+    public void onTapMic(View view) {
+        if (ContextCompat.checkSelfPermission(getBaseContext(), RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            showPermissionOverlay();
+        } else {
+            showVoiceOverlay();
+        }
+    }
+    // endregion
 }
