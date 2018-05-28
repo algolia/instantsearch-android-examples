@@ -144,10 +144,20 @@ public class EcommerceActivity extends AppCompatActivity {
         s.show();
     }
 
+    private void showPermissionRationale() {
+        Snackbar.make(findViewById(R.id.mic), "Voice search requires this permission.", Snackbar.LENGTH_LONG)
+                .setAction("Request again?", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
+                    }
+                }).show();
+    }
+
 
     // endregion
-    // region UI
 
+    // region UI
     private void toggleArrow(Button b, boolean up) {
         final Drawable[] currentDrawables = b.getCompoundDrawables();
         final Drawable newDrawable;
@@ -166,24 +176,15 @@ public class EcommerceActivity extends AppCompatActivity {
 
     }
 
-    private void showVoiceOverlay() {
-        DialogFragment frag = new VoiceDialogFragment();
-        frag.show(getSupportFragmentManager(), "voice");
-    }
-
     private void showPermissionOverlay() {
         DialogFragment frag = new PermissionDialogFragment();
         frag.show(getSupportFragmentManager(), "permission");
     }
 
-    private void showPermissionRationale() {
-        Snackbar.make(findViewById(R.id.mic), "Voice search requires this permission.", Snackbar.LENGTH_LONG)
-                .setAction("Request again?", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
-                    }
-                }).show();
+    private void showVoiceOverlay() {
+        VoiceDialogFragment frag = new VoiceDialogFragment();
+        frag.setSuggestions("iPhone case", "Running shoes");
+        frag.show(getSupportFragmentManager(), "voice");
     }
 
     public void onTapMic(View view) {
