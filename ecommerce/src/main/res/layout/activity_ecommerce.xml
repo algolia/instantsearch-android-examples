@@ -38,6 +38,7 @@
             android:layout_margin="12dp"
             android:background="@drawable/ic_mic"
             android:onClick="onTapMic" />
+
     </LinearLayout>
 
     <RelativeLayout
@@ -90,10 +91,10 @@
 
         <com.algolia.instantsearch.ui.views.Stats
             android:id="@android:id/empty"
-            android:paddingTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/box_filter"
+            android:paddingTop="8dp"
             android:visibility="gone"
             algolia:autoHide="false"
             algolia:resultTemplate="@string/no_result_template" />
