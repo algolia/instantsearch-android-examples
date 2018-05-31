@@ -138,6 +138,10 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     }
     // endregion
 
+    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
+        searcher.search(query);
+    }
+
     // region UI
     public void onTapMic(@NonNull View view) {
         if (Voice.hasRecordPermission(this)) {

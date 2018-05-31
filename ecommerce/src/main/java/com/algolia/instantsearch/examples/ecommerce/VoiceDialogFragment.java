@@ -62,6 +62,12 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
                 .create();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopVoiceRecognition();
+    }
+
     private void startVoiceRecognition() {
         listening = true;
         hintView.setVisibility(View.GONE);
@@ -82,9 +88,10 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
 
     private void stopVoiceRecognition() {
         listening = false;
+        speechRecognizer.stopListening();
         hintView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
-        speechRecognizer.stopListening();
+        updateSuggestions();
     }
 
     public void setSuggestions(String... suggestions) {
@@ -150,6 +157,8 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         suggestionsView.setText(b.toString());
         suggestionsView.setTypeface(null, Typeface.NORMAL);
         Log.d(TAG, "onResults:" + matches.size() + ": " + b.toString());
+        ((EcommerceActivity) getActivity()).search(matches.get(0));
+        dismiss();
     }
 
     @Override
@@ -161,7 +170,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         }
         suggestionsView.setText(b.toString());
         suggestionsView.setTypeface(null, Typeface.ITALIC);
-        Log.d(TAG, "onResults:" + matches.size() + ": " + b.toString());
+        Log.d(TAG, "onPartialResults:" + matches.size() + ": " + b.toString());
     }
 
     @Override
