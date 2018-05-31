@@ -1,6 +1,7 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
 import android.Manifest;
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -156,6 +157,10 @@ public class EcommerceActivity extends AppCompatActivity {
 
 
     // endregion
+
+    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
+        searcher.search(query);
+    }
 
     // region UI
     private void toggleArrow(Button b, boolean up) {
