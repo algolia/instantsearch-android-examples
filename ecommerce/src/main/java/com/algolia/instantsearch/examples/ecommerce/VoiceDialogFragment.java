@@ -88,7 +88,9 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
 
     private void stopVoiceRecognition() {
         listening = false;
-        speechRecognizer.stopListening();
+        if (speechRecognizer != null) {
+            speechRecognizer.stopListening();
+        }
         hintView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         updateSuggestions();
@@ -144,7 +146,9 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
     public void onError(int error) {
         String errorText = getErrorMessage(error);
         Log.d(TAG, "onError: " + errorText);
+        stopVoiceRecognition();
         hintView.setText(errorText);
+        suggestionsView.setVisibility(View.GONE);
     }
 
     @Override
