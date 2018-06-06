@@ -1,7 +1,6 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
 import android.Manifest;
-import android.app.SearchManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -16,11 +15,9 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
@@ -134,9 +131,6 @@ public class EcommerceActivity extends AppCompatActivity {
                                         Uri uri = Uri.fromParts("package", getPackageName(), null);
                                         intent.setData(uri);
                                         startActivity(intent);
-                                        final Toast toast = Toast.makeText(EcommerceActivity.this, "Tap Permissions then Microphone.", Toast.LENGTH_SHORT);
-                                        toast.setGravity(Gravity.CENTER, 0, 0);
-                                        toast.show();
                                     }
                                 }).show();
                     }
