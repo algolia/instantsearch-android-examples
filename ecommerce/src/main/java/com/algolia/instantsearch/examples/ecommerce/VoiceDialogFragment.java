@@ -2,6 +2,7 @@ package com.algolia.instantsearch.examples.ecommerce;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
     private ProgressBar progressBar;
     private TextView hintView;
     private TextView suggestionsView;
+    private TextView titleView;
 
     private boolean listening = false;
 
@@ -39,6 +41,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         progressBar = view.findViewById(R.id.progress);
         hintView = view.findViewById(R.id.hint);
         suggestionsView = view.findViewById(R.id.suggestions);
+        titleView = view.findViewById(R.id.title);
         view.<Button>findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +73,6 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
 
     private void startVoiceRecognition() {
         listening = true;
-        hintView.setVisibility(View.GONE);
-        progressBar.setVisibility(View.VISIBLE);
-        suggestionsView.setText("");
 
         Intent recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
@@ -83,6 +83,9 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(getActivity());
         speechRecognizer.setRecognitionListener(this);
         speechRecognizer.startListening(recognizerIntent);
+
+        updateSuggestions();
+        titleView.setText(R.string.voice_search_title);
         //TODO: Change button state
     }
 
@@ -104,13 +107,17 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
     }
 
     private void updateSuggestions() {
-        StringBuilder b = new StringBuilder();
-        if (suggestions != null && suggestions.length > 0) {
-            for (String s : suggestions) {
-                b.append(SEPARATOR).append(s).append("\n");
+        final Context context = getContext();
+        if (context != null) { // Ensure Fragment still attached
+            hintView.setVisibility(View.VISIBLE);
+            StringBuilder b = new StringBuilder();
+            if (suggestions != null && suggestions.length > 0) {
+                for (String s : suggestions) {
+                    b.append(SEPARATOR).append(s).append("\n");
+                }
             }
+            suggestionsView.setText(b.toString());
         }
-        suggestionsView.setText(b.toString());
     }
 
     // region RecognitionListener
@@ -127,6 +134,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
 
     @Override
     public void onRmsChanged(float rmsdB) {
+        progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress((int) rmsdB);
     }
 
@@ -147,8 +155,10 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         String errorText = getErrorMessage(error);
         Log.d(TAG, "onError: " + errorText);
         stopVoiceRecognition();
-        hintView.setText(errorText);
-        suggestionsView.setVisibility(View.GONE);
+        titleView.setText(R.string.voice_search_error);
+        hintView.setVisibility(View.GONE);
+        suggestionsView.setText(errorText);
+        suggestionsView.setTypeface(null, Typeface.BOLD);
     }
 
     @Override
@@ -172,6 +182,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         for (String match : matches) {
             b.append(match).append("\n");
         }
+        hintView.setVisibility(View.GONE);
         suggestionsView.setText(b.toString());
         suggestionsView.setTypeface(null, Typeface.ITALIC);
         Log.d(TAG, "onPartialResults:" + matches.size() + ": " + b.toString());

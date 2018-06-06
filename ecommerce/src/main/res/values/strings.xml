@@ -7,4 +7,7 @@
     <string name="error_template">Error, please try again</string>
     <string name="empty_text">Sorry, no results…</string>
     <string name="filter_menu_text">Filter</string>
+    <string name="voice_search_hint">Say something like:</string>
+    <string name="voice_search_title">Listening…</string>
+    <string name="voice_search_error">Error:</string>
 </resources>
