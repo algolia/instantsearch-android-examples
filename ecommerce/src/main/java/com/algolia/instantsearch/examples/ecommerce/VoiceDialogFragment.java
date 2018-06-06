@@ -71,6 +71,13 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         stopVoiceRecognition();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        startVoiceRecognition();
+    }
+
+
     private void startVoiceRecognition() {
         listening = true;
 
