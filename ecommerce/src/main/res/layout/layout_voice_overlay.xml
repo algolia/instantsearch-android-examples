@@ -16,7 +16,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Listening..."
+        android:text="@string/voice_search_title"
         android:textColor="@android:color/primary_text_dark"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -31,10 +31,24 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:gravity="start"
-        android:text="Say something like:"
+        android:text="@string/voice_search_hint"
         android:textColor="@android:color/secondary_text_dark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/suggestions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:maxLines="3"
+        android:padding="16dp"
+        android:textColor="@android:color/primary_text_dark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/micButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hint"
+        tools:text="• iPhone Case \n• Running shoes" />
 
     <ProgressBar
         android:id="@+id/progress"
@@ -48,26 +62,12 @@
         android:max="10"
         android:progressTint="@color/colorAccent"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/suggestions"
+        app:layout_constraintBottom_toTopOf="@+id/micButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintTop_toBottomOf="@+id/suggestions"
         tools:minHeight="20dp"
         tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/suggestions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:maxLines="3"
-        android:padding="16dp"
-        android:textColor="@android:color/primary_text_dark"
-        app:layout_constraintBottom_toTopOf="@+id/micButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hint"
-        tools:text="• iPhone Case \n• Running shoes" />
 
     <Button
         android:id="@+id/micButton"

@@ -8,4 +8,7 @@
     <string name="result_template">{nbHits} first results</string>
     <string name="search_hint">Search for products…</string>
     <string name="text_savings">You save</string>
+    <string name="voice_search_hint">Say something like:</string>
+    <string name="voice_search_title">Listening…</string>
+    <string name="voice_search_error">Error:</string>
 </resources>
