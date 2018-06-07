@@ -116,6 +116,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         listening = false;
         if (speechRecognizer != null) {
             speechRecognizer.stopListening();
+            speechRecognizer.destroy();
         }
         hintView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
@@ -173,6 +174,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         suggestionsView.setText(b.toString());
         suggestionsView.setTypeface(null, Typeface.NORMAL);
         Log.d(TAG, "onResults:" + matches.size() + ": " + b.toString());
+        stopVoiceRecognition();
         ((EcommerceActivity) getActivity()).search(matches.get(0));
         dismiss();
     }
