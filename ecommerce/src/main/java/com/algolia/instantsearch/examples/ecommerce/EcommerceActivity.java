@@ -119,7 +119,7 @@ public class EcommerceActivity extends AppCompatActivity {
 
     private void showPermissionManualInstructions() {
         final View micView = findViewById(R.id.mic);
-        Snackbar s = Snackbar.make(micView, "To use voice search you need to allow recording.", Snackbar.LENGTH_LONG)
+        Snackbar snackbar = Snackbar.make(micView, "To use voice search you need to allow recording.", Snackbar.LENGTH_LONG)
                 .setAction("Give permission", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -135,8 +135,8 @@ public class EcommerceActivity extends AppCompatActivity {
                                 }).show();
                     }
                 });
-        ((TextView) s.getView().findViewById(android.support.design.R.id.snackbar_text)).setMaxLines(2);
-        s.show();
+        ((TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text)).setMaxLines(2);
+        snackbar.show();
     }
 
     private void showPermissionRationale() {
