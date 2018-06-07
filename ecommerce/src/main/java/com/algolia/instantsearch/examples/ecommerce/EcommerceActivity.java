@@ -14,7 +14,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -38,6 +37,10 @@ public class EcommerceActivity extends AppCompatActivity {
     private Drawable arrowUp;
     private Button buttonFilter;
     private Searcher searcher;
+
+    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
+        searcher.search(query);
+    }
 
     // region Lifecycle
     @Override
@@ -95,53 +98,21 @@ public class EcommerceActivity extends AppCompatActivity {
         refWatcher.watch(this);
         refWatcher.watch(findViewById(R.id.hits));
     }
-
     // endregion
 
     // region Permission handling
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == ID_REQ_VOICE_PERM && grantResults.length > 0) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                showVoiceOverlay();
-            } else { // can only be PERMISSION_DENIED
-                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
-                    Log.e("TAG", "onRequestPermissionsResult: SHOULDSHOW!");
-                    showPermissionRationale();
-                } else {
-                    Log.e("TAG", "onRequestPermissionsResult: NOTSHOW!");
-                    showPermissionManualInstructions();
-                }
-            }
+        if (isRecordPermissionWithResults(requestCode, grantResults)) {
+            if (isPermissionGranted(grantResults)) showVoiceOverlay();
+            else if (shouldExplainPermission()) showPermissionRationale();
+            else showPermissionManualInstructions();
         }
     }
 
-    private void showPermissionManualInstructions() {
-        final View micView = findViewById(R.id.mic);
-        Snackbar snackbar = Snackbar.make(micView, "To use voice search you need to allow recording.", Snackbar.LENGTH_LONG)
-                .setAction("Give permission", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Snackbar.make(micView, "On the next screen, tap Permissions then Microphone.", Snackbar.LENGTH_SHORT)
-                                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
-                                    @Override
-                                    public void onDismissed(Snackbar transientBottomBar, int event) {
-                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                        Uri uri = Uri.fromParts("package", getPackageName(), null);
-                                        intent.setData(uri);
-                                        startActivity(intent);
-                                    }
-                                }).show();
-                    }
-                });
-        ((TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text)).setMaxLines(2);
-        snackbar.show();
-    }
-
     private void showPermissionRationale() {
-        Snackbar.make(findViewById(R.id.mic), "Voice search requires this permission.", Snackbar.LENGTH_LONG)
-                .setAction("Request again?", new View.OnClickListener() {
+        Snackbar.make(findViewById(R.id.mic), R.string.voice_search_rationale, Snackbar.LENGTH_LONG)
+                .setAction(R.string.voice_search_button_again, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
@@ -149,35 +120,41 @@ public class EcommerceActivity extends AppCompatActivity {
                 }).show();
     }
 
-
+    private void showPermissionManualInstructions() {
+        final View micView = findViewById(R.id.mic);
+        Snackbar snackbar = Snackbar.make(micView, R.string.voice_search_disabled_rationale, Snackbar.LENGTH_LONG)
+                .setAction(R.string.voice_search_button_enable, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Snackbar.make(micView, R.string.voice_search_disabled_instructions, Snackbar.LENGTH_SHORT)
+                                .addCallback(new BaseTransientBottomBar.BaseCallback<Snackbar>() {
+                                    @Override
+                                    public void onDismissed(Snackbar transientBottomBar, int event) {
+                                        startActivity(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                                .setData(Uri.fromParts("package", getPackageName(), null)));
+                                    }
+                                }).show();
+                    }
+                });
+        ((TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text)).setMaxLines(2);
+        snackbar.show();
+    }
     // endregion
 
-    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
-        searcher.search(query);
+    // region UI
+    private void toggleArrow(Button b, boolean isUp) {
+        final Drawable[] currentDrawables = b.getCompoundDrawables();
+        b.setCompoundDrawablesWithIntrinsicBounds(currentDrawables[0], currentDrawables[1], getArrowDrawable(isUp), currentDrawables[3]);
     }
 
-    // region UI
-    private void toggleArrow(Button b, boolean up) {
-        final Drawable[] currentDrawables = b.getCompoundDrawables();
-        final Drawable newDrawable;
-        if (up) {
-            if (arrowUp == null) {
-                arrowUp = getResources().getDrawable(R.drawable.arrow_up_flat);
-            }
-            newDrawable = arrowUp;
-        } else {
-            if (arrowDown == null) {
-                arrowDown = getResources().getDrawable(R.drawable.arrow_down_flat);
-            }
-            newDrawable = arrowDown;
-        }
-        b.setCompoundDrawablesWithIntrinsicBounds(currentDrawables[0], currentDrawables[1], newDrawable, currentDrawables[3]);
-
+    private Drawable getArrowDrawable(boolean isUp) {
+        if (isUp) arrowUp = ContextCompat.getDrawable(this, R.drawable.arrow_up_flat);
+        else arrowDown = ContextCompat.getDrawable(this, R.drawable.arrow_down_flat);
+        return isUp ? arrowUp : arrowDown;
     }
 
     public void onTapMic(View view) {
-        if (ContextCompat.checkSelfPermission(getBaseContext(), RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (hasRecordPermission()) {
             showPermissionOverlay();
         } else {
             showVoiceOverlay();
@@ -191,8 +168,27 @@ public class EcommerceActivity extends AppCompatActivity {
 
     private void showVoiceOverlay() {
         VoiceDialogFragment frag = new VoiceDialogFragment();
-        frag.setSuggestions("iPhone case", "Running shoes");
+        frag.setSuggestions("iPhone case", "Running shoes");//TODO: use query suggestions?
         frag.show(getSupportFragmentManager(), "voice");
+    }
+    // endregion
+
+    // region Helpers
+    private boolean isPermissionGranted(int[] grantResult) {
+        return grantResult[0] == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean isRecordPermissionWithResults(int requestCode, @NonNull int[] grantResults) {
+        return requestCode == ID_REQ_VOICE_PERM && grantResults.length > 0;
+    }
+
+    private boolean hasRecordPermission() {
+        return ContextCompat.checkSelfPermission(getBaseContext(), RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED;
+    }
+
+    private boolean shouldExplainPermission() {
+        return ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO);
     }
     // endregion
 }
