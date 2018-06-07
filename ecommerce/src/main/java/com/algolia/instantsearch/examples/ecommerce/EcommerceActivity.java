@@ -175,6 +175,15 @@ public class EcommerceActivity extends AppCompatActivity {
 
     }
 
+    public void onTapMic(View view) {
+        if (ContextCompat.checkSelfPermission(getBaseContext(), RECORD_AUDIO)
+                != PackageManager.PERMISSION_GRANTED) {
+            showPermissionOverlay();
+        } else {
+            showVoiceOverlay();
+        }
+    }
+
     private void showPermissionOverlay() {
         DialogFragment frag = new PermissionDialogFragment();
         frag.show(getSupportFragmentManager(), "permission");
@@ -184,15 +193,6 @@ public class EcommerceActivity extends AppCompatActivity {
         VoiceDialogFragment frag = new VoiceDialogFragment();
         frag.setSuggestions("iPhone case", "Running shoes");
         frag.show(getSupportFragmentManager(), "voice");
-    }
-
-    public void onTapMic(View view) {
-        if (ContextCompat.checkSelfPermission(getBaseContext(), RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED) {
-            showPermissionOverlay();
-        } else {
-            showVoiceOverlay();
-        }
     }
     // endregion
 }
