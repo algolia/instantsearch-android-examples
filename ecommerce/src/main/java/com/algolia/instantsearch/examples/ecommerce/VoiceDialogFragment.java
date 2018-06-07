@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.examples.ecommerce;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.speech.SpeechRecognizer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -33,35 +35,18 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
 
     private boolean listening = false;
 
+    //region Lifecycle
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final View view = getActivity().getLayoutInflater().inflate(R.layout.layout_voice_overlay, null);
+        @SuppressLint("InflateParams" /* Dialog's root view does not exist yet*/) final View content = LayoutInflater.from(getActivity()).inflate(R.layout.layout_voice_overlay, null);
 
-        progressBar = view.findViewById(R.id.progress);
-        hintView = view.findViewById(R.id.hint);
-        suggestionsView = view.findViewById(R.id.suggestions);
-        titleView = view.findViewById(R.id.title);
-        view.<Button>findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        view.<Button>findViewById(R.id.micButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listening) {
-                    stopVoiceRecognition();
-                } else {
-                    startVoiceRecognition();
-                }
-            }
-        });
-
+        findViewsByIds(content);
+        setButtonsOnClickListeners(content);
         updateSuggestions();
         return new AlertDialog.Builder(getActivity())
-                .setView(view)
+                .setView(content)
                 .create();
     }
 
@@ -77,10 +62,38 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         startVoiceRecognition();
     }
 
+    //region Lifecycle.Helpers
+    private void findViewsByIds(View content) {
+        progressBar = content.findViewById(R.id.progress);
+        hintView = content.findViewById(R.id.hint);
+        suggestionsView = content.findViewById(R.id.suggestions);
+        titleView = content.findViewById(R.id.title);
+    }
 
+    private void setButtonsOnClickListeners(View content) {
+        content.<Button>findViewById(R.id.closeButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        content.<Button>findViewById(R.id.micButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listening) {
+                    stopVoiceRecognition();
+                } else {
+                    startVoiceRecognition();
+                }
+            }
+        });
+    }
+    //endregion
+    //endregion
+
+    //region Voice Recognition
     private void startVoiceRecognition() {
         listening = true;
-
         Intent recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -104,27 +117,6 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         hintView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.GONE);
         updateSuggestions();
-    }
-
-    public void setSuggestions(String... suggestions) {
-        this.suggestions = suggestions;
-        if (getView() != null) {
-            updateSuggestions();
-        }
-    }
-
-    private void updateSuggestions() {
-        final Context context = getContext();
-        if (context != null) { // Ensure Fragment still attached
-            hintView.setVisibility(View.VISIBLE);
-            StringBuilder b = new StringBuilder();
-            if (suggestions != null && suggestions.length > 0) {
-                for (String s : suggestions) {
-                    b.append(SEPARATOR).append(s).append("\n");
-                }
-            }
-            suggestionsView.setText(b.toString());
-        }
     }
 
     // region RecognitionListener
@@ -234,6 +226,30 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
         }
         return errorText;
     }
-
     // endregion
+
+    //endregion
+
+    //region Helpers
+    public void setSuggestions(String... suggestions) {
+        this.suggestions = suggestions;
+        if (getView() != null) {
+            updateSuggestions();
+        }
+    }
+
+    private void updateSuggestions() {
+        final Context context = getContext();
+        if (context != null) { // Ensure Fragment still attached
+            hintView.setVisibility(View.VISIBLE);
+            StringBuilder b = new StringBuilder();
+            if (suggestions != null && suggestions.length > 0) {
+                for (String s : suggestions) {
+                    b.append(SEPARATOR).append(s).append("\n");
+                }
+            }
+            suggestionsView.setText(b.toString());
+        }
+    }
+    //endregion
 }
