@@ -13,5 +13,4 @@
     <style name="AppTheme.SearchView" parent="Widget.AppCompat.SearchView">
         <item name="queryBackground">@drawable/shape_search_query</item>
     </style>
-
 </resources>

@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -12,6 +13,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,7 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         @SuppressLint("InflateParams" /* Dialog's root view does not exist yet*/) final View content = LayoutInflater.from(getActivity()).inflate(R.layout.layout_voice_overlay, null);
 
-        findViewsByIds(content);
+        initViews(content);
         setButtonsOnClickListeners(content);
         updateSuggestions();
         return new AlertDialog.Builder(getActivity())
@@ -63,8 +65,9 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
     }
 
     //region Lifecycle.Helpers
-    private void findViewsByIds(View content) {
+    private void initViews(View content) {
         progressBar = content.findViewById(R.id.progress);
+        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         hintView = content.findViewById(R.id.hint);
         suggestionsView = content.findViewById(R.id.suggestions);
         titleView = content.findViewById(R.id.title);
