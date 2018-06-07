@@ -44,6 +44,10 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     private Button buttonFilter;
     private Searcher searcher;
 
+    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
+        searcher.search(query);
+    }
+
     // region Lifecycle
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -117,6 +121,16 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
         }
     }
 
+    private void showPermissionRationale() {
+        Snackbar.make(findViewById(R.id.mic), R.string.voice_search_rationale, Snackbar.LENGTH_LONG)
+                .setAction(R.string.voice_search_button_again, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
+                    }
+                }).show();
+    }
+
     private void showPermissionManualInstructions() {
         final View micView = findViewById(R.id.mic);
         Snackbar snackbar = Snackbar.make(micView, R.string.voice_search_disabled_rationale, Snackbar.LENGTH_LONG)
@@ -137,10 +151,6 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
         snackbar.show();
     }
     // endregion
-
-    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
-        searcher.search(query);
-    }
 
     // region UI
     public void onTapMic(@NonNull View view) {
@@ -172,16 +182,6 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     private void showPermissionOverlay() {
         DialogFragment frag = new PermissionDialogFragment();
         frag.show(getSupportFragmentManager(), "permission");
-    }
-
-    private void showPermissionRationale() {
-        Snackbar.make(findViewById(R.id.mic), "Voice search requires this permission.", Snackbar.LENGTH_LONG)
-                .setAction("Request again?", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
-                    }
-                }).show();
     }
     // endregion
 }
