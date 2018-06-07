@@ -38,7 +38,10 @@
             android:layout_margin="12dp"
             android:background="@drawable/ic_mic"
             android:onClick="onTapMic" />
+<<<<<<< HEAD
 
+=======
+>>>>>>> refactor(ProgressBar): set color in code for compat <21
     </LinearLayout>
 
     <RelativeLayout
