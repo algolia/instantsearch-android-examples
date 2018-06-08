@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/background_dark"
+    android:background="?algolia_voiceOverlayBackground"
     tools:layout_height="240dp"
     tools:layout_width="240dp">
 
@@ -17,9 +17,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/voice_search_title"
-        android:textColor="@android:color/primary_text_dark"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:textAppearance="?algolia_voiceOverlayTitleTextAppearance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +30,7 @@
         android:layout_marginTop="16dp"
         android:gravity="start"
         android:text="@string/voice_search_hint"
-        android:textColor="@android:color/secondary_text_dark"
+        android:textColor="?algolia_voiceOverlayHintTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
@@ -43,15 +41,14 @@
         android:layout_marginBottom="16dp"
         android:maxLines="3"
         android:padding="16dp"
-        android:textColor="@android:color/primary_text_dark"
-        android:textSize="16sp"
+        android:textAppearance="@style/TextAppearance.Algolia.VoiceOverlay.Suggestions"
         app:layout_constraintBottom_toTopOf="@+id/micButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/hint"
         tools:text="• iPhone Case \n• Running shoes" />
 
     <ProgressBar
-        android:id="@+id/progress"
+        android:id="@+id/feedback"
         style="@android:style/Widget.Holo.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,9 +56,9 @@
         android:layout_marginTop="24dp"
         android:indeterminate="false"
         android:max="10"
-        android:progressTint="@color/colorAccent"
-        android:secondaryProgressTint="@color/colorAccent"
         android:visibility="gone"
+        android:progressTint="?algolia_voiceOverlayFeedbackColor"
+        android:secondaryProgressTint="?algolia_voiceOverlayFeedbackColor"
         app:layout_constraintBottom_toTopOf="@+id/micButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +72,7 @@
         android:layout_height="32dp"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="24dp"
-        android:background="@drawable/ic_mic"
+        android:background="?algolia_voiceOverlayMicButtonBackground"
         app:layout_constraintBottom_toTopOf="@+id/closeButton"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -88,12 +85,11 @@
         android:layout_width="0dp"
         android:layout_height="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        android:background="?algolia_voiceOverlayCloseButtonBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/micButton" />
-
 </android.support.constraint.ConstraintLayout>
