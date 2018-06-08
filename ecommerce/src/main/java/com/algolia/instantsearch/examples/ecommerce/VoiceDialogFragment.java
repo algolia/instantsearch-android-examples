@@ -7,14 +7,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -66,11 +67,16 @@ public class VoiceDialogFragment extends DialogFragment implements RecognitionLi
 
     //region Lifecycle.Helpers
     private void initViews(View content) {
-        progressBar = content.findViewById(R.id.progress);
-        progressBar.getIndeterminateDrawable().setColorFilter(ContextCompat.getColor(getActivity(), R.color.colorAccent), PorterDuff.Mode.SRC_IN);
         hintView = content.findViewById(R.id.hint);
         suggestionsView = content.findViewById(R.id.suggestions);
         titleView = content.findViewById(R.id.title);
+        progressBar = content.findViewById(R.id.feedback);
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
+            TypedValue typedValue = new TypedValue();
+            if (getContext().getTheme().resolveAttribute(R.attr.algolia_voiceOverlayFeedbackColor, typedValue, true)) {
+                progressBar.getProgressDrawable().setColorFilter(typedValue.data, PorterDuff.Mode.SRC_IN);
+            }
+        }
     }
 
     private void setButtonsOnClickListeners(View content) {
