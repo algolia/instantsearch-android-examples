@@ -20,27 +20,27 @@ import android.widget.TextView;
 
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.PermissionDialogFragment;
+import com.algolia.instantsearch.ui.VoiceDialogFragment;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.squareup.leakcanary.RefWatcher;
 
-import static android.Manifest.permission.RECORD_AUDIO;
+import java.util.ArrayList;
 
-public class EcommerceActivity extends AppCompatActivity {
+import static android.Manifest.permission.RECORD_AUDIO;
+import static com.algolia.instantsearch.ui.PermissionDialogFragment.ID_REQ_VOICE_PERM;
+
+public class EcommerceActivity extends AppCompatActivity implements VoiceDialogFragment.VoiceResultsListener {
 
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
-    public static final int ID_REQ_VOICE_PERM = 1;
 
     private FilterResultsWindow filterResultsWindow;
     private Drawable arrowDown;
     private Drawable arrowUp;
     private Button buttonFilter;
     private Searcher searcher;
-
-    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
-        searcher.search(query);
-    }
 
     // region Lifecycle
     @Override
@@ -169,7 +169,13 @@ public class EcommerceActivity extends AppCompatActivity {
     private void showVoiceOverlay() {
         VoiceDialogFragment frag = new VoiceDialogFragment();
         frag.setSuggestions("iPhone case", "Running shoes");//TODO: use query suggestions?
+        frag.setVoiceResultsListener(this);
         frag.show(getSupportFragmentManager(), "voice");
+    }
+
+    @Override
+    public void onVoiceResults(@NonNull ArrayList<String> matches) {
+        searcher.search(matches.get(0));
     }
     // endregion
 
