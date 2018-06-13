@@ -31,22 +31,18 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static com.algolia.instantsearch.voice.Voice.isPermissionGranted;
 import static com.algolia.instantsearch.voice.Voice.isRecordPermissionWithResults;
 import static com.algolia.instantsearch.voice.Voice.shouldExplainPermission;
+import static com.algolia.instantsearch.voice.ui.PermissionDialogFragment.ID_REQ_VOICE_PERM;
 
 public class EcommerceActivity extends AppCompatActivity implements VoiceDialogFragment.VoiceResultsListener {
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
-    public static final int ID_REQ_VOICE_PERM = 1;
 
     private FilterResultsWindow filterResultsWindow;
     private Drawable arrowDown;
     private Drawable arrowUp;
     private Button buttonFilter;
     private Searcher searcher;
-
-    public void search(String query) { //TODO: Should I pass it through intent/BroadcastReceiver?
-        searcher.search(query);
-    }
 
     // region Lifecycle
     @Override
