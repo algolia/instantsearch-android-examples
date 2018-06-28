@@ -33,6 +33,7 @@ dependencies {
 
     // UI
     implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
+    //implementation project(':instantsearch')
 
     // Tests
     testImplementation'junit:junit:4.12'

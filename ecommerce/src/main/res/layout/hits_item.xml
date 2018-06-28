@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:algolia="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,7 +27,7 @@
                 android:paddingTop="6dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/product_placeholder"
-                algolia:attribute='@{"image"}'/>
+                algolia:attribute='@{"image"}' />
         </LinearLayout>
 
         <TextView
@@ -41,7 +42,8 @@
             android:textColor="#111"
             android:textSize="18sp"
             algolia:attribute='@{"name"}'
-            algolia:highlightColor='@{@color/colorAccentSoft}'/>
+            algolia:highlightColor='@{@color/colorAccentSoft}'
+            tools:text="Amazing Phone" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.NotNullView
             android:id="@+id/product_manufacturer"
@@ -51,7 +53,8 @@
             android:layout_toRightOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
             algolia:highlighted='@{true}'
-            algolia:prefix='@{"by "}'/>
+            algolia:prefix='@{"by "}'
+            tools:text="ACME Corporation" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.CategoryOrTypeView
             android:id="@+id/product_category"
@@ -63,7 +66,8 @@
             android:gravity="end"
             android:maxWidth="90dp"
             android:textColor="@android:color/darker_gray"
-            android:textSize="12sp"/>
+            tools:text="Mobile Phones"
+            android:textSize="12sp" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.PriceView
             android:id="@+id/product_price"
@@ -72,7 +76,8 @@
             android:layout_below="@id/product_manufacturer"
             android:layout_toRightOf="@id/product_image_box"
             android:gravity="right"
-            android:textSize="18sp"/>
+            tools:text="42$"
+            android:textSize="18sp" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.PromoView
             android:id="@+id/product_promo"
@@ -80,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/product_price"
             android:layout_toRightOf="@id/product_image_box"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.PreprocessedRatingBar
             android:id="@+id/product_rating"
@@ -93,7 +98,7 @@
             android:progressTint="@color/colorAccent"
             android:rating="4"
             android:secondaryProgressTint="@color/colorAccentSoft"
-            android:stepSize="0.1"/>
+            android:stepSize="0.1" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.NotNullView
             android:id="@+id/product_reviews"
@@ -102,9 +107,10 @@
             android:layout_below="@id/product_promo"
             android:layout_marginLeft="4dp"
             android:layout_marginTop="4dp"
+            tools:text="42"
             android:layout_toRightOf="@id/product_rating"
             algolia:attribute='@{"customerReviewCount"}'
             algolia:prefix='@{"("}'
-            algolia:suffix='@{")"}'/>
+            algolia:suffix='@{")"}' />
     </RelativeLayout>
 </layout>
