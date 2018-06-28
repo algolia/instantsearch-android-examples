@@ -5,6 +5,7 @@
     <string name="search_hint">Search for products…</string>
     <string name="result_template">{nbHits} first results</string>
     <string name="error_template">Error, please try again</string>
+    <string name="no_result_template"><![CDATA[There are no results for the query <b>{query}</b>. Try something less specific.]]></string>
     <string name="empty_text">Sorry, no results…</string>
     <string name="filter_menu_text">Filter</string>
 </resources>
