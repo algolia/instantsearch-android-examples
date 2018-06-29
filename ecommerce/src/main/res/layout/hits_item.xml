@@ -53,7 +53,7 @@
             android:layout_toRightOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
             algolia:highlighted='@{true}'
-            algolia:prefix='@{"by "}'
+            algolia:prefix='@{@string/by_prefix}'
             tools:text="ACME Corporation" />
 
         <com.algolia.instantsearch.examples.ecommerce.views.CategoryOrTypeView
