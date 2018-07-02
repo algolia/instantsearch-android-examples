@@ -64,17 +64,17 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
 
                 // Open connection.
                 hostConnection = (HttpURLConnection) hostURL.openConnection();
-                hostConnection.setRequestProperty ("Authorization", basicAuth);
+                hostConnection.setRequestProperty("Authorization", basicAuth);
 
                 // Headers
                 hostConnection.setRequestProperty("Accept-Encoding", "gzip");
-                hostConnection.setRequestProperty("Content-Type","application/json");
+                hostConnection.setRequestProperty("Content-Type", "application/json");
                 hostConnection.setRequestMethod("POST");
 
                 DataOutputStream printout = new DataOutputStream(hostConnection.getOutputStream());
                 printout.writeBytes(searchParameters.toString());
-                printout.flush ();
-                printout.close ();
+                printout.flush();
+                printout.close();
 
                 // read response
                 int code = hostConnection.getResponseCode();
@@ -158,7 +158,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
 
             queryObj.putOpt("fields", fieldsArr);
             queryObj.putOpt("type", "phrase_prefix");
-            queryObj.putOpt("query", query.getQuery() !=null ? query.getQuery() : "");
+            queryObj.putOpt("query", query.getQuery() != null ? query.getQuery() : "");
 
             JSONObject multiMatchObj = new JSONObject();
             multiMatchObj.putOpt("multi_match", queryObj);
@@ -178,7 +178,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
 
             if (query.getAttributesToHighlight().length != 0) {
                 JSONObject highlightFields = new JSONObject();
-                for(String field: query.getAttributesToHighlight()) {
+                for (String field : query.getAttributesToHighlight()) {
                     highlightFields.putOpt(field, new JSONObject());
                 }
                 JSONObject highlightObject = new JSONObject();
@@ -190,7 +190,8 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
                 }
                 rootObj.putOpt("highlight", highlightObject);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return rootObj;
     }
 
