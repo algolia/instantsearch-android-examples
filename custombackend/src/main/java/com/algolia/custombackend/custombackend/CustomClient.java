@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.algolia.custombackend.helpers.Helpers;
-import com.algolia.instantsearch.searchclient.SearchResultsHandler;
 import com.algolia.instantsearch.searchclient.SearchClient;
+import com.algolia.instantsearch.searchclient.SearchResultsHandler;
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.Query;
 import com.algolia.search.saas.Request;
@@ -48,7 +48,7 @@ public class CustomClient extends SearchClient<JSONObject, JSONObject> {
         @Override
         protected JSONObject doInBackground(JSONObject... customSearchParameters) {
             InputStream stream = null;
-            HttpURLConnection hostConnection = null;
+            HttpURLConnection hostConnection;
             JSONObject searchParameters = customSearchParameters[0];
             try {
                 // Build URL.
@@ -62,17 +62,17 @@ public class CustomClient extends SearchClient<JSONObject, JSONObject> {
 
                 // Open connection.
                 hostConnection = (HttpURLConnection) hostURL.openConnection();
-                hostConnection.setRequestProperty ("Authorization", basicAuth);
+                hostConnection.setRequestProperty("Authorization", basicAuth);
 
                 // Headers
                 hostConnection.setRequestProperty("Accept-Encoding", "gzip");
-                hostConnection.setRequestProperty("Content-Type","application/json");
+                hostConnection.setRequestProperty("Content-Type", "application/json");
                 hostConnection.setRequestMethod("POST");
 
                 DataOutputStream printout = new DataOutputStream(hostConnection.getOutputStream());
                 printout.writeBytes(searchParameters.toString());
-                printout.flush ();
-                printout.close ();
+                printout.flush();
+                printout.close();
 
                 // read response
                 int code = hostConnection.getResponseCode();
@@ -154,7 +154,7 @@ public class CustomClient extends SearchClient<JSONObject, JSONObject> {
 
             queryObj.putOpt("fields", fieldsArr);
             queryObj.putOpt("type", "phrase_prefix");
-            queryObj.putOpt("query", query.getQuery() !=null ? query.getQuery() : "");
+            queryObj.putOpt("query", query.getQuery() != null ? query.getQuery() : "");
 
             JSONObject multiMatchObj = new JSONObject();
             multiMatchObj.putOpt("multi_match", queryObj);
@@ -174,7 +174,7 @@ public class CustomClient extends SearchClient<JSONObject, JSONObject> {
 
             if (query.getAttributesToHighlight().length != 0) {
                 JSONObject highlightFields = new JSONObject();
-                for(String field: query.getAttributesToHighlight()) {
+                for (String field : query.getAttributesToHighlight()) {
                     highlightFields.putOpt(field, new JSONObject());
                 }
                 JSONObject highlightObject = new JSONObject();
@@ -186,7 +186,8 @@ public class CustomClient extends SearchClient<JSONObject, JSONObject> {
                 }
                 rootObj.putOpt("highlight", highlightObject);
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+        }
         return rootObj;
     }
 
