@@ -32,8 +32,12 @@ dependencies {
     implementation "com.android.support:design:$VERSION_SUPPORT"
 
     // UI
-    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
-    //implementation project(':instantsearch')
+    implementation("com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH", {
+        exclude group: 'com.algolia', module: 'algoliasearch-android'
+    })
+
+    implementation "com.algolia:algoliasearch-offline-android:3.22.14"
+//    implementation project(':instantsearch')
 
     // Tests
     testImplementation'junit:junit:4.12'
