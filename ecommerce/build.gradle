@@ -29,7 +29,7 @@ dependencies {
     // Support Library
     implementation "com.android.support:appcompat-v7:$VERSION_SUPPORT"
     implementation "com.android.support:design:$VERSION_SUPPORT"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     // UI
 //    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
     implementation project(":instantsearch")
