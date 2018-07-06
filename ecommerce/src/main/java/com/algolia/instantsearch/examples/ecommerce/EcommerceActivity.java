@@ -20,15 +20,15 @@ import android.widget.TextView;
 
 import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
-import com.algolia.instantsearch.ui.PermissionDialogFragment;
-import com.algolia.instantsearch.ui.VoiceDialogFragment;
 import com.algolia.instantsearch.ui.views.SearchBox;
+import com.algolia.instantsearch.voice.PermissionDialogFragment;
+import com.algolia.instantsearch.voice.VoiceDialogFragment;
 import com.squareup.leakcanary.RefWatcher;
 
 import java.util.ArrayList;
 
 import static android.Manifest.permission.RECORD_AUDIO;
-import static com.algolia.instantsearch.ui.PermissionDialogFragment.ID_REQ_VOICE_PERM;
+import static com.algolia.instantsearch.voice.PermissionDialogFragment.ID_REQ_VOICE_PERM;
 
 public class EcommerceActivity extends AppCompatActivity implements VoiceDialogFragment.VoiceResultsListener {
 
@@ -168,7 +168,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
 
     private void showVoiceOverlay() {
         VoiceDialogFragment frag = new VoiceDialogFragment();
-        frag.setSuggestions("iPhone case", "Running shoes");//TODO: use query suggestions?
+        frag.setSuggestions("iPhone case", "Running shoes"); //TODO: use query suggestions?
         frag.setVoiceResultsListener(this);
         frag.show(getSupportFragmentManager(), "voice");
     }
@@ -180,6 +180,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     // endregion
 
     // region Helpers
+    //TODO: Move helpers to Voice lib?
     private boolean isPermissionGranted(int[] grantResult) {
         return grantResult[0] == PackageManager.PERMISSION_GRANTED;
     }
