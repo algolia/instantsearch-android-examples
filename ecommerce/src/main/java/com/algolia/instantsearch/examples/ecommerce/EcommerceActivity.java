@@ -162,7 +162,8 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     }
 
     private void showPermissionOverlay() {
-        DialogFragment frag = new PermissionDialogFragment();
+        PermissionDialogFragment frag = new PermissionDialogFragment();
+        frag.setTitle("You can use voice search to find products");
         frag.show(getSupportFragmentManager(), "permission");
     }
 
