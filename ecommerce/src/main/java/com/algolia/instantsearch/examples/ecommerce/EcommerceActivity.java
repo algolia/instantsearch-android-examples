@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -176,7 +175,8 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     }
 
     private void showPermissionOverlay() {
-        DialogFragment frag = new PermissionDialogFragment();
+        PermissionDialogFragment frag = new PermissionDialogFragment();
+        frag.setTitle("You can use voice search to find products");
         frag.show(getSupportFragmentManager(), "permission");
     }
     // endregion
