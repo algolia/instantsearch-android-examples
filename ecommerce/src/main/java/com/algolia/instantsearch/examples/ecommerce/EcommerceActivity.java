@@ -31,7 +31,6 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static com.algolia.instantsearch.voice.PermissionDialogFragment.ID_REQ_VOICE_PERM;
 
 public class EcommerceActivity extends AppCompatActivity implements VoiceDialogFragment.VoiceResultsListener {
-
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
