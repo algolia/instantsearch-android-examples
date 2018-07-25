@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -43,7 +44,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
 
     // region Lifecycle
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ecommerce);
 
@@ -75,7 +76,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
         searcher.search(intent);
     }
@@ -152,7 +153,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
         return isUp ? arrowUp : arrowDown;
     }
 
-    public void onTapMic(View view) {
+    public void onTapMic(@NonNull View view) {
         if (hasRecordPermission()) {
             showPermissionOverlay();
         } else {
