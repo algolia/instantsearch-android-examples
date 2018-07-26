@@ -31,9 +31,8 @@ dependencies {
     implementation "com.android.support:design:$VERSION_SUPPORT"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     // UI
-//    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
-    implementation project(":instantsearch")
-    implementation project(":instantsearch-voice")
+    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
+    implementation "com.algolia.instantsearch-android:voice:1.0.1"
 
     // Tests
     testImplementation 'junit:junit:4.12'
