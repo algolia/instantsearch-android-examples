@@ -88,12 +88,14 @@
             algolia:autoHideKeyboard="true"
             algolia:itemLayout="@layout/hits_item" />
 
-        <TextView
+        <com.algolia.instantsearch.ui.views.Stats
             android:id="@android:id/empty"
+            android:paddingTop="8dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/box_filter"
-            android:text="@string/empty_text"
-            android:visibility="gone" />
+            android:visibility="gone"
+            algolia:autoHide="false"
+            algolia:resultTemplate="@string/no_result_template" />
     </RelativeLayout>
 </RelativeLayout>

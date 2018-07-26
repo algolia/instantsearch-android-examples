@@ -1,5 +1,5 @@
 
-package com.algolia.custombackend.elasticbackend;
+package com.algolia.custombackend.custombackend;
 
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -9,13 +9,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.algolia.custombackend.helpers.Helpers;
-import com.algolia.instantsearch.transformer.SearchResultsHandler;
-import com.algolia.instantsearch.transformer.SearchTransformer;
+import com.algolia.instantsearch.searchclient.SearchClient;
+import com.algolia.instantsearch.searchclient.SearchResultsHandler;
 import com.algolia.search.saas.AlgoliaException;
-import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Query;
 import com.algolia.search.saas.Request;
-import com.algolia.search.saas.RequestOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,7 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.zip.GZIPInputStream;
 
-public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject> {
+public class CustomClient extends SearchClient<JSONObject, JSONObject> {
 
     public static class AsyncRequest extends AsyncTask<JSONObject, Boolean, JSONObject> implements Request {
 
@@ -48,18 +46,18 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
         }
 
         @Override
-        protected JSONObject doInBackground(JSONObject... elasticSearchParameters) {
+        protected JSONObject doInBackground(JSONObject... customSearchParameters) {
             InputStream stream = null;
-            HttpURLConnection hostConnection = null;
-            JSONObject searchParameters = elasticSearchParameters[0];
+            HttpURLConnection hostConnection;
+            JSONObject searchParameters = customSearchParameters[0];
             try {
                 // Build URL.
-                String urlString = "https://tests-first-sandbox-9472672183.eu-west-1.bonsaisearch.net/concerts/_search?";
+                String urlString = "https://guys-first-sandbox-8228827598.eu-central-1.bonsaisearch.net/concerts/_search?";
                 URL hostURL = new URL(urlString);
 
                 String basicAuth = null;
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                    basicAuth = "Basic " + new String(android.util.Base64.encode("3nmp9kz7fh:gch2ewzerx".getBytes(), android.util.Base64.NO_WRAP));
+                    basicAuth = "Basic " + new String(android.util.Base64.encode("dvilzsbbyw:7le70vhxx9".getBytes(), android.util.Base64.NO_WRAP));
                 }
 
                 // Open connection.
@@ -120,8 +118,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
     }
 
     @Override
-    public Request searchAsync(@Nullable Query query, @Nullable RequestOptions requestOptions, @Nullable final CompletionHandler completionHandler) {
-        JSONObject params = map(query);
+    public Request search(@Nullable JSONObject query, @Nullable final SearchResultsHandler<JSONObject> completionHandler) {
         AsyncRequest request = new AsyncRequest(new SearchResultsHandler<JSONObject>() {
             @Override
             public void requestCompleted(final JSONObject content, final Exception error) {
@@ -133,8 +130,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
                         if (error != null) {
                             completionHandler.requestCompleted(null, new AlgoliaException((error.getMessage())));
                         } else {
-                            JSONObject obj = ElasticTransformer.this.map(content);
-                            completionHandler.requestCompleted(obj, null);
+                            completionHandler.requestCompleted(content, null);
                         }
                     }
                 };
@@ -142,7 +138,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
 
             }
         });
-        request.execute(params);
+        request.execute(query);
         return request;
     }
 
@@ -196,11 +192,11 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
     }
 
     @Override
-    public JSONObject map(@NonNull JSONObject elasticSearchResults) {
-        if (elasticSearchResults == null) {
+    public JSONObject map(@NonNull JSONObject customSearchResults) {
+        if (customSearchResults == null) {
             return null;
         }
-        JSONObject hitsContent = elasticSearchResults.optJSONObject("hits");
+        JSONObject hitsContent = customSearchResults.optJSONObject("hits");
         if (hitsContent == null) {
             return null;
         }
@@ -211,7 +207,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
             obj.putOpt("nbHits", hitsContent.optInt("total"));
             obj.putOpt("query", "test");
             obj.putOpt("params", "testparams");
-            obj.putOpt("processingTimeMS", elasticSearchResults.optInt("took"));
+            obj.putOpt("processingTimeMS", customSearchResults.optInt("took"));
         } catch (Exception e) {
             return null;
         }
