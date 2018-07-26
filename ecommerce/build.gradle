@@ -26,21 +26,19 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-
     // Support Library
     implementation "com.android.support:appcompat-v7:$VERSION_SUPPORT"
     implementation "com.android.support:design:$VERSION_SUPPORT"
-
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     // UI
     implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
-    //implementation project(':instantsearch')
+    implementation "com.algolia.instantsearch-android:voice:1.0.1"
 
     // Tests
-    testImplementation'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
     // Memory Leaks Detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
