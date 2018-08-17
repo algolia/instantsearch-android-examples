@@ -149,7 +149,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
 
     // region UI
     public void onTapMic(@NonNull View view) {
-        if (Voice.hasRecordPermission(this)) {
+        if (!Voice.hasRecordPermission(this)) {
             showPermissionOverlay();
         } else {
             showVoiceOverlay();
