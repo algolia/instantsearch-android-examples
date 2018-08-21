@@ -20,11 +20,12 @@ import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.algolia.instantsearch.voice.Voice;
+import com.algolia.instantsearch.voice.VoiceInput;
 import com.algolia.instantsearch.voice.ui.PermissionDialogFragment;
 import com.algolia.instantsearch.voice.ui.VoiceDialogFragment;
 import com.squareup.leakcanary.RefWatcher;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static com.algolia.instantsearch.voice.Voice.isPermissionGranted;
@@ -32,7 +33,7 @@ import static com.algolia.instantsearch.voice.Voice.isRecordPermissionWithResult
 import static com.algolia.instantsearch.voice.Voice.shouldExplainPermission;
 import static com.algolia.instantsearch.voice.ui.PermissionDialogFragment.ID_REQ_VOICE_PERM;
 
-public class EcommerceActivity extends AppCompatActivity implements VoiceDialogFragment.VoiceResultsListener {
+public class EcommerceActivity extends AppCompatActivity implements VoiceInput.VoiceResultsListener {
     private static final String ALGOLIA_APP_ID = "latency";
     private static final String ALGOLIA_INDEX_NAME = "bestbuy_promo";
     private static final String ALGOLIA_API_KEY = "91e5b0d48d0ea9c1eb7e7e063d5c7750";
@@ -101,7 +102,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     }
 
     @Override
-    public void onVoiceResults(@NonNull ArrayList<String> matches) {
+    public void onVoiceResults(@NonNull List<String> matches) {
         searcher.search(matches.get(0));
     }
     // endregion
@@ -170,7 +171,6 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceDialogF
     private void showVoiceOverlay() {
         VoiceDialogFragment frag = new VoiceDialogFragment();
         frag.setSuggestions("iPhone case", "Running shoes"); //TODO: use query suggestions?
-        frag.setVoiceResultsListener(this);
         frag.show(getSupportFragmentManager(), "voice");
     }
 
