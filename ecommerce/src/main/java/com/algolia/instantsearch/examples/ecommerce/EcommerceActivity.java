@@ -31,7 +31,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static com.algolia.instantsearch.voice.Voice.isPermissionGranted;
 import static com.algolia.instantsearch.voice.Voice.isRecordPermissionWithResults;
 import static com.algolia.instantsearch.voice.Voice.shouldExplainPermission;
-import static com.algolia.instantsearch.voice.ui.PermissionDialogFragment.ID_REQ_VOICE_PERM;
+import static com.algolia.instantsearch.voice.ui.PermissionDialogFragment.PermissionRequestRecordAudio;
 
 public class EcommerceActivity extends AppCompatActivity implements VoiceInput.VoiceResultsListener {
     private static final String ALGOLIA_APP_ID = "latency";
@@ -122,7 +122,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceInput.V
                 .setAction(R.string.voice_search_button_again, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, ID_REQ_VOICE_PERM);
+                        ActivityCompat.requestPermissions(EcommerceActivity.this, new String[]{RECORD_AUDIO}, PermissionRequestRecordAudio);
                     }
                 }).show();
     }
@@ -176,7 +176,7 @@ public class EcommerceActivity extends AppCompatActivity implements VoiceInput.V
 
     private void showPermissionOverlay() {
         PermissionDialogFragment frag = new PermissionDialogFragment();
-        frag.setTitle("You can use voice search to find products");
+        frag.setArguments(PermissionDialogFragment.Companion.buildArguments("You can use voice search to find products"));
         frag.show(getSupportFragmentManager(), "permission");
     }
     // endregion
