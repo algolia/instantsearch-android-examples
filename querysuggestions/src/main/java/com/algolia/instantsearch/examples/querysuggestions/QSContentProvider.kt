@@ -6,15 +6,9 @@ import com.algolia.instantsearch.helpers.Searcher
 import com.algolia.search.saas.Index
 
 class QSContentProvider : QuerySuggestionsContentProvider() {
-    override fun getLimit(): Int {
-        return 5
-    }
+    override fun getLimit(): Int = 5
 
-    override fun initIndex(): Index? {
-        return Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_SUGGESTIONS, "suggestions").index
-    }
+    override fun initIndex(): Index? = Searcher.create(ALGOLIA_APP_ID, ALGOLIA_API_KEY, ALGOLIA_INDEX_SUGGESTIONS, "suggestions").index
 
-    override fun shouldReturnHighlightResult(): Boolean {
-        return true
-    }
+    override fun shouldReturnHighlightResult(): Boolean = true
 }

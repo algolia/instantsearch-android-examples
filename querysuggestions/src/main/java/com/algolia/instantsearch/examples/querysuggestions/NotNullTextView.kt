@@ -21,8 +21,6 @@ open class NotNullTextView : android.support.v7.widget.AppCompatTextView {
     }
 
     companion object {
-        internal fun isNull(text: CharSequence?): Boolean {
-            return text == null || text == "" || text.toString() == "null"
-        }
+        internal fun isNull(text: CharSequence?): Boolean = text == null || text == "" || text.toString() == "null"
     }
 }
