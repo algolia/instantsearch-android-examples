@@ -34,10 +34,4 @@ dependencies {
     implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
 //    implementation project(':instantsearch')
     implementation 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-
-    // Tests
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
 }

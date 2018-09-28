@@ -35,11 +35,6 @@ dependencies {
     implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
 //    implementation project(":instantsearch")
 
-    // Tests
-    testImplementation'junit:junit:4.12'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
 
     // Memory Leaks Detection
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
