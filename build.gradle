@@ -16,14 +16,17 @@ buildscript {
 
 allprojects {
     ext {
-        VERSION_BUILD_TOOLS = "27.0.3"
-        VERSION_COMPILE_SDK = 27
+        VERSION_BUILD_TOOLS = "28.0.2"
+        VERSION_COMPILE_SDK = 28
         VERSION_MIN_SDK = 14
-        VERSION_TARGET_SDK = 27
-     
+        VERSION_TARGET_SDK = 28
+
         VERSION_INSTANTSEARCH = "1.+"
-        VERSION_SUPPORT = "27.1.1"
+        VERSION_VOICE = "1.+"
+        VERSION_SUPPORT = "28.0.0"
         VERSION_KOTLIN = rootProject.VERSION_KOTLIN
+
+        VERSION_CONSTRAINT = "1.1.3"
     }
 
     repositories {

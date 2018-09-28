@@ -3,14 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion VERSION_COMPILE_SDK
+    buildToolsVersion "$VERSION_BUILD_TOOLS"
 
     dataBinding.enabled true
 
     defaultConfig {
         applicationId "com.algolia.instantsearch.examples.querysuggestions"
-        minSdkVersion 21
-        targetSdkVersion 27
+        minSdkVersion 21 //TODO: Try using VERSION_MIN_SDK
+        targetSdkVersion VERSION_TARGET_SDK
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,7 +38,7 @@ dependencies {
     // DESIGN
     implementation "com.android.support:appcompat-v7:$VERSION_SUPPORT"
     implementation "com.android.support:design:$VERSION_SUPPORT"
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation "com.android.support.constraint:constraint-layout:$VERSION_CONSTRAINT"
 
 //    implementation "com.algolia:instantsearch-android:$VERSION_INSTANTSEARCH"
     implementation project(":instantsearch")
