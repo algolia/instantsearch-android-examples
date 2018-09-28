@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.algolia.instantsearch.examples.querysuggestions"
-        minSdkVersion 21 //TODO: Try using VERSION_MIN_SDK
+        minSdkVersion VERSION_MIN_SDK
         targetSdkVersion VERSION_TARGET_SDK
         versionCode 1
         versionName "1.0"
