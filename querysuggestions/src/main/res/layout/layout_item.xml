@@ -20,6 +20,7 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginRight="6dp"
+                android:layout_marginEnd="6dp"
                 android:layout_marginTop="12dp"
                 android:paddingBottom="6dp"
                 android:paddingTop="6dp"
@@ -34,8 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
+            android:layout_marginEnd="6dp"
             android:layout_marginTop="6dp"
             android:layout_toRightOf="@id/product_image_box"
+            android:layout_toEndOf="@id/product_image_box"
             android:ellipsize="end"
             android:maxLines="2"
             tools:text="Product name"
@@ -51,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/product_name"
             android:layout_toEndOf="@id/product_image_box"
+            android:layout_toRightOf="@id/product_image_box"
             algolia:attribute='@{"manufacturer"}'
             algolia:highlighted='@{true}'
             algolia:prefix='@{"by "}'
@@ -61,9 +65,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:paddingEnd="8dp"
+            android:paddingRight="8dp"
+            android:paddingStart="8dp"
+            android:paddingLeft="8dp"
             android:layout_below="@id/product_name"
             android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             tools:text="Category"
             android:gravity="end"
             android:maxWidth="90dp"
@@ -77,7 +86,8 @@
             android:layout_below="@id/product_manufacturer"
             tools:text="$ 18"
             android:layout_toRightOf="@id/product_image_box"
-            android:gravity="right"
+            android:layout_toEndOf="@id/product_image_box"
+            android:gravity="end"
             android:textSize="18sp"/>
     </RelativeLayout>
 </layout>
