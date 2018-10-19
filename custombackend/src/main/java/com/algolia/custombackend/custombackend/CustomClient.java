@@ -51,7 +51,7 @@ public class CustomClient extends SearchClient<JSONObject, JSONObject> {
             HttpURLConnection hostConnection;
             JSONObject searchParameters = customSearchParameters[0];
             try {
-                // Build URL.
+                // Build URL. TODO: bonsai keeps disabling, find a long-term solution
                 String urlString = "https://guys-first-sandbox-8228827598.eu-central-1.bonsaisearch.net/concerts/_search?";
                 URL hostURL = new URL(urlString);
 

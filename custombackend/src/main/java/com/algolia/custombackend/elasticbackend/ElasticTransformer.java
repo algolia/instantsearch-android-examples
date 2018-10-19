@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.algolia.custombackend.helpers.Helpers;
-import com.algolia.instantsearch.transformer.SearchResultsHandler;
-import com.algolia.instantsearch.transformer.SearchTransformer;
+import com.algolia.instantsearch.searchclient.SearchResultsHandler;
+import com.algolia.instantsearch.searchclient.Transformable;
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Query;
@@ -25,9 +25,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
+import java.util.Map;
 import java.util.zip.GZIPInputStream;
 
-public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject> {
+public class ElasticTransformer implements Transformable<JSONObject, JSONObject> {
 
     public static class AsyncRequest extends AsyncTask<JSONObject, Boolean, JSONObject> implements Request {
 
@@ -119,9 +121,7 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
         }
     }
 
-    @Override
-    public Request searchAsync(@Nullable Query query, @Nullable RequestOptions requestOptions, @Nullable final CompletionHandler completionHandler) {
-        JSONObject params = map(query);
+    private Request searchAsync(JSONObject params, @Nullable RequestOptions requestOptions, @Nullable final CompletionHandler completionHandler) {
         AsyncRequest request = new AsyncRequest(new SearchResultsHandler<JSONObject>() {
             @Override
             public void requestCompleted(final JSONObject content, final Exception error) {
@@ -144,6 +144,25 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
         });
         request.execute(params);
         return request;
+    }
+
+    @Override
+    public Request search(@Nullable JSONObject query, @Nullable final SearchResultsHandler<JSONObject> completionHandler) {
+        return searchAsync(map(query), null, new CompletionHandler() {
+            @Override
+            public void requestCompleted(JSONObject jsonObject, AlgoliaException e) {
+                if (completionHandler != null) {
+                    completionHandler.requestCompleted(jsonObject, e);
+                } else {
+                    Log.e("ElasticTransformer", "cannot forward to null completionHandler.");
+                }
+            }
+        });
+    }
+
+    @Override
+    public Request searchForFacetValues(@NonNull JSONObject query, @Nullable SearchResultsHandler<JSONObject> completionHandler) {
+        return null; //TODO: Demonstrate SFFV with Elastic
     }
 
     @Override
@@ -196,6 +215,11 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
     }
 
     @Override
+    public JSONObject map(@NonNull Query query, @NonNull Collection<String> disjunctiveFacets, @NonNull Map<String, ? extends Collection<String>> refinements) {
+        return null;
+    }
+
+    @Override
     public JSONObject map(@NonNull JSONObject elasticSearchResults) {
         if (elasticSearchResults == null) {
             return null;
@@ -216,5 +240,10 @@ public class ElasticTransformer extends SearchTransformer<JSONObject, JSONObject
             return null;
         }
         return obj;
+    }
+
+    @Override
+    public JSONObject map(@Nullable Query query, @NonNull String facetName, @NonNull String matchingText) {
+        return null; //TODO: map for SFFV
     }
 }
