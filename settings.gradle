@@ -1,5 +1,5 @@
 include ':media', ':ecommerce', ':icebnb', ':movies', ':querysuggestions', ':custombackend'
-include ':instantsearch'
-project(':instantsearch').projectDir = new File(settingsDir, "../instantsearch-android/instantsearch")
-include ':algoliasearch'
-project(':algoliasearch').projectDir = new File(settingsDir, "../algoliasearch-client-android/algoliasearch")
+//include ':instantsearch'
+//project(':instantsearch').projectDir = new File(settingsDir, "../instantsearch-android/instantsearch")
+//include ':algoliasearch'
+//project(':algoliasearch').projectDir = new File(settingsDir, "../algoliasearch-client-android/algoliasearch")
