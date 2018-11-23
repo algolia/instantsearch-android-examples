@@ -22,9 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.algolia.instantsearch.R;
-import com.algolia.instantsearch.helpers.Searcher;
-import com.algolia.instantsearch.model.FacetStat;
-import com.algolia.instantsearch.model.NumericRefinement;
+import com.algolia.instantsearch.core.helpers.Searcher;
+import com.algolia.instantsearch.core.model.FacetStat;
+import com.algolia.instantsearch.core.model.NumericRefinement;
 
 import java.util.ArrayList;
 import java.util.List;

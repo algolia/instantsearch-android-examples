@@ -4,10 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.algolia.instantsearch.examples.icebnb.model.HitMarker;
-import com.algolia.instantsearch.helpers.Searcher;
-import com.algolia.instantsearch.model.AlgoliaResultsListener;
-import com.algolia.instantsearch.model.AlgoliaSearcherListener;
-import com.algolia.instantsearch.model.SearchResults;
+import com.algolia.instantsearch.core.helpers.Searcher;
+import com.algolia.instantsearch.core.model.AlgoliaResultsListener;
+import com.algolia.instantsearch.core.model.AlgoliaSearcherListener;
+import com.algolia.instantsearch.core.model.SearchResults;
 import com.algolia.search.saas.Query;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;

@@ -2,7 +2,7 @@ package com.algolia.instantsearch.examples.movies;
 
 import android.os.Bundle;
 
-import com.algolia.instantsearch.helpers.InstantSearch;
+import com.algolia.instantsearch.ui.helpers.InstantSearch;
 
 public class MoviesSectionsActivity extends MoviesActivity {
     @Override

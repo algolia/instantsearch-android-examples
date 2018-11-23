@@ -8,8 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.algolia.instantsearch.helpers.Searcher;
-import com.algolia.instantsearch.model.SearchBoxViewModel;
+import com.algolia.instantsearch.core.helpers.Searcher;
+import com.algolia.instantsearch.core.model.SearchBoxViewModel;
 import com.algolia.instantsearch.ui.views.SearchBox;
 
 

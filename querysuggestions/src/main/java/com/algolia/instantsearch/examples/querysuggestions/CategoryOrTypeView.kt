@@ -2,7 +2,7 @@ package com.algolia.instantsearch.examples.querysuggestions
 
 import android.content.Context
 import android.util.AttributeSet
-import com.algolia.instantsearch.helpers.Highlighter
+import com.algolia.instantsearch.core.helpers.Highlighter
 import com.algolia.instantsearch.ui.views.AlgoliaHitView
 import org.json.JSONException
 import org.json.JSONObject

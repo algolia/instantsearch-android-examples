@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.Spannable;
 import android.util.AttributeSet;
 
-import com.algolia.instantsearch.helpers.Highlighter;
+import com.algolia.instantsearch.core.helpers.Highlighter;
 import com.algolia.instantsearch.ui.views.AlgoliaHitView;
 
 import org.json.JSONException;

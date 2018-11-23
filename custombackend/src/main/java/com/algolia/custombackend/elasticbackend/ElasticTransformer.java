@@ -9,8 +9,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.algolia.custombackend.helpers.Helpers;
-import com.algolia.instantsearch.searchclient.SearchResultsHandler;
-import com.algolia.instantsearch.searchclient.Transformable;
+import com.algolia.instantsearch.core.searchclient.SearchResultsHandler;
+import com.algolia.instantsearch.core.searchclient.Transformable;
 import com.algolia.search.saas.AlgoliaException;
 import com.algolia.search.saas.CompletionHandler;
 import com.algolia.search.saas.Query;

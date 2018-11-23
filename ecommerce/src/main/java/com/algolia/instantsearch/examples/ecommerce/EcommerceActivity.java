@@ -18,8 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.algolia.instantsearch.helpers.InstantSearch;
-import com.algolia.instantsearch.helpers.Searcher;
+import com.algolia.instantsearch.ui.helpers.InstantSearch;
+import com.algolia.instantsearch.core.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 import com.algolia.instantsearch.voice.PermissionDialogFragment;
 import com.algolia.instantsearch.voice.VoiceDialogFragment;
