@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:paddingStart="6dp"
-        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
         android:paddingEnd="6dp"
-        android:paddingBottom="6dp">
+        android:paddingStart="6dp"
+        android:paddingTop="6dp">
 
         <com.algolia.instantsearch.ui.views.SearchBox
             android:id="@+id/searchBox"
@@ -44,10 +44,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/box_search"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingTop="6dp"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="6dp"
         tools:context="com.algolia.instantsearch.examples.ecommerce.EcommerceActivity">
 
         <LinearLayout
@@ -72,8 +72,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="0dp"
                 android:drawableLeft="@android:drawable/dark_header"
-                android:drawableRight="@drawable/arrow_down_flat"
                 android:drawablePadding="5dp"
+                android:drawableRight="@drawable/arrow_down_flat"
                 android:text="@string/filter_menu_text" />
 
 
@@ -86,14 +86,15 @@
             android:layout_below="@id/box_filter"
             android:requiresFadingEdge="vertical"
             algolia:autoHideKeyboard="true"
-            algolia:itemLayout="@layout/hits_item" />
+            algolia:itemLayout="@layout/hits_item"
+            algolia:remainingItemsBeforeLoading="5" />
 
         <com.algolia.instantsearch.ui.views.Stats
             android:id="@android:id/empty"
-            android:paddingTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/box_filter"
+            android:paddingTop="8dp"
             android:visibility="gone"
             algolia:autoHide="false"
             algolia:resultTemplate="@string/no_result_template" />
