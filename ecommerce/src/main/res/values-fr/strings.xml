@@ -7,4 +7,6 @@
     <string name="text_savings">Vous économisez</string>
     <string name="placeholder_checkbox_attribute">Attribut</string>
     <string name="filter_menu_text">Filtrer</string>
+    <string name="app_name">Amazing</string>
+    <string name="result_template">{nbHits} résultats</string>
 </resources>
