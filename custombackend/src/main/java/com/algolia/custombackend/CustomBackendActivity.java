@@ -8,14 +8,14 @@ import com.algolia.instantsearch.helpers.InstantSearch;
 import com.algolia.instantsearch.helpers.Searcher;
 import com.algolia.instantsearch.ui.views.SearchBox;
 
-public class MainActivity extends AppCompatActivity {
+public class CustomBackendActivity extends AppCompatActivity {
 
     private Searcher searcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_custom_backend);
         CustomClient customClient = new CustomClient();
 
         searcher = Searcher.create(customClient);
