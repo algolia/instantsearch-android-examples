@@ -22,6 +22,6 @@ public class CustomBackendActivity extends AppCompatActivity {
         new InstantSearch(this, searcher); // Initialize InstantSearch in this activity with searcher
         searcher.search(getIntent()); // Show results for empty query (on app launch) / voice query (from intent)
 
-        ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landsca
+        ((SearchBox) findViewById(R.id.searchBox)).disableFullScreen(); // disable fullscreen input UI on landscape
     }
 }
