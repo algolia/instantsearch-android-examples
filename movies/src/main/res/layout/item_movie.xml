@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:algolia="http://schemas.android.com/apk/res-auto"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +17,7 @@
             algolia:variant='@{"movies"}'
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_gallery"/>
+            app:srcCompat="@android:drawable/ic_menu_gallery" />
 
         <TextView
             android:id="@+id/movieTitle"
@@ -27,32 +25,33 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_marginStart="8dp"
-            tools:text="Guardians of the Super Very Long Title"
+            android:layout_marginLeft="8dp"
             android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:textAppearance="@style/TextAppearanceTitle"
             algolia:attribute='@{"title"}'
             algolia:variant='@{"movies"}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/movieImage"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Guardians of the Super Very Long Title" />
 
         <TextView
             android:id="@+id/movieYear"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:gravity="center"
-            tools:text="1994"
             android:textAlignment="center"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"
+            android:textAppearance="@style/TextAppearanceSubtitle"
             algolia:attribute='@{"year"}'
             algolia:variant='@{"movies"}'
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/movieRating"
             app:layout_constraintStart_toEndOf="@id/movieImage"
             app:layout_constraintTop_toBottomOf="@+id/movieTitle"
-            app:layout_constraintVertical_bias="1.0"/>
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="1994" />
 
 
         <RatingBar
@@ -60,9 +59,10 @@
             style="@style/Widget.AppCompat.RatingBar.Indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:isIndicator="true"
             android:rating="4"
             algolia:attribute='@{"rating"}'
@@ -71,6 +71,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/movieYear"
             app:layout_constraintTop_toBottomOf="@+id/movieTitle"
-            app:layout_constraintTop_toTopOf="@+id/movieYear"/>
+            app:layout_constraintTop_toTopOf="@+id/movieYear" />
     </android.support.constraint.ConstraintLayout>
 </layout>

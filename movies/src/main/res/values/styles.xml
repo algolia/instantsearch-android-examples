@@ -17,4 +17,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="TextAppearanceTitle">@android:style/TextAppearance.DeviceDefault.Large</style>
+    <style name="TextAppearanceSubtitle">@android:style/TextAppearance.DeviceDefault.Medium</style>
 </resources>

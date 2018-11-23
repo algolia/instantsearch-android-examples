@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:algolia="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:algolia="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -13,25 +13,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_marginTop="28dp"
-            tools:text="Catherine"
-            android:textAppearance="@android:style/TextAppearance.Material.Headline"
+            android:textAppearance="@style/TextAppearanceTitle"
             algolia:attribute='@{"name"}'
             algolia:variant='@{"actors"}'
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Catherine" />
 
         <ImageView
             android:id="@+id/actorImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:src="@android:drawable/sym_def_app_icon"
             algolia:attribute='@{"image_path"}'
-            algolia:variant='@{"actors"}'
             algolia:prefix='@{"https://image.tmdb.org/t/p/w300"}'
+            algolia:variant='@{"actors"}'
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </layout>
