@@ -1,8 +1,8 @@
 package com.algolia.instantsearch.examples.querysuggestions
 
+import com.algolia.instantsearch.core.helpers.QuerySuggestionsContentProvider
+import com.algolia.instantsearch.core.helpers.Searcher
 import com.algolia.instantsearch.examples.querysuggestions.BuildConfig.*
-import com.algolia.instantsearch.helpers.QuerySuggestionsContentProvider
-import com.algolia.instantsearch.helpers.Searcher
 import com.algolia.search.saas.Index
 
 class QSContentProvider : QuerySuggestionsContentProvider() {
