@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.algolia.instantsearch.events.ErrorEvent;
+import com.algolia.instantsearch.core.events.ErrorEvent;
 import com.algolia.instantsearch.examples.icebnb.widgets.MapWidget;
 import com.algolia.instantsearch.core.helpers.Searcher;
 import com.algolia.instantsearch.ui.helpers.InstantSearch;

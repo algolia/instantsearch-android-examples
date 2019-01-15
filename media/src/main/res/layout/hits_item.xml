@@ -36,7 +36,7 @@
             android:textColor="@android:color/black"
             android:textSize="18sp"
             algolia:attribute='@{"title"}'
-            algolia:highlightColor='@{android.R.color.holo_orange_light}'/>
+            algolia:highlightColor='@{@android:color/holo_orange_light}'/>
 
         <com.algolia.instantsearch.examples.media.views.TimestampHitView
             android:id="@+id/hit_published"
