@@ -44,7 +44,8 @@ public class FilterResultsFragment extends DialogFragment {
      *
      * @deprecated you <b>MUST</b> use {@link FilterResultsFragment#get(Searcher)} instead.
      */
-    public FilterResultsFragment() {}
+    public FilterResultsFragment() {
+    }
 
     /**
      * Get a FilterResultsFragment instance linked with a given searcher.
