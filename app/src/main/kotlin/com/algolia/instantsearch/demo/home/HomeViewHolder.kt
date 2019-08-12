@@ -5,6 +5,7 @@ import android.text.Html
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
 import com.algolia.search.serialize.KeyIndexName
 import com.algolia.search.serialize.KeyName
 import kotlinx.android.synthetic.main.list_item_small.view.*
@@ -22,9 +23,7 @@ sealed class HomeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     data class Item(val view: View) : HomeViewHolder(view) {
 
         fun bind(item: HomeItem.Item) {
-            val text = item.hit.highlightResults?.getValue("name")?.let {
-                Html.fromHtml(it.value, Html.FROM_HTML_MODE_COMPACT)
-            } ?: item.hit.name
+            val text = item.hit.highlightedName?.toSpannedString() ?: item.hit.name
 
             view.itemName.text = text
             view.setOnClickListener {
