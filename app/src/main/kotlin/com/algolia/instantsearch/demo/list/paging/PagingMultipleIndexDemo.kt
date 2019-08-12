@@ -27,7 +27,7 @@ class PagingMultipleIndexDemo : AppCompatActivity() {
     private val indexMovies = IndexQuery(IndexName("mobile_demo_movies"))
     private val indexActors = IndexQuery(IndexName("mobile_demo_actors"))
     private val searcher = SearcherMultipleIndex(client, listOf(indexMovies, indexActors))
-    private val pagedListConfig = PagedList.Config.Builder().setPageSize(10).build()
+    private val pagedListConfig = PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
     private val moviesFactory = SearcherMultipleIndexDataSource.Factory(searcher, indexMovies) { it.deserialize(Movie.serializer()) }
     private val actorsFactory = SearcherMultipleIndexDataSource.Factory(searcher, indexActors) { it.deserialize(Actor.serializer()) }
     private val movies = LivePagedListBuilder(moviesFactory, pagedListConfig).build()

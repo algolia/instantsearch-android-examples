@@ -27,7 +27,7 @@ class LoadingDemo : AppCompatActivity() {
 
     private val searcher = SearcherSingleIndex(stubIndex)
     private val dataSourceFactory = SearcherSingleIndexDataSource.Factory(searcher) { it.deserialize(Movie.serializer()) }
-    private val pagedListConfig = PagedList.Config.Builder().setPageSize(10).build()
+    private val pagedListConfig = PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
     private val movies = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     private val loading = LoadingConnector(searcher)
     private val searchBox = SearchBoxConnectorPagedList(searcher, listOf(movies))

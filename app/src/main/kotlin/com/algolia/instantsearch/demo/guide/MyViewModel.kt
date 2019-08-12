@@ -37,7 +37,7 @@ class MyViewModel : ViewModel() {
             hit.json.getObjectOrNull("_highlightResult")
         )
     }
-    val pagedListConfig = PagedList.Config.Builder().setPageSize(50).build()
+    val pagedListConfig = PagedList.Config.Builder().setPageSize(50).setEnablePlaceholders(false).build()
     val products: LiveData<PagedList<Product>> = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     val searchBox = SearchBoxConnectorPagedList(searcher, listOf(products))
     val adapterProduct = ProductAdapter()
