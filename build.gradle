@@ -16,9 +16,9 @@ buildscript {
 
 allprojects {
     repositories {
-        mavenLocal()
         google()
         jcenter()
+        maven { url = "https://dl.bintray.com/algolia/maven" }
         
     }
 }
