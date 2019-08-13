@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.guide
+package com.algolia.instantsearch.guides.gettingstarted
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.guides.R
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.android.searchbox.connectView
@@ -19,7 +19,7 @@ import com.algolia.instantsearch.helper.stats.connectView
 import kotlinx.android.synthetic.main.product_fragment.*
 
 
-class ProductFragment : Fragment() {
+class GettingStartedProductFragment : Fragment() {
 
     private val connection = ConnectionHandler()
 
@@ -29,7 +29,7 @@ class ProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProviders.of(requireActivity())[MyViewModel::class.java]
+        val viewModel = ViewModelProviders.of(requireActivity())[GettingStartedViewModel::class.java]
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         val statsView = StatsTextView(stats)
 
@@ -44,7 +44,7 @@ class ProductFragment : Fragment() {
             it.layoutManager = LinearLayoutManager(requireContext())
             it.autoScrollToStart(viewModel.adapterProduct)
         }
-        filters.setOnClickListener { (requireActivity() as MyActivity).showFacetFragment() }
+        filters.setOnClickListener { (requireActivity() as GettingStartedActivity).showFacetFragment() }
     }
 
     override fun onDestroyView() {

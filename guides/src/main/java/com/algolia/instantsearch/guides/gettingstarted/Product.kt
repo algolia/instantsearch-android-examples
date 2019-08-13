@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.guide
+package com.algolia.instantsearch.guides.gettingstarted
 
 import com.algolia.instantsearch.core.highlighting.HighlightedString
 import com.algolia.instantsearch.helper.highlighting.Highlightable

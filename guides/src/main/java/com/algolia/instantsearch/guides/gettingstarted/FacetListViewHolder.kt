@@ -1,15 +1,15 @@
-package com.algolia.instantsearch.showcase.guide
+package com.algolia.instantsearch.guides.gettingstarted
 
 import android.view.View
 import android.view.ViewGroup
-import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.guides.R
 import com.algolia.instantsearch.helper.android.filter.facet.FacetListViewHolder
 import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.search.model.search.Facet
 import kotlinx.android.synthetic.main.facet_list_item.view.*
 
 
-class MyFacetListViewHolder(view: View) : FacetListViewHolder(view) {
+class FacetListViewHolder(view: View) : FacetListViewHolder(view) {
 
     override fun bind(facet: Facet, selected: Boolean, onClickListener: View.OnClickListener) {
         view.setOnClickListener(onClickListener)
@@ -22,7 +22,7 @@ class MyFacetListViewHolder(view: View) : FacetListViewHolder(view) {
     object Factory : FacetListViewHolder.Factory {
 
         override fun createViewHolder(parent: ViewGroup): FacetListViewHolder {
-            return MyFacetListViewHolder(parent.inflate(R.layout.facet_list_item))
+            return FacetListViewHolder(parent.inflate(R.layout.facet_list_item))
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.guide
+package com.algolia.instantsearch.guides.gettingstarted
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -23,7 +23,7 @@ import com.algolia.search.model.IndexName
 import io.ktor.client.features.logging.LogLevel
 
 
-class MyViewModel : ViewModel() {
+class GettingStartedViewModel : ViewModel() {
 
     val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"), LogLevel.ALL)
     val index = client.initIndex(IndexName("bestbuy_promo"))
@@ -52,7 +52,7 @@ class MyViewModel : ViewModel() {
         sortBy = listOf(FacetSortCriterion.CountDescending, FacetSortCriterion.IsRefined),
         limit = 100
     )
-    val adapterFacet = FacetListAdapter(MyFacetListViewHolder.Factory)
+    val adapterFacet = FacetListAdapter(FacetListViewHolder.Factory)
     val connection = ConnectionHandler()
 
     init {

@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.guide
+package com.algolia.instantsearch.guides.gettingstarted
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

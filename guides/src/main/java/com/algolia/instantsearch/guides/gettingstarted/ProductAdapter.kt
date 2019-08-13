@@ -1,13 +1,15 @@
-package com.algolia.instantsearch.showcase.guide
+package com.algolia.instantsearch.guides.gettingstarted
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.guides.R
 
 
-class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(ProductAdapter) {
+class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(
+    ProductAdapter
+) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.product_item, parent, false)

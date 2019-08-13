@@ -116,10 +116,6 @@
             android:name="com.algolia.instantsearch.showcase.hierarchical.HierarchicalShowcase"
             android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
 
-        <activity
-            android:exported="true"
-            android:name="com.algolia.instantsearch.showcase.guide.MyActivity"/>
-
     </application>
 
 </manifest>
