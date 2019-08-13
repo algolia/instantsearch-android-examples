@@ -31,6 +31,7 @@ class MergedListShowcase : AppCompatActivity() {
     private val searchBox = SearchBoxConnector(searcher)
     private val connection = ConnectionHandler(searchBox)
     private val adapter = MergedListAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.showcase_search)

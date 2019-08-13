@@ -9,7 +9,7 @@ class GettingStartedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.sample_activity)
+        setContentView(R.layout.getting_started_activity)
 
         showProductFragment()
     }
