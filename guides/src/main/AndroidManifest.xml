@@ -13,7 +13,7 @@
         android:theme="@style/InstantSearchShowcase"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name="com.algolia.instantsearch.guides.gettingstarted.GettingStartedActivity">
+        <activity android:name=".places.PlacesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

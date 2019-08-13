@@ -52,7 +52,7 @@ class GettingStartedViewModel : ViewModel() {
         sortBy = listOf(FacetSortCriterion.CountDescending, FacetSortCriterion.IsRefined),
         limit = 100
     )
-    val adapterFacet = FacetListAdapter(FacetListViewHolder.Factory)
+    val adapterFacet = FacetListAdapter(FacetListViewHolderImpl.Factory)
     val connection = ConnectionHandler()
 
     init {
