@@ -30,7 +30,6 @@ class PlacesActivity : AppCompatActivity() {
     )
     val searchBox = SearchBoxViewModel()
     val connection = ConnectionHandler()
-    val debouncer = Debouncer(100)
     val searcher = SearcherPlaces(query = query, language = Language.English)
     val adapter = PlacesAdapter()
 
