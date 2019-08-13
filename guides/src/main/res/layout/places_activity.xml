@@ -14,7 +14,6 @@
         android:layout_height="?attr/actionBarSize">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipChildren="false"
@@ -30,7 +29,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:iconifiedByDefault="false"
-                tools:queryHint="@string/search_colors"/>
+                app:queryHint="Search places"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
