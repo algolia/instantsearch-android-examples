@@ -44,7 +44,7 @@ class ProductFragment : Fragment() {
             it.layoutManager = LinearLayoutManager(requireContext())
             it.autoScrollToStart(viewModel.adapterProduct)
         }
-        filters.setOnClickListener { (requireActivity() as GettingStartedActivity).showFacetFragment() }
+        filters.setOnClickListener { (requireActivity() as GettingStartedGuide).showFacetFragment() }
     }
 
     override fun onDestroyView() {

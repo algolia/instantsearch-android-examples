@@ -12,7 +12,7 @@ class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_text, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_small, parent, false)
 
         return ProductViewHolder(view)
     }

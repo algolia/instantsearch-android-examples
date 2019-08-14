@@ -9,7 +9,7 @@ import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
 import com.algolia.search.model.places.PlaceLanguage
 import com.algolia.search.model.search.HighlightResult
 import com.algolia.search.serialize.toHighlights
-import kotlinx.android.synthetic.main.list_item_text.view.*
+import kotlinx.android.synthetic.main.list_item_small.view.*
 
 
 class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

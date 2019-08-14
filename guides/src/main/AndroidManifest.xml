@@ -14,7 +14,7 @@
         android:theme="@style/InstantSearchShowcase"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".querysuggestion.QuerySuggestionActivity">
+        <activity android:name=".directory.DirectoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -22,7 +22,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".gettingstarted.GettingStartedActivity"/>
+
+        <activity android:name=".gettingstarted.GettingStartedGuide"
+                  android:parentActivityName=".directory.DirectoryActivity"/>
+
+        <activity android:name=".places.PlacesActivity"
+                  android:parentActivityName=".directory.DirectoryActivity"/>
+
+        <activity android:name=".querysuggestion.QuerySuggestionGuide"
+                  android:parentActivityName=".directory.DirectoryActivity"/>
 
     </application>
 

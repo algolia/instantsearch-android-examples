@@ -22,7 +22,7 @@ class Adapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return when (Type.values()[viewType]) {
-            Type.Product -> ViewHolder.Product(parent.inflate(R.layout.list_item_image, false))
+            Type.Product -> ViewHolder.Product(parent.inflate(R.layout.list_item_large, false))
             Type.Suggestion -> ViewHolder.Suggestion(parent.inflate(R.layout.list_item_suggestion, false))
             Type.Header -> ViewHolder.Header(parent.inflate<TextView>(R.layout.list_item_header, false))
         }

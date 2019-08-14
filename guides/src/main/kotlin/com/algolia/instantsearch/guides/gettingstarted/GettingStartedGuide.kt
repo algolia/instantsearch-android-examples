@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.guides.R
 
 
-class GettingStartedActivity : AppCompatActivity() {
+class GettingStartedGuide : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_places.searchView
 import kotlinx.android.synthetic.main.activity_query_suggestion.*
 
 
-class QuerySuggestionActivity : AppCompatActivity() {
+class QuerySuggestionGuide : AppCompatActivity() {
 
     val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"), LogLevel.ALL)
     val searcher = SearcherMultipleIndex(
