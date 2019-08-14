@@ -6,6 +6,6 @@ It is built on top of Algolia's [Kotlin API Client](https://github.com/algolia/a
 
 
 ## Widget Showcase
-<img src="./docs/showcase/home.gif" width="250"/>
+<img src="./docs/showcase/showcase.gif" width="250"/>
 
 Have a look at our [**Widget Showcase**](https://github.com/algolia/instantsearch-android-examples/tree/master/showcase) to see each of our widgets in action.
