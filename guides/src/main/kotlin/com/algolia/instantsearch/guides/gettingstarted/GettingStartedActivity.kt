@@ -9,7 +9,7 @@ class GettingStartedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.getting_started_activity)
+        setContentView(R.layout.activity_getting_started)
 
         showProductFragment()
     }
@@ -17,7 +17,7 @@ class GettingStartedActivity : AppCompatActivity() {
     fun showFacetFragment() {
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.container, GettingStartedFacetFragment())
+            .add(R.id.container, FacetFragment())
             .addToBackStack("facet")
             .commit()
     }
@@ -25,7 +25,7 @@ class GettingStartedActivity : AppCompatActivity() {
     fun showProductFragment() {
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.container, GettingStartedProductFragment())
+            .add(R.id.container, ProductFragment())
             .commit()
     }
 

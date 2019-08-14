@@ -14,7 +14,7 @@ import com.algolia.search.model.places.Country
 import com.algolia.search.model.places.PlaceType
 import com.algolia.search.model.places.PlacesQuery
 import com.algolia.search.model.search.Language
-import kotlinx.android.synthetic.main.places_activity.*
+import kotlinx.android.synthetic.main.activity_places.*
 
 
 class PlacesActivity : AppCompatActivity() {
@@ -27,12 +27,12 @@ class PlacesActivity : AppCompatActivity() {
     )
     val searcher = SearcherPlaces(query = query, language = Language.English)
     val searchBox = SearchBoxConnector(searcher)
-    val adapter = PlacesAdapter()
+    val adapter = Adapter()
     val connection = ConnectionHandler(searchBox)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.places_activity)
+        setContentView(R.layout.activity_places)
 
         connection += searchBox.connectView(SearchBoxViewAppCompat(searchView))
         connection += searcher.connectHitsView(adapter) { hits -> hits.hits }

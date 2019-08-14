@@ -9,13 +9,13 @@ import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.search.model.places.PlaceLanguage
 
 
-class PlacesAdapter : ListAdapter<PlaceLanguage, PlacesViewHolder>(PlacesAdapter), HitsView<PlaceLanguage> {
+class Adapter : ListAdapter<PlaceLanguage, ViewHolder>(Adapter), HitsView<PlaceLanguage> {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlacesViewHolder {
-        return PlacesViewHolder(parent.inflate(R.layout.place_item))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(parent.inflate(R.layout.list_item_text))
     }
 
-    override fun onBindViewHolder(holder: PlacesViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
 
         if (item != null) holder.bind(item)

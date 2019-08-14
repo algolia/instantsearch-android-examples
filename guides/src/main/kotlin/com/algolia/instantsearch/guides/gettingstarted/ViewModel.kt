@@ -23,7 +23,7 @@ import com.algolia.search.model.IndexName
 import io.ktor.client.features.logging.LogLevel
 
 
-class GettingStartedViewModel : ViewModel() {
+class ViewModel : ViewModel() {
 
     val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"), LogLevel.ALL)
     val index = client.initIndex(IndexName("bestbuy_promo"))
@@ -52,7 +52,7 @@ class GettingStartedViewModel : ViewModel() {
         sortBy = listOf(FacetSortCriterion.CountDescending, FacetSortCriterion.IsRefined),
         limit = 100
     )
-    val adapterFacet = FacetListAdapter(FacetListViewHolderImpl.Factory)
+    val adapterFacet = FacetListAdapter(FacetViewHolderImpl.Factory)
     val connection = ConnectionHandler()
 
     init {

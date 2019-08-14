@@ -16,20 +16,20 @@ import com.algolia.instantsearch.helper.android.searchbox.connectView
 import com.algolia.instantsearch.helper.android.stats.StatsTextView
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
-import kotlinx.android.synthetic.main.getting_started_product_fragment.*
+import kotlinx.android.synthetic.main.fragment_product.*
 
 
-class GettingStartedProductFragment : Fragment() {
+class ProductFragment : Fragment() {
 
     private val connection = ConnectionHandler()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.getting_started_product_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_product, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProviders.of(requireActivity())[GettingStartedViewModel::class.java]
+        val viewModel = ViewModelProviders.of(requireActivity())[ViewModel::class.java]
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         val statsView = StatsTextView(stats)
 
