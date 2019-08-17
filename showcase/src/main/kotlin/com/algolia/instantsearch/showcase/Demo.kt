@@ -225,8 +225,8 @@ fun SearchView.showQueryHintIcon(
 
 fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()
 
-public fun List<FilterGroup<*>>.highlight(
-    converter: FilterGroupsConverter<List<FilterGroup<*>>, String?> = FilterGroupsConverter.SQL.Unquoted,
+public fun Set<FilterGroup<*>>.highlight(
+    converter: FilterGroupsConverter<Set<FilterGroup<*>>, String?> = FilterGroupsConverter.SQL.Unquoted,
     colors: Map<String, Int> = mapOf(),
     defaultColor: Int = Color.BLACK
 ): SpannableStringBuilder {
@@ -235,11 +235,11 @@ public fun List<FilterGroup<*>>.highlight(
 
         forEachIndexed { index, group ->
             val color = colors.getOrElse(group.name ?: "") { defaultColor }
-            val string = converter(listOf(group))
+            val string = converter(setOf(group))
 
             it.append(string)
             it.setSpan(ForegroundColorSpan(color), begin, it.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            if (index < lastIndex) {
+            if (index < size - 1) {
                 begin = it.length
                 it.append(" AND ")
                 it.setSpan(StyleSpan(Typeface.BOLD), begin, it.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)

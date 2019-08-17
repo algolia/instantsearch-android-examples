@@ -32,7 +32,7 @@ class HierarchicalShowcase : AppCompatActivity() {
     private val searcher = SearcherSingleIndex(stubIndex)
     private val filterState = FilterState()
     private val separator = " > "
-    private val hierarchical = HierarchicalConnector(searcher, filterState, hierarchicalAttributes, separator)
+    private val hierarchical = HierarchicalConnector(searcher, hierarchicalCategory, filterState, hierarchicalAttributes, separator)
     private val connection = ConnectionHandler(hierarchical, searcher.connectFilterState(filterState))
 
     override fun onCreate(savedInstanceState: Bundle?) {
