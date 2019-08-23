@@ -10,6 +10,7 @@ import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
+import com.algolia.instantsearch.helper.searcher.SearcherPlaces
 import com.algolia.search.model.places.Country
 import com.algolia.search.model.places.PlaceType
 import com.algolia.search.model.places.PlacesQuery
