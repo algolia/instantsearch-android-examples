@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.filter.segment
+package com.algolia.instantsearch.showcase.filter.map
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,7 @@ import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
-import kotlinx.android.synthetic.main.showcase_filter_segment.*
+import kotlinx.android.synthetic.main.showcase_filter_map.*
 import kotlinx.android.synthetic.main.header_filter.*
 
 
@@ -27,16 +27,16 @@ class FilterMapShowcase : AppCompatActivity() {
         R.id.male to Filter.Facet(gender, "male"),
         R.id.female to Filter.Facet(gender, "female")
     )
-    private val filterSegment = FilterMapConnector(filters, filterState, groupID = groupGender)
-    private val connection = ConnectionHandler(filterSegment, searcher.connectFilterState(filterState))
+    private val filterMap = FilterMapConnector(filters, filterState, groupID = groupGender)
+    private val connection = ConnectionHandler(filterMap, searcher.connectFilterState(filterState))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_segment)
+        setContentView(R.layout.showcase_filter_map)
 
         val viewGender = FilterMapViewRadioGroup(radioGroupGender)
 
-        connection += filterSegment.connectView(viewGender)
+        connection += filterMap.connectView(viewGender)
 
         configureToolbar(toolbar)
         configureSearcher(searcher)
