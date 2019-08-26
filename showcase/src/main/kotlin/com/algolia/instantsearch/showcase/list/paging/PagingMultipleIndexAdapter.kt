@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.list.paging
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -68,6 +69,7 @@ class PagingMultipleIndexAdapter : ListAdapter<PagingMultipleIndexItem, PagingMu
             return oldItem == newItem
         }
 
+        @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: PagingMultipleIndexItem, newItem: PagingMultipleIndexItem): Boolean {
             return oldItem == newItem
         }
