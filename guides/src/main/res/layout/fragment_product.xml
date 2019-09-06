@@ -43,8 +43,7 @@
                 app:layout_constraintEnd_toStartOf="@id/filters"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:iconifiedByDefault="false"
-                tools:queryHint="@string/search_colors"/>
+                app:iconifiedByDefault="false" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
