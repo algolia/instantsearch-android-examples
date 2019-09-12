@@ -31,7 +31,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Environment:**  
  - OS: [e.g. iOS / windows / mac / android]
- - Version [e.g. 2.0.0]
+ - Commit hash
 
 **Additional context**  
 Add any other context about the problem here.
