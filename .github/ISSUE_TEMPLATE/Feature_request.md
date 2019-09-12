@@ -7,8 +7,8 @@ about: Suggest an idea for this project
 <!--
 Thanks for participating in this project! We will try to answer as soon as possible 🙏
     
-/!\ You are reporting a bug in our Examples. 
-If the issue you are reporting is about the library and not the examples, 
+/!\ You are requesting a feature in our Examples. 
+If the feature you are requesting is about the library and not the examples, 
 please open an issue there instead: https://github.com/algolia/instantsearch-android/issues/new
 /!\
 -->
