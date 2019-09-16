@@ -11,7 +11,7 @@ import com.algolia.instantsearch.showcase.filter.list.FilterListNumericShowcase
 import com.algolia.instantsearch.showcase.filter.list.FilterListTagShowcase
 import com.algolia.instantsearch.showcase.filter.numeric.comparison.FilterComparisonShowcase
 import com.algolia.instantsearch.showcase.filter.range.FilterRangeShowcase
-import com.algolia.instantsearch.showcase.filter.segment.FilterMapShowcase
+import com.algolia.instantsearch.showcase.filter.map.FilterMapShowcase
 import com.algolia.instantsearch.showcase.filter.toggle.FilterToggleShowcase
 import com.algolia.instantsearch.showcase.hierarchical.HierarchicalShowcase
 import com.algolia.instantsearch.showcase.highlighting.HighlightingShowcase

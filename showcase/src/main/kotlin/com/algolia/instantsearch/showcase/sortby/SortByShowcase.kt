@@ -17,7 +17,7 @@ import com.algolia.instantsearch.helper.sortby.SortByConnector
 import com.algolia.instantsearch.helper.sortby.connectView
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.IndexName
-import kotlinx.android.synthetic.main.showcase_index_segment.*
+import kotlinx.android.synthetic.main.showcase_sort_by.*
 
 
 class SortByShowcase : AppCompatActivity() {
@@ -36,7 +36,7 @@ class SortByShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_index_segment)
+        setContentView(R.layout.showcase_sort_by)
 
         val adapter = ArrayAdapter<String>(this, R.layout.menu_item)
         val view = SortByViewAutocomplete(autocompleteTextView, adapter)
