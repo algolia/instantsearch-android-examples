@@ -5,7 +5,7 @@ apply plugin: 'kotlinx-serialization'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "29.0.0"
+    buildToolsVersion build_tools_version
     defaultConfig {
         applicationId "com.algolia.instantsearch.showcase"
         minSdkVersion 23
