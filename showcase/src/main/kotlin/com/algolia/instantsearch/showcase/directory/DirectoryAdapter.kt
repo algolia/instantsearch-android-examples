@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.directory
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -55,6 +56,7 @@ class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUti
                 } else false
             }
 
+            @SuppressLint("DiffUtilEquals") // all subclasses are data classes
             override fun areContentsTheSame(oldItem: DirectoryItem, newItem: DirectoryItem): Boolean {
                 return oldItem == newItem
             }

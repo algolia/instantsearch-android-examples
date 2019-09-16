@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.list.merged
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -55,6 +56,7 @@ class MergedListAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(this) {
             return oldItem == newItem
         }
 
+        @SuppressLint("DiffUtilEquals") // items are either String/Actor/Movie, with equals()
         override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
             return oldItem == newItem
         }
