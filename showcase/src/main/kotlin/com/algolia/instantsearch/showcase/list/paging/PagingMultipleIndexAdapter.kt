@@ -69,7 +69,7 @@ class PagingMultipleIndexAdapter : ListAdapter<PagingMultipleIndexItem, PagingMu
             return oldItem == newItem
         }
 
-        @SuppressLint("DiffUtilEquals")
+        @SuppressLint("DiffUtilEquals") // all subclasses are data classes
         override fun areContentsTheSame(oldItem: PagingMultipleIndexItem, newItem: PagingMultipleIndexItem): Boolean {
             return oldItem == newItem
         }

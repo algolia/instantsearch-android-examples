@@ -56,7 +56,7 @@ class MergedListAdapter : ListAdapter<Any, RecyclerView.ViewHolder>(this) {
             return oldItem == newItem
         }
 
-        @SuppressLint("DiffUtilEquals")
+        @SuppressLint("DiffUtilEquals") // items are either String/Actor/Movie, with equals()
         override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
             return oldItem == newItem
         }

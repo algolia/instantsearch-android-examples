@@ -56,7 +56,7 @@ class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUti
                 } else false
             }
 
-            @SuppressLint("DiffUtilEquals")
+            @SuppressLint("DiffUtilEquals") // all subclasses are data classes
             override fun areContentsTheSame(oldItem: DirectoryItem, newItem: DirectoryItem): Boolean {
                 return oldItem == newItem
             }
