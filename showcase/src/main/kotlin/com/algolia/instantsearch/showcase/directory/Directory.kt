@@ -20,6 +20,7 @@ import com.algolia.instantsearch.showcase.list.paging.PagingMultipleIndexShowcas
 import com.algolia.instantsearch.showcase.list.paging.PagingSingleIndexShowcase
 import com.algolia.instantsearch.showcase.loading.LoadingShowcase
 import com.algolia.instantsearch.showcase.search.SearchAsYouTypeShowcase
+import com.algolia.instantsearch.showcase.search.SearchAutoCompleteTextView
 import com.algolia.instantsearch.showcase.search.SearchOnSubmitShowcase
 import com.algolia.instantsearch.showcase.sortby.SortByShowcase
 import com.algolia.instantsearch.showcase.stats.StatsShowcase
@@ -42,6 +43,7 @@ val showcases = mapOf(
     ObjectID("filter_numeric_range") to FilterRangeShowcase::class,
     ObjectID("search_on_submit") to SearchOnSubmitShowcase::class,
     ObjectID("search_as_you_type") to SearchAsYouTypeShowcase::class,
+    ObjectID("search_auto_complete_text_view") to SearchAutoCompleteTextView::class,
     ObjectID("paging_single_searcher") to PagingSingleIndexShowcase::class,
     ObjectID("sort_by") to SortByShowcase::class,
     ObjectID("stats") to StatsShowcase::class,

@@ -39,7 +39,7 @@ class SortByShowcase : AppCompatActivity() {
         setContentView(R.layout.showcase_sort_by)
 
         val adapter = ArrayAdapter<String>(this, R.layout.menu_item)
-        val view = SortByViewAutocomplete(autocompleteTextView, adapter)
+        val view = SortByViewAutocomplete(autoCompleteTextView, adapter)
         val adapterMovie = MovieAdapter()
 
         connection += sortBy.connectView(view) { index ->

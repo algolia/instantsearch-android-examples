@@ -89,6 +89,11 @@
             android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
 
         <activity
+            android:name="com.algolia.instantsearch.showcase.search.SearchAutoCompleteTextView"
+            android:exported="true"
+            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
+
+        <activity
             android:name="com.algolia.instantsearch.showcase.list.paging.PagingSingleIndexShowcase"
             android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
 
