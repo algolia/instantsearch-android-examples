@@ -50,6 +50,6 @@ class PlacesActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        connection.disconnect()
+        connection.clear()
     }
 }

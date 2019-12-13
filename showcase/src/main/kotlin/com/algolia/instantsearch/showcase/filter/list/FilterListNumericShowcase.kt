@@ -57,6 +57,6 @@ class FilterListNumericShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.disconnect()
+        connection.clear()
     }
 }

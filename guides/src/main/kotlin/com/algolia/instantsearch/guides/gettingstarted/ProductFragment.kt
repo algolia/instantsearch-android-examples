@@ -49,6 +49,6 @@ class ProductFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        connection.disconnect()
+        connection.clear()
     }
 }

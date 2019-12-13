@@ -67,6 +67,6 @@ class ViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         searcher.cancel()
-        connection.disconnect()
+        connection.clear()
     }
 }

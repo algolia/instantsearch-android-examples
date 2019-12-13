@@ -75,6 +75,6 @@ class FacetListSearchShowcase : AppCompatActivity() {
         super.onDestroy()
         searcher.cancel()
         searcherForFacet.cancel()
-        connection.disconnect()
+        connection.clear()
     }
 }
