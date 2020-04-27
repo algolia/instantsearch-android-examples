@@ -23,7 +23,7 @@ import com.algolia.search.model.IndexName
 import io.ktor.client.features.logging.LogLevel
 
 
-class ViewModel : ViewModel() {
+class MyViewModel : ViewModel() {
 
     val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"), LogLevel.ALL)
     val index = client.initIndex(IndexName("bestbuy_promo"))
@@ -38,7 +38,6 @@ class ViewModel : ViewModel() {
     val pagedListConfig = PagedList.Config.Builder().setPageSize(50).setEnablePlaceholders(false).build()
     val products: LiveData<PagedList<Product>> = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     val searchBox = SearchBoxConnectorPagedList(searcher, listOf(products))
-    val adapterProduct = ProductAdapter()
     val stats = StatsConnector(searcher)
 
     val filterState = FilterState()
@@ -52,7 +51,6 @@ class ViewModel : ViewModel() {
         sortBy = listOf(FacetSortCriterion.CountDescending, FacetSortCriterion.IsRefined),
         limit = 100
     )
-    val adapterFacet = FacetListAdapter(FacetViewHolderImpl.Factory)
     val connection = ConnectionHandler()
 
     init {
@@ -60,7 +58,6 @@ class ViewModel : ViewModel() {
         connection += stats
         connection += facetList
         connection += searcher.connectFilterState(filterState)
-        connection += facetList.connectView(adapterFacet, facetPresenter)
         connection += filterState.connectPagedList(products)
     }
 
