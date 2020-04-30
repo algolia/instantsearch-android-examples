@@ -29,10 +29,6 @@ class GettingStartedGuide : AppCompatActivity() {
             .commit()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         supportFragmentManager.popBackStack()
         return super.onSupportNavigateUp()

@@ -9,7 +9,7 @@ import com.algolia.search.model.search.Facet
 import kotlinx.android.synthetic.main.list_item_selectable.view.*
 
 
-class FacetViewHolderImpl(view: View) : FacetListViewHolder(view) {
+class MyFacetListViewHolder(view: View) : FacetListViewHolder(view) {
 
     override fun bind(facet: Facet, selected: Boolean, onClickListener: View.OnClickListener) {
         view.setOnClickListener(onClickListener)
@@ -22,7 +22,7 @@ class FacetViewHolderImpl(view: View) : FacetListViewHolder(view) {
     object Factory : FacetListViewHolder.Factory {
 
         override fun createViewHolder(parent: ViewGroup): FacetListViewHolder {
-            return FacetViewHolderImpl(parent.inflate(R.layout.list_item_selectable))
+            return MyFacetListViewHolder(parent.inflate(R.layout.list_item_selectable))
         }
     }
 }
