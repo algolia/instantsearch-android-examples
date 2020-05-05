@@ -29,7 +29,7 @@ class HighlightingShowcase : AppCompatActivity() {
 
         configureToolbar(toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(list, adapter)
+        configureRecyclerView(hits, adapter)
         configureSearchView(searchView, getString(R.string.search_movies))
         configureSearchBox(searchView, searcher, connection)
 

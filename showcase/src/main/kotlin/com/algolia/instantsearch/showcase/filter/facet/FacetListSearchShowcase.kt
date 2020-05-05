@@ -61,7 +61,7 @@ class FacetListSearchShowcase : AppCompatActivity() {
         connection += searchBox.connectView(searchBoxView)
 
         configureToolbar(toolbar)
-        configureRecyclerView(list, facetView)
+        configureRecyclerView(hits, facetView)
         configureSearchView(searchView, getString(R.string.search_brands))
         onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, brand)
         onClearAllThenClearFilters(filterState, filtersClearAll, connection)

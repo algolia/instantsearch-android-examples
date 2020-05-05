@@ -41,7 +41,7 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
         configureToolbar(toolbar)
         configureSearcher(searcher)
         configureSearchView(searchView, getString(R.string.search_movies))
-        configureRecyclerView(list, adapter)
+        configureRecyclerView(hits, adapter)
         onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
     }
 

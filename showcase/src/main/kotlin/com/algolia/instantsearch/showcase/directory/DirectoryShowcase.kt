@@ -35,7 +35,7 @@ class DirectoryShowcase : AppCompatActivity() {
                 }
         }
 
-        configureRecyclerView(list, adapter)
+        configureRecyclerView(hits, adapter)
         configureSearchView(searchView, getString(R.string.search_showcases))
         configureSearchBox(searchView, searcher, connection)
 

@@ -17,6 +17,8 @@ import kotlinx.android.synthetic.main.list_item_product.view.itemType
 
 class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffUtil), HitsView<Product> {
 
+    var callback: ((Product) -> Unit)? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         return ProductViewHolder(parent.inflate(R.layout.list_item_product))
     }
@@ -24,6 +26,9 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val item = getItem(position)
         if (item != null) holder.bind(item)
+        holder.itemView.setOnClickListener {
+            callback?.invoke(item)
+        }
     }
 
     override fun setHits(hits: List<Product>) {

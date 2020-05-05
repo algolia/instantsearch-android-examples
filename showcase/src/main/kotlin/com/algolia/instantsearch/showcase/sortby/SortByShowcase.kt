@@ -55,7 +55,7 @@ class SortByShowcase : AppCompatActivity() {
         }
 
         configureToolbar(toolbar)
-        configureRecyclerView(list, adapterMovie)
+        configureRecyclerView(hits, adapterMovie)
 
         searcher.searchAsync()
     }

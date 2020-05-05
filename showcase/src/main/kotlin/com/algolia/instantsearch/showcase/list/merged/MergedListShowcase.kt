@@ -52,7 +52,7 @@ class MergedListShowcase : AppCompatActivity() {
 
         configureToolbar(toolbar)
         configureSearchView(searchView, getString(R.string.search_movies))
-        configureRecyclerView(list, adapter)
+        configureRecyclerView(hits, adapter)
 
         searcher.searchAsync()
     }
