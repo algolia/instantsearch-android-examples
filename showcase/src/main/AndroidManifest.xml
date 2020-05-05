@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.algolia.instantsearch.showcase">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
@@ -14,113 +13,90 @@
         android:supportsRtl="true"
         android:theme="@style/InstantSearchShowcase"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name="com.algolia.instantsearch.showcase.directory.DirectoryShowcase">
+        <activity android:name=".directory.DirectoryShowcase">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.algolia.instantsearch.showcase.highlighting.HighlightingShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".highlighting.HighlightingShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.clear.FilterClearShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.clear.FilterClearShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.current.ShowcaseFilterCurrent"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.current.ShowcaseFilterCurrent"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.toggle.FilterToggleShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.toggle.FilterToggleShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.range.FilterRangeShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.range.FilterRangeShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.map.FilterMapShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.map.FilterMapShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.list.FilterListAllShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.list.FilterListAllShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.list.FilterListFacetShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.list.FilterListFacetShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.list.FilterListNumericShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.list.FilterListNumericShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.list.FilterListTagShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.list.FilterListTagShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.facet.FacetListShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.facet.FacetListShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.facet.FacetListSearchShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.facet.FacetListSearchShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.facet.FacetListPersistentShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.facet.FacetListPersistentShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.filter.numeric.comparison.FilterComparisonShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".filter.numeric.comparison.FilterComparisonShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.search.SearchOnSubmitShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".search.SearchOnSubmitShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.search.SearchAsYouTypeShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".search.SearchAsYouTypeShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.search.SearchAutoCompleteTextView"
+            android:name=".search.SearchAutoCompleteTextView"
             android:exported="true"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.list.paging.PagingSingleIndexShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".list.paging.PagingSingleIndexShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.sortby.SortByShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".sortby.SortByShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.stats.StatsShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".stats.StatsShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.loading.LoadingShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".loading.LoadingShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.list.paging.PagingMultipleIndexShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".list.paging.PagingMultipleIndexShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.list.merged.MergedListShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".list.merged.MergedListShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name="com.algolia.instantsearch.showcase.hierarchical.HierarchicalShowcase"
-            android:parentActivityName="com.algolia.instantsearch.showcase.directory.DirectoryShowcase"/>
-
+            android:name=".hierarchical.HierarchicalShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".relateditems.RelatedItemsShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>
