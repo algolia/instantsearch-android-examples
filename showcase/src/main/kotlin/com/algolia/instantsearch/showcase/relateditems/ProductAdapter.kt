@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.core.hits.HitsView
-import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
 import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.instantsearch.showcase.R
 import com.bumptech.glide.Glide
@@ -38,9 +37,9 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
     class ProductViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(product: Product) {
-            view.itemName.text = product.highlightedName?.toSpannedString() ?: product.name
-            view.itemBrand.text = product.highlightedBrand?.toSpannedString() ?: product.brand
-            view.itemType.text = product.highlightedType?.toSpannedString() ?: product.type
+            view.itemName.text = product.name
+            view.itemBrand.text = product.brand
+            view.itemType.text = product.type
             Glide.with(view)
                 .load(product.image).placeholder(android.R.drawable.ic_media_play)
                 .centerCrop()
