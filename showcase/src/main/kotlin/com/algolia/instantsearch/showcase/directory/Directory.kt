@@ -2,16 +2,16 @@ package com.algolia.instantsearch.showcase.directory
 
 import com.algolia.instantsearch.showcase.filter.clear.FilterClearShowcase
 import com.algolia.instantsearch.showcase.filter.current.ShowcaseFilterCurrent
-import com.algolia.instantsearch.showcase.filter.facet.FacetListShowcase
 import com.algolia.instantsearch.showcase.filter.facet.FacetListPersistentShowcase
 import com.algolia.instantsearch.showcase.filter.facet.FacetListSearchShowcase
+import com.algolia.instantsearch.showcase.filter.facet.FacetListShowcase
 import com.algolia.instantsearch.showcase.filter.list.FilterListAllShowcase
 import com.algolia.instantsearch.showcase.filter.list.FilterListFacetShowcase
 import com.algolia.instantsearch.showcase.filter.list.FilterListNumericShowcase
 import com.algolia.instantsearch.showcase.filter.list.FilterListTagShowcase
+import com.algolia.instantsearch.showcase.filter.map.FilterMapShowcase
 import com.algolia.instantsearch.showcase.filter.numeric.comparison.FilterComparisonShowcase
 import com.algolia.instantsearch.showcase.filter.range.FilterRangeShowcase
-import com.algolia.instantsearch.showcase.filter.map.FilterMapShowcase
 import com.algolia.instantsearch.showcase.filter.toggle.FilterToggleShowcase
 import com.algolia.instantsearch.showcase.hierarchical.HierarchicalShowcase
 import com.algolia.instantsearch.showcase.highlighting.HighlightingShowcase
@@ -19,13 +19,13 @@ import com.algolia.instantsearch.showcase.list.merged.MergedListShowcase
 import com.algolia.instantsearch.showcase.list.paging.PagingMultipleIndexShowcase
 import com.algolia.instantsearch.showcase.list.paging.PagingSingleIndexShowcase
 import com.algolia.instantsearch.showcase.loading.LoadingShowcase
+import com.algolia.instantsearch.showcase.relateditems.RelatedItemsShowcase
 import com.algolia.instantsearch.showcase.search.SearchAsYouTypeShowcase
 import com.algolia.instantsearch.showcase.search.SearchAutoCompleteTextView
 import com.algolia.instantsearch.showcase.search.SearchOnSubmitShowcase
 import com.algolia.instantsearch.showcase.sortby.SortByShowcase
 import com.algolia.instantsearch.showcase.stats.StatsShowcase
 import com.algolia.search.model.ObjectID
-
 
 val showcases = mapOf(
     ObjectID("filter_current") to ShowcaseFilterCurrent::class,
@@ -52,5 +52,6 @@ val showcases = mapOf(
     ObjectID("paging_multiple_index") to PagingMultipleIndexShowcase::class,
     ObjectID("filter_hierarchical") to HierarchicalShowcase::class,
     ObjectID("merged_list") to MergedListShowcase::class,
-    ObjectID("highlighting") to HighlightingShowcase::class
+    ObjectID("highlighting") to HighlightingShowcase::class,
+    ObjectID("personalisation_related_items") to RelatedItemsShowcase::class
 )

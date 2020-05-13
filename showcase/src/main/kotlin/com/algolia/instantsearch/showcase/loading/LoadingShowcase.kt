@@ -1,7 +1,6 @@
 package com.algolia.instantsearch.showcase.loading
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
@@ -19,7 +18,7 @@ import com.algolia.instantsearch.helper.loading.LoadingConnector
 import com.algolia.instantsearch.helper.loading.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import kotlinx.android.synthetic.main.showcase_loading.*
-import kotlinx.android.synthetic.main.showcase_search.list
+import kotlinx.android.synthetic.main.showcase_search.hits
 import kotlinx.android.synthetic.main.showcase_search.toolbar
 import kotlinx.android.synthetic.main.include_search.*
 
@@ -49,7 +48,7 @@ class LoadingShowcase : AppCompatActivity() {
         configureSearcher(searcher)
         configureToolbar(toolbar)
         configureSearchView(searchView, getString(R.string.search_movies))
-        configureRecyclerView(list, adapter)
+        configureRecyclerView(hits, adapter)
 
         searcher.searchAsync()
     }

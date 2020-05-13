@@ -43,7 +43,7 @@ class HierarchicalShowcase : AppCompatActivity() {
 
         connection += hierarchical.connectView(view, HierarchicalPresenterImpl(separator))
 
-        list.let {
+        hits.let {
             it.adapter = view
             it.layoutManager = LinearLayoutManager(this)
         }

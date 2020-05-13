@@ -19,7 +19,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/list"
+        android:id="@+id/hits"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"

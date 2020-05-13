@@ -61,7 +61,7 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
 
         configureToolbar(toolbar)
         configureSearchView(searchView, getString(R.string.search_movies))
-        configureRecyclerView(list, adapter)
+        configureRecyclerView(hits, adapter)
     }
 
     override fun onDestroy() {

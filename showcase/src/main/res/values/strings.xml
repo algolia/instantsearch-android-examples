@@ -22,4 +22,5 @@
     <string name="bounds_reset">Reset bounds</string>
     <string name="bounds_change">Change bounds</string>
     <string name="button_reset">Reset</string>
+    <string name="related_items_header">Related Items</string>
 </resources>
