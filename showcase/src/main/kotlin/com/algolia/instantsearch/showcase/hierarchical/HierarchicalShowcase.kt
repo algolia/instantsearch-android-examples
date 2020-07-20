@@ -13,9 +13,17 @@ import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureSearcher
 import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.showcase.onClearAllThenClearFilters
+import com.algolia.instantsearch.showcase.onErrorThenUpdateFiltersText
+import com.algolia.instantsearch.showcase.onFilterChangedThenUpdateFiltersText
+import com.algolia.instantsearch.showcase.onResetThenRestoreFilters
+import com.algolia.instantsearch.showcase.onResponseChangedThenUpdateNbHits
 import com.algolia.instantsearch.showcase.stubIndex
 import com.algolia.search.model.Attribute
+import kotlinx.android.synthetic.main.header_filter.*
+import kotlinx.android.synthetic.main.showcase_filter_clear.*
 import kotlinx.android.synthetic.main.showcase_hierarchical.*
+import kotlinx.android.synthetic.main.showcase_hierarchical.toolbar
 
 class HierarchicalShowcase : AppCompatActivity() {
 
@@ -53,6 +61,10 @@ class HierarchicalShowcase : AppCompatActivity() {
         configureRecyclerView(hits, view)
         configureToolbar(toolbar)
         configureSearcher(searcher)
+        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, hierarchicalCategory)
+        onErrorThenUpdateFiltersText(searcher, filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
 
         searcher.searchAsync()
     }

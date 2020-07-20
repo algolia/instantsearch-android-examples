@@ -14,6 +14,6 @@ class HierarchicalViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         view.selectableItemSubtitle.text = item.facet.count.toString()
         view.selectableItemSubtitle.visibility = View.VISIBLE
         view.setOnClickListener(onClick)
-        view.selectableItemIcon.visibility = if (item.selected) View.VISIBLE else View.INVISIBLE
+        view.selectableItemIcon.visibility = if (item.isSelected) View.VISIBLE else View.INVISIBLE
     }
 }
