@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.Callback
-import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalItem
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalView
+import com.algolia.instantsearch.showcase.R
 
-
-class HierarchicalAdapter : ListAdapter<HierarchicalItem, HierarchicalViewHolder>(diffUtil), HierarchicalView {
+class HierarchicalAdapter : ListAdapter<HierarchicalItem, HierarchicalViewHolder>(diffUtil),
+    HierarchicalView {
 
     override var onSelectionChanged: Callback<String>? = null
 
@@ -33,11 +33,17 @@ class HierarchicalAdapter : ListAdapter<HierarchicalItem, HierarchicalViewHolder
 
         private val diffUtil = object : DiffUtil.ItemCallback<HierarchicalItem>() {
 
-            override fun areItemsTheSame(oldItem: HierarchicalItem, newItem: HierarchicalItem): Boolean {
+            override fun areItemsTheSame(
+                oldItem: HierarchicalItem,
+                newItem: HierarchicalItem
+            ): Boolean {
                 return oldItem == newItem
             }
 
-            override fun areContentsTheSame(oldItem: HierarchicalItem, newItem: HierarchicalItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: HierarchicalItem,
+                newItem: HierarchicalItem
+            ): Boolean {
                 return oldItem == newItem
             }
         }
