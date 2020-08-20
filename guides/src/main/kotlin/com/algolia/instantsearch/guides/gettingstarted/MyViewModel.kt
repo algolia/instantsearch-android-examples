@@ -6,11 +6,12 @@ import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
-import com.algolia.instantsearch.helper.android.filter.facet.FacetListAdapter
 import com.algolia.instantsearch.helper.android.filter.state.connectPagedList
 import com.algolia.instantsearch.helper.android.list.SearcherSingleIndexDataSource
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
-import com.algolia.instantsearch.helper.filter.facet.*
+import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
+import com.algolia.instantsearch.helper.filter.facet.FacetListPresenterImpl
+import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
@@ -21,22 +22,29 @@ import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import io.ktor.client.features.logging.LogLevel
-
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 
 class MyViewModel : ViewModel() {
 
-    val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"), LogLevel.ALL)
+    val client = ClientSearch(
+        ApplicationID("latency"),
+        APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"),
+        LogLevel.ALL
+    )
     val index = client.initIndex(IndexName("bestbuy_promo"))
     val searcher = SearcherSingleIndex(index)
 
     val dataSourceFactory = SearcherSingleIndexDataSource.Factory(searcher) { hit ->
         Product(
-            hit.json.getPrimitive("name").content,
-            hit.json.getObjectOrNull("_highlightResult")
+            hit.json.getValue("name").jsonPrimitive.content,
+            hit.json["_highlightResult"]?.jsonObject
         )
     }
-    val pagedListConfig = PagedList.Config.Builder().setPageSize(50).setEnablePlaceholders(false).build()
-    val products: LiveData<PagedList<Product>> = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
+    val pagedListConfig =
+        PagedList.Config.Builder().setPageSize(50).setEnablePlaceholders(false).build()
+    val products: LiveData<PagedList<Product>> =
+        LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
     val searchBox = SearchBoxConnectorPagedList(searcher, listOf(products))
     val stats = StatsConnector(searcher)
 
