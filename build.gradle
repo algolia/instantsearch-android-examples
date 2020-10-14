@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = "1.4.10"
     ext.lifecycle_version = "2.2.0"
     ext.build_tools_version = "30.0.2"
-    ext.instantsearch = '2.6.0'
+    ext.instantsearch = '2.7.0'
     ext.canary = '2.3'
     repositories {
         google()
