@@ -12,10 +12,11 @@ import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.helper.deserialize
-import com.algolia.search.model.search.Query
+import com.algolia.search.model.insights.EventName
 import io.ktor.client.features.logging.LogLevel
 import kotlinx.android.synthetic.main.demo_activity.*
 
@@ -29,9 +30,21 @@ class DemoActivity : AppCompatActivity() {
         )
     )
     private val stubIndex = client.initIndex(App.INDEX_NAME)
-    private val searcher = SearcherSingleIndex(stubIndex, query = Query(clickAnalytics = true))
+    private val searcher = SearcherSingleIndex(stubIndex)
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.OnSubmit)
     private val connection = ConnectionHandler(searchBox)
+
+    private val insights = Insights.register(
+        context = applicationContext,
+        appId = App.APP_ID,
+        apiKey = App.API_KEY,
+        indexName = App.INDEX_NAME
+    )
+    private val hitsTracker = HitsTracker(
+        eventName = EventName("demo"),
+        searcher = searcher,
+        insights = insights
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
