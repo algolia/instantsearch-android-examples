@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.directory
 
+import com.algolia.instantsearch.showcase.customdata.QueryRuleCustomDataShowcase
 import com.algolia.instantsearch.showcase.filter.clear.FilterClearShowcase
 import com.algolia.instantsearch.showcase.filter.current.ShowcaseFilterCurrent
 import com.algolia.instantsearch.showcase.filter.facet.FacetListPersistentShowcase
@@ -53,5 +54,6 @@ val showcases = mapOf(
     ObjectID("filter_hierarchical") to HierarchicalShowcase::class,
     ObjectID("merged_list") to MergedListShowcase::class,
     ObjectID("highlighting") to HighlightingShowcase::class,
-    ObjectID("personalisation_related_items") to RelatedItemsShowcase::class
+    ObjectID("personalisation_related_items") to RelatedItemsShowcase::class,
+    ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
 )

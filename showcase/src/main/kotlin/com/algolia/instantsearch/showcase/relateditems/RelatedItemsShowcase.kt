@@ -11,6 +11,8 @@ import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureSearcher
 import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.showcase.list.product.Product
+import com.algolia.instantsearch.showcase.list.product.ProductAdapter
 import com.algolia.instantsearch.showcase.stubIndex
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.Attribute

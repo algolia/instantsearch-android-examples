@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.relateditems
+package com.algolia.instantsearch.showcase.list.product
 
 import com.algolia.search.model.ObjectID
 import com.algolia.search.model.indexing.Indexable

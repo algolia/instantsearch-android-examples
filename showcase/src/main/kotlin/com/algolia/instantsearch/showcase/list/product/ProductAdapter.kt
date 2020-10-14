@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.relateditems
+package com.algolia.instantsearch.showcase.list.product
 
 import android.view.View
 import android.view.ViewGroup
