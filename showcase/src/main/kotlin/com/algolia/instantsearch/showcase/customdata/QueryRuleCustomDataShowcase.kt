@@ -5,8 +5,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.lifecycleScope
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
+import com.algolia.instantsearch.extension.customdata.model
+import com.algolia.instantsearch.extension.searchbox.submits
+import com.algolia.instantsearch.extension.subscription.asFlow
+import com.algolia.instantsearch.extension.subscription.asLiveData
+import com.algolia.instantsearch.extension.subscription.asStateFlow
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.customdata.QueryRuleCustomDataConnector
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
@@ -28,6 +35,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.include_search.searchView
 import kotlinx.android.synthetic.main.include_search_info.*
 import kotlinx.android.synthetic.main.showcase_query_rule_custom_data.*
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class QueryRuleCustomDataShowcase : AppCompatActivity() {
 
@@ -48,20 +58,26 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
             response.hits.deserialize(Product.serializer())
         }
 
-        queryRuleCustomData.subscribe { model ->
-            when {
-                model == null -> noBanner()
-                model.banner != null -> showBannerImage(model)
-                model.title != null -> showBannerText(model)
-            }
-        }
+        // default
+        //observeBasic()
 
-        searchBox.viewModel.eventSubmit.subscribe {
-            val model = queryRuleCustomData.viewModel.item.value ?: return@subscribe
-            if (model.banner == null && model.title == null) {
-                redirect(model.link, resources.getString(R.string.redirect_via_submit))
-            }
-        }
+        // using LiveData
+        //observeAsLiveData()
+
+        // using Flow
+        observeAsFlow()
+
+        // using StateFlow
+        // observeAsStateFlow()
+
+        searchBox.submits.asFlow()
+            .onEach { handleSearchEvent() }
+            .launchIn(lifecycleScope)
+
+        // SearchBox using LiveData
+        //searchBox.events
+        //    .asLiveData()
+        //    .observe(this) { handleSearchEvent() }
 
         configureToolbar(toolbar)
         configureSearcher(searcher)
@@ -70,6 +86,46 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
         configureHelp(info)
 
         searcher.searchAsync()
+    }
+
+    private fun handleSearchEvent() {
+        val model = queryRuleCustomData.model.value ?: return
+        if (model.banner == null && model.title == null) {
+            redirect(model.link, resources.getString(R.string.redirect_via_submit))
+        }
+    }
+
+    private fun observeBasic() {
+        queryRuleCustomData.subscribe { model -> handleBanner(model) }
+    }
+
+    private fun observeAsLiveData() {
+        Transformations
+            .distinctUntilChanged(queryRuleCustomData.model.asLiveData())
+            .observe(this) { model -> handleBanner(model) }
+    }
+
+    private fun observeAsFlow() {
+        queryRuleCustomData.model
+            .asFlow()
+            .distinctUntilChanged()
+            .onEach { model -> handleBanner(model) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun observeAsStateFlow() {
+        queryRuleCustomData.model
+            .asStateFlow(lifecycleScope)
+            .onEach { model -> handleBanner(model) }
+            .launchIn(lifecycleScope)
+    }
+
+    private fun handleBanner(model: Banner?) {
+        when {
+            model == null -> noBanner()
+            model.banner != null -> showBannerImage(model)
+            model.title != null -> showBannerText(model)
+        }
     }
 
     override fun onDestroy() {
