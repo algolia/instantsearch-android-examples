@@ -4,12 +4,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
 import com.algolia.instantsearch.helper.android.inflate
+import com.algolia.instantsearch.helper.tracker.HitsTracker
 
-class ListItemAdapter : ListAdapter<ListItem, ListItemViewHolder>(ListItemCallback),
+class ListItemAdapter(private val hitsTracker: HitsTracker) :
+    ListAdapter<ListItem, ListItemViewHolder>(ListItemCallback),
     HitsView<ListItem> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
-        return ListItemViewHolder(parent.inflate(R.layout.list_item))
+        return ListItemViewHolder(parent.inflate(R.layout.list_item), hitsTracker)
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {

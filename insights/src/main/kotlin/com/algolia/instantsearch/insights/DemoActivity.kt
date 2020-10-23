@@ -13,6 +13,7 @@ import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.tracker.HitsTracker
+import com.algolia.instantsearch.insights.App.Companion.INDEX_NAME
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.helper.deserialize
@@ -29,28 +30,22 @@ class DemoActivity : AppCompatActivity() {
             logLevel = LogLevel.ALL
         )
     )
-    private val stubIndex = client.initIndex(App.INDEX_NAME)
+    private val stubIndex = client.initIndex(INDEX_NAME)
     private val searcher = SearcherSingleIndex(stubIndex)
-    private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.OnSubmit)
-    private val connection = ConnectionHandler(searchBox)
+    private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
 
-    private val insights = Insights.register(
-        context = applicationContext,
-        appId = App.APP_ID,
-        apiKey = App.API_KEY,
-        indexName = App.INDEX_NAME
-    )
     private val hitsTracker = HitsTracker(
         eventName = EventName("demo"),
         searcher = searcher,
-        insights = insights
+        insights = Insights.shared(INDEX_NAME)
     )
+    private val connection = ConnectionHandler(searchBox, hitsTracker)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.demo_activity)
 
-        val adapter = ListItemAdapter()
+        val adapter = ListItemAdapter(hitsTracker)
         recyclerView.let {
             it.visibility = View.VISIBLE
             it.layoutManager = LinearLayoutManager(this)
