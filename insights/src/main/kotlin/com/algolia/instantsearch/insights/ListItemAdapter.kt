@@ -7,8 +7,8 @@ import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 
 class ListItemAdapter(private val hitsTracker: HitsTracker) :
-    ListAdapter<ListItem, ListItemViewHolder>(ListItemCallback),
-    HitsView<ListItem> {
+    ListAdapter<ItemModel, ListItemViewHolder>(ListItemCallback),
+    HitsView<ItemModel> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
         return ListItemViewHolder(parent.inflate(R.layout.list_item), hitsTracker)
@@ -18,7 +18,7 @@ class ListItemAdapter(private val hitsTracker: HitsTracker) :
         getItem(position)?.let { holder.bind(it) }
     }
 
-    override fun setHits(hits: List<ListItem>) {
+    override fun setHits(hits: List<ItemModel>) {
         submitList(hits)
     }
 }

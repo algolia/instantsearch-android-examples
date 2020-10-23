@@ -58,6 +58,7 @@ class DemoActivity : AppCompatActivity() {
         connection += searchBox.connectView(searchBoxView)
         connection += searcher.connectHitsView(adapter) { response ->
             response.hits.deserialize(ListItem.serializer())
+                .mapIndexed { index, listItem -> ItemModel(listItem, index + 1) }
         }
 
         searcher.searchAsync()

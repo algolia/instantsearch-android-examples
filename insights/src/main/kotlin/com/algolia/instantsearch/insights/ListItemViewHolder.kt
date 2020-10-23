@@ -14,16 +14,17 @@ class ListItemViewHolder(itemView: View, private val hitsTracker: HitsTracker) :
     private val imageView = itemView.imageView
     private val button = itemView.button
 
-    fun bind(item: ListItem) {
-        textView.text = item.name
-        button.setOnClickListener { hitsTracker.trackConvert(item) }
+    fun bind(model: ItemModel) {
+        val listItem = model.listItem
+        textView.text = listItem.name
+        button.setOnClickListener { hitsTracker.trackConvert(listItem) }
         itemView.setOnClickListener {
-            item.position?.let { position -> hitsTracker.trackClick(item, position) }
+             hitsTracker.trackClick(listItem, model.position)
         }
 
         Glide
             .with(itemView.context)
-            .load(item.image)
+            .load(listItem.image)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(imageView)
     }

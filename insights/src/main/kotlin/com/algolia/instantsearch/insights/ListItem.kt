@@ -11,5 +11,6 @@ data class ListItem(
     val image: String,
     val queryId: String? = null,
     val objectId: String? = null,
-    val position: Int? = null,
 ) : Indexable
+
+data class ItemModel(val listItem: ListItem, val position: Int)

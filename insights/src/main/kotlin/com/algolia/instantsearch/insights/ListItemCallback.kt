@@ -2,13 +2,13 @@ package com.algolia.instantsearch.insights
 
 import androidx.recyclerview.widget.DiffUtil
 
-object ListItemCallback : DiffUtil.ItemCallback<ListItem>() {
+object ListItemCallback : DiffUtil.ItemCallback<ItemModel>() {
 
-    override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
-        return oldItem.objectId == newItem.objectId
+    override fun areItemsTheSame(oldItem: ItemModel, newItem: ItemModel): Boolean {
+        return oldItem.listItem.objectId == newItem.listItem.objectId
     }
 
-    override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean {
-        return oldItem == newItem
+    override fun areContentsTheSame(oldItem: ItemModel, newItem: ItemModel): Boolean {
+        return oldItem.listItem == newItem.listItem
     }
 }
