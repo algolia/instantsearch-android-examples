@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 data class ListItem(
     override val objectID: ObjectID,
     val name: String,
+    val shortDescription: String? = null,
     val image: String,
     val queryId: String? = null,
     val objectId: String? = null,

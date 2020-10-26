@@ -8,14 +8,6 @@ import com.algolia.search.model.insights.UserToken
 
 class App : Application() {
 
-    //val insights: Insights by lazy {
-    //    Insights.register(this, APP_ID, API_KEY, INDEX_NAME).apply {
-    //        loggingEnabled = true
-    //        userToken = UserToken("userToken")
-    //        minBatchSize = 1
-    //    }
-    //}
-
     override fun onCreate() {
         super.onCreate()
         Insights.register(this, APP_ID, API_KEY, INDEX_NAME).apply {

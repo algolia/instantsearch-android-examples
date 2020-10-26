@@ -5,19 +5,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import kotlinx.android.synthetic.main.list_item.view.*
+import kotlinx.android.synthetic.main.list_item_large.view.*
 
 class ListItemViewHolder(itemView: View, private val hitsTracker: HitsTracker) :
     RecyclerView.ViewHolder(itemView) {
 
-    private val textView = itemView.textView
-    private val imageView = itemView.imageView
-    private val button = itemView.button
+    private val title = itemView.itemTitle
+    private val substitle = itemView.itemSubtitle
+    private val imageView = itemView.itemImage
+    private val buy = itemView.buy
 
     fun bind(model: ItemModel) {
         val listItem = model.listItem
-        textView.text = listItem.name
-        button.setOnClickListener { hitsTracker.trackConvert(listItem) }
+        title.text = listItem.name
+        substitle.text = listItem.shortDescription.orEmpty()
+        buy.setOnClickListener { hitsTracker.trackConvert(listItem) }
         itemView.setOnClickListener {
              hitsTracker.trackClick(listItem, model.position)
         }

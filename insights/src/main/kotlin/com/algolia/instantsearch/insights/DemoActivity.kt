@@ -1,12 +1,9 @@
 package com.algolia.instantsearch.insights
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
@@ -14,12 +11,15 @@ import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.algolia.instantsearch.insights.App.Companion.INDEX_NAME
+import com.algolia.instantsearch.insights.extension.configureRecyclerView
+import com.algolia.instantsearch.insights.extension.configureSearchView
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.insights.EventName
 import io.ktor.client.features.logging.LogLevel
 import kotlinx.android.synthetic.main.demo_activity.*
+import kotlinx.android.synthetic.main.include_search.*
 
 class DemoActivity : AppCompatActivity() {
 
@@ -44,22 +44,19 @@ class DemoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.demo_activity)
+        setSupportActionBar(toolbar)
 
         val adapter = ListItemAdapter(hitsTracker)
-        recyclerView.let {
-            it.visibility = View.VISIBLE
-            it.layoutManager = LinearLayoutManager(this)
-            it.adapter = adapter
-            it.itemAnimator = null
-            it.autoScrollToStart(adapter)
-        }
-
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         connection += searchBox.connectView(searchBoxView)
         connection += searcher.connectHitsView(adapter) { response ->
-            response.hits.deserialize(ListItem.serializer())
+            response.hits
+                .deserialize(ListItem.serializer())
                 .mapIndexed { index, listItem -> ItemModel(listItem, index + 1) }
         }
+
+        configureSearchView(searchView, resources.getString(R.string.search_items))
+        configureRecyclerView(adapter)
 
         searcher.searchAsync()
     }

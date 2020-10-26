@@ -11,7 +11,7 @@ class ListItemAdapter(private val hitsTracker: HitsTracker) :
     HitsView<ItemModel> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListItemViewHolder {
-        return ListItemViewHolder(parent.inflate(R.layout.list_item), hitsTracker)
+        return ListItemViewHolder(parent.inflate(R.layout.list_item_large), hitsTracker)
     }
 
     override fun onBindViewHolder(holder: ListItemViewHolder, position: Int) {
