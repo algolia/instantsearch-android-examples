@@ -14,6 +14,8 @@ class App : Application() {
             loggingEnabled = true
             userToken = UserToken("userToken")
             minBatchSize = 1
+        }.also {
+            it.loggingEnabled = true
         }
     }
 
