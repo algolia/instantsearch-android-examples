@@ -13,6 +13,7 @@ import com.algolia.instantsearch.showcase.filter.list.FilterListTagShowcase
 import com.algolia.instantsearch.showcase.filter.map.FilterMapShowcase
 import com.algolia.instantsearch.showcase.filter.numeric.comparison.FilterComparisonShowcase
 import com.algolia.instantsearch.showcase.filter.range.FilterRangeShowcase
+import com.algolia.instantsearch.showcase.filter.rating.RatingShowcase
 import com.algolia.instantsearch.showcase.filter.toggle.FilterToggleShowcase
 import com.algolia.instantsearch.showcase.hierarchical.HierarchicalShowcase
 import com.algolia.instantsearch.showcase.highlighting.HighlightingShowcase
@@ -56,4 +57,5 @@ val showcases = mapOf(
     ObjectID("highlighting") to HighlightingShowcase::class,
     ObjectID("personalisation_related_items") to RelatedItemsShowcase::class,
     ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
+    ObjectID("filter_rating") to RatingShowcase::class,
 )
