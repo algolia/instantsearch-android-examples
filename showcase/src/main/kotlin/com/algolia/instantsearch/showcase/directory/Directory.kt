@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.directory
 
+import com.algolia.instantsearch.showcase.answers.AnswersShowcase
 import com.algolia.instantsearch.showcase.customdata.QueryRuleCustomDataShowcase
 import com.algolia.instantsearch.showcase.filter.clear.FilterClearShowcase
 import com.algolia.instantsearch.showcase.filter.current.ShowcaseFilterCurrent
@@ -58,4 +59,5 @@ val showcases = mapOf(
     ObjectID("personalisation_related_items") to RelatedItemsShowcase::class,
     ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
     ObjectID("filter_rating") to RatingShowcase::class,
+    ObjectID("answers_qa") to AnswersShowcase::class,
 )

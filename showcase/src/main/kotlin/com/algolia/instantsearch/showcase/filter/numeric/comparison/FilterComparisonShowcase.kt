@@ -42,8 +42,8 @@ class FilterComparisonShowcase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.showcase_filter_comparison)
 
-        searcher.query.addFacet(price)
-        searcher.query.addFacet(year)
+        searcher.request.addFacet(price)
+        searcher.request.addFacet(year)
 
         val priceView = FilterPriceView(filterComparison, price, comparisonPrice.operator)
         val yearView = FilterYearView(filterComparison, year, comparisonYear.operator)

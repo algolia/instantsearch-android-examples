@@ -1,8 +1,8 @@
 buildscript {
-    ext.kotlin_version = "1.4.10"
+    ext.kotlin_version = "1.4.21"
     ext.lifecycle_version = "2.2.0"
-    ext.build_tools_version = "30.0.2"
-    ext.instantsearch = '2.7.2'
+    ext.build_tools_version = "30.0.3"
+    ext.instantsearch = '2.8.0-alpha01'
     ext.canary = '2.5'
     repositories {
         google()
@@ -17,6 +17,7 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         google()
         jcenter()
     }

@@ -33,4 +33,9 @@
     <string name="ok">OK</string>
     <string name="redirect_via_banner_tap">Redirect via banner tap</string>
     <string name="redirect_via_submit">Redirect via submit</string>
+    <string name="search_answers">Ask a quastion, Algolia answers</string>
+    <string name="search_mode">Search Mode</string>
+    <string name="hybrid">Hybrid</string>
+    <string name="standard">Standard</string>
+    <string name="q_a">Semantic Q&amp;A</string>
 </resources>

@@ -36,7 +36,7 @@ class StatsShowcase : AppCompatActivity() {
                 if (response != null) {
                     bold { append(response.nbHits.toString()) }
                     append(" ${getString(R.string.hits)}")
-                    val query = searcher.query.query
+                    val query = searcher.request.query
 
                     if (query != null && query.isNotBlank()) {
                         append(" for \"$query\"")

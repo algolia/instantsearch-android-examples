@@ -27,7 +27,7 @@ class RelatedItemsShowcase : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.showcase_relateditems)
-        searcher.query.hitsPerPage = 3 // Limit to 3 results
+        searcher.request.hitsPerPage = 3 // Limit to 3 results
 
         configureToolbar(toolbar)
         configureSearcher(searcher)

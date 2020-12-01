@@ -37,12 +37,14 @@ import com.algolia.instantsearch.helper.filter.state.toFilterGroups
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherForFacets
+import com.algolia.instantsearch.helper.searcher.SearcherIndex
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenter
 import com.algolia.instantsearch.helper.stats.connectView
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
+import com.algolia.search.helper.toIndexName
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
@@ -53,7 +55,6 @@ import com.algolia.search.model.filter.FilterGroupsConverter
 import com.algolia.search.serialize.KeyIndexName
 import com.algolia.search.serialize.KeyName
 import io.ktor.client.features.logging.LogLevel
-
 
 val client = ClientSearch(
     ConfigurationSearch(
@@ -154,7 +155,7 @@ fun AppCompatActivity.configureTitle(
     }
 }
 
-fun AppCompatActivity.configureSearcher(searcher: SearcherSingleIndex) {
+fun AppCompatActivity.configureSearcher(searcher: SearcherIndex<*>) {
     searcher.index = client.initIndex(intent.indexName)
 }
 
@@ -238,11 +239,21 @@ public fun Set<FilterGroup<*>>.highlight(
             val string = converter(setOf(group))
 
             it.append(string)
-            it.setSpan(ForegroundColorSpan(color), begin, it.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            it.setSpan(
+                ForegroundColorSpan(color),
+                begin,
+                it.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             if (index < size - 1) {
                 begin = it.length
                 it.append(" AND ")
-                it.setSpan(StyleSpan(Typeface.BOLD), begin, it.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                it.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    begin,
+                    it.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             }
             begin = it.length
         }
