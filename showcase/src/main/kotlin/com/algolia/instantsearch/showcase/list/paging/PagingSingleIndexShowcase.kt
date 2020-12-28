@@ -14,6 +14,7 @@ import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPage
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.android.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.showcase.list.movie.FavoriteMovieAdapterPaged
 import kotlinx.android.synthetic.main.showcase_paging.*
 import kotlinx.android.synthetic.main.include_search.*
 
@@ -31,7 +32,7 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.showcase_paging)
 
-        val adapter = MovieAdapterPaged()
+        val adapter = FavoriteMovieAdapterPaged()
         val searchBoxView = SearchBoxViewAppCompat(searchView)
 
         connection += searchBox.connectView(searchBoxView)
