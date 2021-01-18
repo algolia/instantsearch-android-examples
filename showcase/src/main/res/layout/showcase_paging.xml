@@ -43,7 +43,7 @@
         tools:listitem="@layout/list_item_large" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filter"
+        android:id="@+id/fabRefresh"
         style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,6 +52,6 @@
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_filter_list" />
+        app:srcCompat="@drawable/ic_refresh" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

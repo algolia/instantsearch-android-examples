@@ -1,8 +1,8 @@
 package com.algolia.instantsearch.showcase.list.paging
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.algolia.instantsearch.core.connection.ConnectionHandler
@@ -36,13 +36,20 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
 
         connection += searchBox.connectView(searchBoxView)
 
-        movies.observe(this, Observer { hits -> adapter.submitList(hits) })
+        movies.observe(this) { hits ->
+            Log.d("PAGING", "Hits: $hits")
+            adapter.submitList(hits)
+        }
 
         configureToolbar(toolbar)
         configureSearcher(searcher)
         configureSearchView(searchView, getString(R.string.search_movies))
         configureRecyclerView(hits, adapter)
         onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+
+        fabRefresh.setOnClickListener {
+            movies.value?.dataSource?.invalidate()
+        }
     }
 
     override fun onDestroy() {
