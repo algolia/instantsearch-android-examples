@@ -2,14 +2,14 @@ buildscript {
     ext.kotlin_version = "1.4.21"
     ext.lifecycle_version = "2.2.0"
     ext.build_tools_version = "30.0.3"
-    ext.instantsearch = '2.7.2'
+    ext.instantsearch = '2.8.0'
     ext.canary = '2.6'
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.1'
+        classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
