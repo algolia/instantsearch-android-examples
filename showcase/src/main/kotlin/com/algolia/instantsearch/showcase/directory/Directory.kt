@@ -1,6 +1,7 @@
 package com.algolia.instantsearch.showcase.directory
 
 import com.algolia.instantsearch.showcase.customdata.QueryRuleCustomDataShowcase
+import com.algolia.instantsearch.showcase.dynamic.DynamicSortShowcase
 import com.algolia.instantsearch.showcase.filter.clear.FilterClearShowcase
 import com.algolia.instantsearch.showcase.filter.current.ShowcaseFilterCurrent
 import com.algolia.instantsearch.showcase.filter.facet.FacetListPersistentShowcase
@@ -58,4 +59,5 @@ val showcases = mapOf(
     ObjectID("personalisation_related_items") to RelatedItemsShowcase::class,
     ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
     ObjectID("filter_rating") to RatingShowcase::class,
+    ObjectID("dynamic_sort") to DynamicSortShowcase::class,
 )
