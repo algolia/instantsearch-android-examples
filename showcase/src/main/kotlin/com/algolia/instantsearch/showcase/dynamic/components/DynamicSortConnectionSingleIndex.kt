@@ -1,30 +1,28 @@
-package com.algolia.instantsearch.showcase.dynamic
+package com.algolia.instantsearch.showcase.dynamic.components
 
 import com.algolia.instantsearch.core.Callback
 import com.algolia.instantsearch.core.connection.Connection
 import com.algolia.instantsearch.core.connection.ConnectionImpl
-import com.algolia.instantsearch.helper.searcher.SearcherMultipleIndex
-import com.algolia.search.model.response.ResponseSearches
+import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.search.model.response.ResponseSearch
 
-internal class DynamicSortToggleConnectionMultipleIndex(
-    val viewModel: DynamicSortToggleViewModel,
-    val searcher: SearcherMultipleIndex,
-    private val queryIndex: Int
+internal class DynamicSortToggleConnectionSingleIndex(
+    val viewModel: DynamicSortViewModel,
+    val searcher: SearcherSingleIndex,
 ) : ConnectionImpl() {
 
     private val priorityCallback: Callback<DynamicSortPriority?> = callback@{ priority ->
         if (priority == null) return@callback
-        searcher.queries[queryIndex].query.relevancyStrictness = priority.relevancyStrictness
+        searcher.query.relevancyStrictness = priority.relevancyStrictness
         searcher.searchAsync()
     }
 
-    private val responseCallback: Callback<ResponseSearches?> = callback@{ responses ->
-        if (responses == null) return@callback
-        val receivedRelevancyStrictness =
-            responses.results[queryIndex].appliedRelevancyStrictnessOrNull ?: run {
-                viewModel.priority.value = null
-                return@callback
-            }
+    private val responseCallback: Callback<ResponseSearch?> = callback@{ response ->
+        if (response == null) return@callback
+        val receivedRelevancyStrictness = response.appliedRelevancyStrictnessOrNull ?: run {
+            viewModel.priority.value = null
+            return@callback
+        }
         val dynamicSortPriority = DynamicSortPriority.of(receivedRelevancyStrictness)
         if (dynamicSortPriority != viewModel.priority.value) {
             viewModel.priority.value = dynamicSortPriority
@@ -48,11 +46,7 @@ internal class DynamicSortToggleConnectionMultipleIndex(
  * Create a connection between a view model and a searcher.
  *
  * @param searcher searcher to connect
- * @param queryIndex query index
  */
-public fun DynamicSortToggleViewModel.connectSearcher(
-    searcher: SearcherMultipleIndex,
-    queryIndex: Int
-): Connection {
-    return DynamicSortToggleConnectionMultipleIndex(this, searcher, queryIndex)
+public fun DynamicSortViewModel.connectSearcher(searcher: SearcherSingleIndex): Connection {
+    return DynamicSortToggleConnectionSingleIndex(this, searcher)
 }

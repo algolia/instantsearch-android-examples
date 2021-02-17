@@ -1,8 +1,8 @@
-package com.algolia.instantsearch.showcase.dynamic
+package com.algolia.instantsearch.showcase.dynamic.components
 
 import com.algolia.instantsearch.core.subscription.SubscriptionValue
-import com.algolia.instantsearch.showcase.dynamic.DynamicSortPriority.HitsCount
-import com.algolia.instantsearch.showcase.dynamic.DynamicSortPriority.Relevancy
+import com.algolia.instantsearch.showcase.dynamic.components.DynamicSortPriority.HitsCount
+import com.algolia.instantsearch.showcase.dynamic.components.DynamicSortPriority.Relevancy
 
 /**
  * The component that stores the currently applied dynamic sort priority applied to the search in
@@ -12,7 +12,7 @@ import com.algolia.instantsearch.showcase.dynamic.DynamicSortPriority.Relevancy
  * the relevancy of results. DynamicSortToggle components provide a convenient interface to switch
  * between these options.
  */
-public class DynamicSortToggleViewModel(
+public class DynamicSortViewModel(
     priority: DynamicSortPriority? = null
 ) {
 
@@ -29,9 +29,10 @@ public class DynamicSortToggleViewModel(
      * Skipped if the current value of sort priority is `null`.
      */
     fun toggle() {
-        when (priority.value) {
-            Relevancy -> priority.value = HitsCount
-            HitsCount -> priority.value = Relevancy
+        val value = priority.value ?: return
+        priority.value = when (value) {
+            Relevancy -> HitsCount
+            HitsCount -> Relevancy
         }
     }
 }

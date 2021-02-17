@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.dynamic
+package com.algolia.instantsearch.showcase.dynamic.components
 
 /**
  * Represents the priority to apply to the search in the dynamically sorted index
@@ -16,6 +16,8 @@ public enum class DynamicSortPriority(
     HitsCount(0);
 
     companion object {
+
+        @JvmStatic
         fun of(relevancyStrictness: Int): DynamicSortPriority = when (relevancyStrictness) {
             0 -> HitsCount
             else -> Relevancy

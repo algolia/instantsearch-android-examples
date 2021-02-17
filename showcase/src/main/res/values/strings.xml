@@ -33,4 +33,8 @@
     <string name="ok">OK</string>
     <string name="redirect_via_banner_tap">Redirect via banner tap</string>
     <string name="redirect_via_submit">Redirect via submit</string>
+    <string name="show_all_results">Show all results</string>
+    <string name="show_all_results_hint">Currently showing all results.</string>
+    <string name="show_relevant_results">Show more relevant results</string>
+    <string name="show_relevant_results_hint">We removed some search results to show you the most relevant ones.</string>
 </resources>
