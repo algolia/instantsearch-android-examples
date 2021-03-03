@@ -21,8 +21,8 @@ import kotlinx.android.synthetic.main.showcase_search_autocomplete.*
 
 class SearchAutoCompleteTextView : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
-    private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
+    public val searcher = SearcherSingleIndex(stubIndex)
+    public val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
     private val connection = ConnectionHandler(searchBox)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +42,7 @@ class SearchAutoCompleteTextView : AppCompatActivity() {
         configureSearcher(searcher)
         searcher.searchAsync()
     }
+
 
     override fun onDestroy() {
         super.onDestroy()
