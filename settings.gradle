@@ -1,1 +1,1 @@
-include ':showcase', ':guides'
+include ':showcase', ':guides', ':insights'
