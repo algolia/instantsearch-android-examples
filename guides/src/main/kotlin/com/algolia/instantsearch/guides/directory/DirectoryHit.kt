@@ -5,9 +5,7 @@ import com.algolia.search.model.Attribute
 import com.algolia.search.model.ObjectID
 import com.algolia.search.model.indexing.Indexable
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonObject
-
 
 @Serializable
 data class DirectoryHit(
@@ -15,9 +13,8 @@ data class DirectoryHit(
     val name: String,
     val type: String,
     override val _highlightResult: JsonObject? = null
-): Indexable, Highlightable {
+) : Indexable, Highlightable {
 
-    @Transient
-    public val highlightedName
+    val highlightedName
         get() = getHighlight(Attribute("name"), preTag = "<b>", postTag = "</b>")
 }

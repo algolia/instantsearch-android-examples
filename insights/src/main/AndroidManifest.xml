@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="com.algolia.instantsearch.insights">
+package="com.algolia.instantsearch.insights.showcase">
 
 <uses-permission android:name="android.permission.INTERNET" />
 <application

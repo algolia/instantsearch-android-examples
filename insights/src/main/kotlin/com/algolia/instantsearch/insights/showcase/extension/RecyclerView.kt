@@ -1,10 +1,10 @@
-package com.algolia.instantsearch.insights.extension
+package com.algolia.instantsearch.insights.showcase.extension
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
-import com.algolia.instantsearch.insights.ListItemAdapter
+import com.algolia.instantsearch.insights.showcase.ListItemAdapter
 import kotlinx.android.synthetic.main.demo_activity.*
 
 fun AppCompatActivity.configureRecyclerView(adapter: ListItemAdapter) {

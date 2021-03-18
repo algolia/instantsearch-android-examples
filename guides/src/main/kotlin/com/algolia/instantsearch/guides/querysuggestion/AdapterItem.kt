@@ -7,9 +7,7 @@ import com.algolia.search.model.Attribute
 import com.algolia.search.model.ObjectID
 import com.algolia.search.model.indexing.Indexable
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.Transient
 import kotlinx.serialization.json.JsonObject
-
 
 sealed class AdapterItem : Indexable {
 
@@ -22,8 +20,7 @@ sealed class AdapterItem : Indexable {
         override val _highlightResult: JsonObject?
     ) : Highlightable, AdapterItem() {
 
-        @Transient
-        public val highlightedName: HighlightedString?
+        val highlightedName: HighlightedString?
             get() = getHighlight(Attribute("name"))
     }
 
@@ -34,8 +31,7 @@ sealed class AdapterItem : Indexable {
         override val _highlightResult: JsonObject?
     ) : AdapterItem(), Highlightable {
 
-        @Transient
-        public val highlightedQuery: HighlightedString?
+        val highlightedQuery: HighlightedString?
             get() = getHighlight(Attribute("query"))
 
         var onClickListener: View.OnClickListener? = null

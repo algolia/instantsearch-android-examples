@@ -1,6 +1,7 @@
-package com.algolia.instantsearch.insights
+package com.algolia.instantsearch.insights.showcase
 
 import android.app.Application
+import com.algolia.instantsearch.insights.Insights
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName

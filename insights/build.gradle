@@ -7,7 +7,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion build_tools_version
     defaultConfig {
-        applicationId "com.algolia.instantsearch.insights"
+        applicationId "com.algolia.instantsearch.insights.showcase"
         minSdkVersion 23
         targetSdkVersion 30
         versionCode 1

@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.insights
+package com.algolia.instantsearch.insights.showcase
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -10,9 +10,10 @@ import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.tracker.HitsTracker
-import com.algolia.instantsearch.insights.App.Companion.INDEX_NAME
-import com.algolia.instantsearch.insights.extension.configureRecyclerView
-import com.algolia.instantsearch.insights.extension.configureSearchView
+import com.algolia.instantsearch.insights.Insights
+import com.algolia.instantsearch.insights.showcase.App.Companion.INDEX_NAME
+import com.algolia.instantsearch.insights.showcase.extension.configureRecyclerView
+import com.algolia.instantsearch.insights.showcase.extension.configureSearchView
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.helper.deserialize

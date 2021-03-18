@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.insights
+package com.algolia.instantsearch.insights.showcase
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

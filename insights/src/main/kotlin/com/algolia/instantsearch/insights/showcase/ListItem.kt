@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.insights
+package com.algolia.instantsearch.insights.showcase
 
 import com.algolia.search.model.ObjectID
 import com.algolia.search.model.indexing.Indexable

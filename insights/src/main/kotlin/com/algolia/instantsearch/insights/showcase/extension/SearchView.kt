@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.insights.extension
+package com.algolia.instantsearch.insights.showcase.extension
 
 import android.graphics.drawable.Drawable
 import android.text.Spannable
@@ -8,7 +8,7 @@ import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import com.algolia.instantsearch.insights.R
+import com.algolia.instantsearch.insights.showcase.R
 
 fun AppCompatActivity.configureSearchView(
     searchView: SearchView,
