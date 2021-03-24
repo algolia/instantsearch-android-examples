@@ -114,6 +114,10 @@
             android:name=".filter.rating.RatingShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
 
+        <activity
+            android:name="com.algolia.instantsearch.showcase.filter.facet.dynamic.DynamicFacetShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
+
         <activity android:name=".customdata.TemplateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
