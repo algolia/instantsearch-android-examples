@@ -12,14 +12,9 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.showcase.client
-import com.algolia.instantsearch.showcase.configureRecyclerView
-import com.algolia.instantsearch.showcase.configureSearchView
-import com.algolia.instantsearch.showcase.configureSearcher
-import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.showcase.*
+import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
-import com.algolia.search.model.rule.FacetMerchandising
 import kotlinx.android.synthetic.main.include_search.*
 import kotlinx.android.synthetic.main.showcase_facet_list_search.*
 
@@ -29,7 +24,7 @@ class DynamicFacetShowcase : AppCompatActivity() {
     private val searcher = SearcherSingleIndex(index)
     private val filterState = FilterState()
     private val searchBox = SearchBoxConnector(searcher)
-    private val dynamicFacetViewModel = DynamicFacetViewModel(FacetMerchandising(), mutableMapOf())
+    private val dynamicFacetViewModel = DynamicFacetViewModel(emptyList(), mutableMapOf())
     private val connection = ConnectionHandler(searchBox)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +44,7 @@ class DynamicFacetShowcase : AppCompatActivity() {
         configureSearchView(searchView, getString(R.string.search_brands))
         configureRecyclerView(hits, adapter)
 
+        searcher.query.facets = setOf(Attribute("brand"), Attribute("color"), Attribute("size"), Attribute("country"))
         searcher.searchAsync()
     }
 
