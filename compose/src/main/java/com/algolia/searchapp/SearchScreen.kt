@@ -24,7 +24,7 @@ import com.algolia.instantsearch.compose.paging.SearcherLazyPaging
 import com.algolia.instantsearch.compose.paging.SearcherSingleIndexPager
 import com.algolia.instantsearch.compose.paging.collectAsSearcherLazyPaging
 import com.algolia.instantsearch.compose.searchbox.SearchBox
-import com.algolia.instantsearch.compose.searchbox.SearchBoxCompose
+import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.compose.stats.StatsCompose
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
 import com.algolia.search.model.search.Facet
@@ -74,7 +74,7 @@ fun TextAnnotated(
 @Composable
 fun Search(
     modifier: Modifier = Modifier,
-    searchBox: SearchBoxCompose,
+    searchQuery: SearchQuery,
     productPager: SearcherSingleIndexPager<Product>,
     statsText: StatsCompose<String>,
     facetList: FacetListCompose,
@@ -96,11 +96,8 @@ fun Search(
                         .padding(bottom = 12.dp)
                 ) {
                     SearchBox(
-                        query = searchBox.query,
-                        onValueChange = { query, isSubmit ->
-                            searchBox.onValueChange(query, isSubmit)
-                            searcherLazyPaging.resetAsync()
-                        },
+                        searchQuery = searchQuery,
+                        onValueChange = { _, _ -> searcherLazyPaging.resetAsync() },
                         modifier = Modifier
                             .weight(1f)
                             .padding(top = 12.dp, start = 12.dp),
@@ -128,10 +125,10 @@ fun Search(
 }
 
 @Composable
-fun Stats(modifier: Modifier = Modifier, stats: State<String>) {
+fun Stats(modifier: Modifier = Modifier, stats: String) {
     Text(
         modifier = modifier,
-        text = stats.value,
+        text = stats,
         style = MaterialTheme.typography.caption,
         maxLines = 1
     )
@@ -183,7 +180,7 @@ fun FacetList(
             modifier = Modifier.padding(14.dp)
         )
         LazyColumn(Modifier.background(MaterialTheme.colors.background)) {
-            items(facetList.facets.value) { item ->
+            items(facetList.facets) { item ->
                 FacetRow(
                     modifier = Modifier
                         .clickable { facetList.onSelection?.invoke(item.first) }

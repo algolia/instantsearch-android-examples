@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.algolia.instantsearch.compose.filter.FacetListCompose
 import com.algolia.instantsearch.compose.filter.connectSearcherPager
 import com.algolia.instantsearch.compose.paging.SearcherSingleIndexPager
-import com.algolia.instantsearch.compose.searchbox.SearchBoxCompose
+import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.compose.stats.StatsTextCompose
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
@@ -38,7 +38,7 @@ class MainViewModel : ViewModel() {
     val searcher = SearcherSingleIndex(index)
 
     // Search Box
-    val searchBox = SearchBoxCompose()
+    val searchQuery = SearchQuery()
     val searchBoxConnector = SearchBoxConnector(searcher)
 
     // Hits
@@ -65,7 +65,7 @@ class MainViewModel : ViewModel() {
     val connections = ConnectionHandler(searchBoxConnector, statsConnector, facetListConnector)
 
     init {
-        connections += searchBoxConnector.connectView(searchBox)
+        connections += searchBoxConnector.connectView(searchQuery)
         connections += statsConnector.connectView(statsText, StatsPresenterImpl())
         connections += searcher.connectFilterState(filterState)
         connections += facetListConnector.connectView(facetList)
@@ -81,3 +81,4 @@ class MainViewModel : ViewModel() {
         searcherForFacet.cancel()
     }
 }
+
