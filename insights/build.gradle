@@ -43,6 +43,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:4.10.0"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation "com.algolia:instantsearch-android:$instantsearch"
+    implementation "com.algolia:instantsearch-insights-android:$instantsearch"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$canary"
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

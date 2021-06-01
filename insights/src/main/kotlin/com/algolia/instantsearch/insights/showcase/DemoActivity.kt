@@ -11,6 +11,7 @@ import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.algolia.instantsearch.insights.Insights
+import com.algolia.instantsearch.insights.shared
 import com.algolia.instantsearch.insights.showcase.App.Companion.INDEX_NAME
 import com.algolia.instantsearch.insights.showcase.extension.configureRecyclerView
 import com.algolia.instantsearch.insights.showcase.extension.configureSearchView
