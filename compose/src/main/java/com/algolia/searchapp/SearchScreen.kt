@@ -5,7 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -17,12 +19,12 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.algolia.instantsearch.compose.filter.FacetListCompose
 import com.algolia.instantsearch.compose.highlight.toAnnotatedString
-import com.algolia.instantsearch.compose.paging.SearcherLazyPaging
-import com.algolia.instantsearch.compose.paging.SearcherSingleIndexPager
-import com.algolia.instantsearch.compose.paging.collectAsSearcherLazyPaging
+import com.algolia.instantsearch.compose.paging.*
 import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.compose.stats.StatsCompose
@@ -33,11 +35,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun ProductsList(
     modifier: Modifier = Modifier,
-    searcherLazyPaging: SearcherLazyPaging<Product>
+    pagingHits: LazyPagingItems<Product>,
+    listState: LazyListState
 ) {
-    val (products, state) = searcherLazyPaging
-    LazyColumn(modifier, state) {
-        items(products) { item ->
+    LazyColumn(modifier, listState) {
+        items(pagingHits) { item ->
             if (item == null) return@items
             TextAnnotated(
                 modifier = modifier
@@ -75,14 +77,15 @@ fun TextAnnotated(
 fun Search(
     modifier: Modifier = Modifier,
     searchQuery: SearchQuery,
-    productPager: SearcherSingleIndexPager<Product>,
+    productPager: Paginator<Product>,
     statsText: StatsCompose<String>,
     facetList: FacetListCompose,
 ) {
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
-    val searcherLazyPaging = productPager.collectAsSearcherLazyPaging(scope = scope)
+    val listState = rememberLazyListState()
+    val pagingHits = productPager.flow.collectAsLazyPagingItems()
 
     ModalBottomSheetLayout(
         modifier = modifier,
@@ -97,7 +100,7 @@ fun Search(
                 ) {
                     SearchBox(
                         searchQuery = searchQuery,
-                        onValueChange = { _, _ -> searcherLazyPaging.resetAsync() },
+                        onValueChange = { _, _ -> scope.launch { listState.scrollToItem(0) } },
                         modifier = Modifier
                             .weight(1f)
                             .padding(top = 12.dp, start = 12.dp),
@@ -117,7 +120,8 @@ fun Search(
                 Stats(modifier = Modifier.padding(start = 12.dp), stats = statsText.stats)
                 ProductsList(
                     modifier = Modifier.fillMaxSize(),
-                    searcherLazyPaging = searcherLazyPaging
+                    pagingHits = pagingHits,
+                    listState = listState
                 )
             }
         }
