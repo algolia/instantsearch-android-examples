@@ -5,12 +5,12 @@ apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 30
     buildToolsVersion build_tools_version
     defaultConfig {
         applicationId "com.algolia.instantsearch.guides"
         minSdkVersion 23
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
