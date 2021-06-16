@@ -7,19 +7,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.helper.android.inflate
+import com.algolia.instantsearch.helper.filter.facet.dynamic.AttributedFacets
 import com.algolia.instantsearch.helper.filter.facet.dynamic.DynamicFacetView
-import com.algolia.instantsearch.helper.filter.facet.dynamic.FacetSelections
+import com.algolia.instantsearch.helper.filter.facet.dynamic.SelectionsPerAttribute
 import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.filter.facet.dynamic.DynamicFacetAdapter.DynamicFacetViewHolder
 import com.algolia.search.model.Attribute
-import com.algolia.search.model.rule.AttributedFacets
 import com.algolia.search.model.search.Facet
 import kotlinx.android.synthetic.main.list_item_selectable.view.*
 
-class DynamicFacetAdapter : ListAdapter<FacetItem, DynamicFacetViewHolder>(diffUtil),
-        DynamicFacetView {
+class DynamicFacetAdapter : ListAdapter<FacetItem, DynamicFacetViewHolder>(DiffUtil), DynamicFacetView {
 
-    var facetSelections: FacetSelections = mutableMapOf()
+    var facetSelections: SelectionsPerAttribute = emptyMap()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DynamicFacetViewHolder {
         return when (ViewType.values()[viewType]) {
@@ -32,14 +31,11 @@ class DynamicFacetAdapter : ListAdapter<FacetItem, DynamicFacetViewHolder>(diffU
         val item = getItem(position)
         when (holder) {
             is DynamicFacetViewHolder.Header -> holder.bind(item as FacetItem.Header)
-            is DynamicFacetViewHolder.Item -> holder.bind(item as FacetItem.Value, item.isSelected) {
+            is DynamicFacetViewHolder.Item -> holder.bind(item as FacetItem.Value, item.selected) {
                 didSelect?.let { it(item.attribute, item.facet) }
             }
         }
     }
-
-    private val FacetItem.Value.isSelected
-        get() = facetSelections[attribute]?.contains(facet.value) == true
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
@@ -51,21 +47,35 @@ class DynamicFacetAdapter : ListAdapter<FacetItem, DynamicFacetViewHolder>(diffU
 
     override var didSelect: ((Attribute, Facet) -> Unit)? = null
 
-    override fun commit(selections: FacetSelections) {
+    override fun setSelections(selections: SelectionsPerAttribute) {
+        if (facetSelections == selections) return
         facetSelections = selections
-        notifyDataSetChanged()
+        updateListItems()
     }
 
-    override fun commit(facetOrder: List<AttributedFacets>) {
+    private fun updateListItems() {
+        val newList = currentList.map { facetItem ->
+            when (facetItem) {
+                is FacetItem.Header -> facetItem
+                is FacetItem.Value -> facetItem.copy(selected = isSelected(facetItem.attribute, facetItem.facet))
+            }
+        }
+        if (currentList != newList) submitList(newList)
+    }
+
+    override fun setOrderedFacets(facetOrder: List<AttributedFacets>) {
         val list = mutableListOf<FacetItem>()
-        facetOrder.onEach { attributedFacets ->
-            list += FacetItem.Header(attributedFacets.attribute)
-            attributedFacets.facets.onEach {
-                list += FacetItem.Value(attributedFacets.attribute, it)
+        facetOrder.onEach { (attribute, facets) ->
+            list += FacetItem.Header(attribute)
+            facets.onEach { facet ->
+                val isSelected = isSelected(attribute, facet)
+                list += FacetItem.Value(attribute, facet, isSelected)
             }
         }
         submitList(list)
     }
+
+    private fun isSelected(attribute: Attribute, facet: Facet) = facetSelections[attribute]?.contains(facet.value) == true
 
     enum class ViewType {
         Header,
@@ -96,7 +106,7 @@ class DynamicFacetAdapter : ListAdapter<FacetItem, DynamicFacetViewHolder>(diffU
 
     companion object {
 
-        private val diffUtil = object : DiffUtil.ItemCallback<FacetItem>() {
+        private val DiffUtil = object : DiffUtil.ItemCallback<FacetItem>() {
             override fun areItemsTheSame(oldItem: FacetItem, newItem: FacetItem): Boolean {
                 return oldItem === newItem
             }
