@@ -5,10 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.filter.facet.dynamic.DynamicFacetViewModel
-import com.algolia.instantsearch.helper.filter.facet.dynamic.connectFilterState
-import com.algolia.instantsearch.helper.filter.facet.dynamic.connectSearcher
+import com.algolia.instantsearch.helper.filter.facet.dynamic.DynamicFacetConnector
 import com.algolia.instantsearch.helper.filter.facet.dynamic.connectView
+import com.algolia.instantsearch.helper.filter.state.FilterOperator
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
@@ -18,7 +17,6 @@ import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureSearchView
 import com.algolia.instantsearch.showcase.configureToolbar
 import com.algolia.search.client.ClientSearch
-import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
@@ -29,30 +27,32 @@ import kotlinx.android.synthetic.main.showcase_facet_list_search.*
 
 class DynamicFacetShowcase : AppCompatActivity() {
 
-    private val client = ClientSearch(
-            ConfigurationSearch(
-                    ApplicationID("RVURKQXRHU"),
-                    APIKey("937e4e6ec422ff69fe89b569dba30180"),
-                    logLevel = LogLevel.ALL
-            )
+    val client = ClientSearch(
+            ApplicationID("RVURKQXRHU"),
+            APIKey("937e4e6ec422ff69fe89b569dba30180"),
+            LogLevel.ALL
     )
-    private val index = client.initIndex(IndexName("test_facet_ordering"))
-    private val searcher = SearcherSingleIndex(index)
-    private val filterState = FilterState()
-    private val searchBox = SearchBoxConnector(searcher)
-
-    private val color = Attribute("color")
-    private val country = Attribute("country")
-    private val brand = Attribute("brand")
-    private val size = Attribute("size")
-
-    private val dynamicFacetViewModel = DynamicFacetViewModel(
+    val index = client.initIndex(IndexName("test_facet_ordering"))
+    val searcher = SearcherSingleIndex(index)
+    val filterState = FilterState()
+    val searchBox = SearchBoxConnector(searcher)
+    val color = Attribute("color")
+    val country = Attribute("country")
+    val brand = Attribute("brand")
+    val size = Attribute("size")
+    val dynamicFacets = DynamicFacetConnector(
+            searcher = searcher,
+            filterState = filterState,
             selectionModeForAttribute = mapOf(
                     color to SelectionMode.Multiple,
                     country to SelectionMode.Multiple
+            ),
+            filterGroupForAttribute = mapOf(
+                    brand to (brand to FilterOperator.Or),
+                    color to (color to FilterOperator.Or),
             )
     )
-    private val connection = ConnectionHandler(searchBox)
+    private val connection = ConnectionHandler(searchBox, dynamicFacets)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,9 +62,7 @@ class DynamicFacetShowcase : AppCompatActivity() {
         connection += searchBox.connectView(searchBoxView)
 
         val adapter = DynamicFacetAdapter()
-        connection += dynamicFacetViewModel.connectSearcher(searcher)
-        connection += dynamicFacetViewModel.connectFilterState(filterState)
-        connection += dynamicFacetViewModel.connectView(adapter)
+        connection += dynamicFacets.connectView(adapter)
 
         configureToolbar(toolbar)
         configureSearchView(searchView, getString(R.string.search_brands))
