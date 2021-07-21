@@ -15,8 +15,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             SearchAppTheme {
                 Search(
-                    searchBox = viewModel.searchBox,
-                    productPager = viewModel.hitsPager,
+                    searchQuery = viewModel.searchQuery,
+                    paginator = viewModel.hitsPaginator,
                     statsText = viewModel.statsText,
                     facetList = viewModel.facetList
                 )

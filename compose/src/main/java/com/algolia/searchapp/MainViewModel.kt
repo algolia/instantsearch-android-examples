@@ -1,11 +1,12 @@
 package com.algolia.searchapp
 
 import androidx.lifecycle.ViewModel
-import com.algolia.instantsearch.compose.filter.FacetListCompose
-import com.algolia.instantsearch.compose.filter.connectSearcherPager
-import com.algolia.instantsearch.compose.paging.SearcherSingleIndexPager
-import com.algolia.instantsearch.compose.searchbox.SearchBoxCompose
-import com.algolia.instantsearch.compose.stats.StatsTextCompose
+import com.algolia.instantsearch.compose.filter.facet.FacetListState
+import com.algolia.instantsearch.compose.filter.facet.connectPaginator
+import com.algolia.instantsearch.compose.item.StatsTextState
+import com.algolia.instantsearch.compose.list.Paginator
+import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.connectPaginator
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
@@ -38,20 +39,20 @@ class MainViewModel : ViewModel() {
     val searcher = SearcherSingleIndex(index)
 
     // Search Box
-    val searchBox = SearchBoxCompose()
+    val searchQuery = SearchQuery()
     val searchBoxConnector = SearchBoxConnector(searcher)
 
     // Hits
-    val hitsPager = SearcherSingleIndexPager(searcher) { response ->
+    val hitsPaginator = Paginator(searcher) { response ->
         response.hits.deserialize(Product.serializer())
     }
 
     // Stats
-    val statsText = StatsTextCompose()
+    val statsText = StatsTextState()
     val statsConnector = StatsConnector(searcher)
 
     // Filters
-    val facetList = FacetListCompose()
+    val facetList = FacetListState()
     val filterState = FilterState()
     val manufacturer = Attribute("category")
     val searcherForFacet = SearcherForFacets(index, manufacturer)
@@ -65,11 +66,12 @@ class MainViewModel : ViewModel() {
     val connections = ConnectionHandler(searchBoxConnector, statsConnector, facetListConnector)
 
     init {
-        connections += searchBoxConnector.connectView(searchBox)
+        connections += searchBoxConnector.connectView(searchQuery)
         connections += statsConnector.connectView(statsText, StatsPresenterImpl())
         connections += searcher.connectFilterState(filterState)
         connections += facetListConnector.connectView(facetList)
-        connections += facetListConnector.connectSearcherPager(hitsPager)
+        connections += facetListConnector.connectPaginator(hitsPaginator)
+        connections += searchBoxConnector.connectPaginator(hitsPaginator)
 
         searcherForFacet.searchAsync()
     }
