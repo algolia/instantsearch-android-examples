@@ -99,11 +99,11 @@ fun Search(
                         .padding(bottom = 12.dp)
                 ) {
                     SearchBox(
-                        searchQuery = searchQuery,
-                        onValueChange = { _, _ -> scope.launch { listState.scrollToItem(0) } },
                         modifier = Modifier
                             .weight(1f)
                             .padding(top = 12.dp, start = 12.dp),
+                        searchQuery = searchQuery,
+                        onValueChange = { _, _ -> scope.launch { listState.scrollToItem(0) } },
                     )
 
                     Card(Modifier.padding(top = 12.dp, end = 12.dp, start = 8.dp)) {
