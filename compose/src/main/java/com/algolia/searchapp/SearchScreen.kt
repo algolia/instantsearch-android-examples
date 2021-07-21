@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.algolia.instantsearch.compose.filter.FacetListCompose
-import com.algolia.instantsearch.compose.highlight.toAnnotatedString
-import com.algolia.instantsearch.compose.paging.*
+import com.algolia.instantsearch.compose.filter.facet.FacetListState
+import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
+import com.algolia.instantsearch.compose.item.StatsState
+import com.algolia.instantsearch.compose.list.Paginator
 import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchQuery
-import com.algolia.instantsearch.compose.stats.StatsCompose
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
 import com.algolia.search.model.search.Facet
 import kotlinx.coroutines.launch
@@ -77,15 +77,15 @@ fun TextAnnotated(
 fun Search(
     modifier: Modifier = Modifier,
     searchQuery: SearchQuery,
-    productPager: Paginator<Product>,
-    statsText: StatsCompose<String>,
-    facetList: FacetListCompose,
+    paginator: Paginator<Product>,
+    statsText: StatsState<String>,
+    facetList: FacetListState,
 ) {
 
     val scope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val listState = rememberLazyListState()
-    val pagingHits = productPager.flow.collectAsLazyPagingItems()
+    val pagingHits = paginator.flow.collectAsLazyPagingItems()
 
     ModalBottomSheetLayout(
         modifier = modifier,
@@ -175,7 +175,7 @@ fun FacetRow(
 @Composable
 fun FacetList(
     modifier: Modifier = Modifier,
-    facetList: FacetListCompose
+    facetList: FacetListState
 ) {
     Column(modifier) {
         Text(

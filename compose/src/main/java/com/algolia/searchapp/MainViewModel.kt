@@ -1,12 +1,12 @@
 package com.algolia.searchapp
 
 import androidx.lifecycle.ViewModel
-import com.algolia.instantsearch.compose.filter.FacetListCompose
-import com.algolia.instantsearch.compose.filter.connectPaginator
-import com.algolia.instantsearch.compose.paging.Paginator
+import com.algolia.instantsearch.compose.filter.facet.FacetListState
+import com.algolia.instantsearch.compose.filter.facet.connectPaginator
+import com.algolia.instantsearch.compose.item.StatsTextState
+import com.algolia.instantsearch.compose.list.Paginator
 import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.compose.searchbox.connectPaginator
-import com.algolia.instantsearch.compose.stats.StatsTextCompose
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
@@ -48,11 +48,11 @@ class MainViewModel : ViewModel() {
     }
 
     // Stats
-    val statsText = StatsTextCompose()
+    val statsText = StatsTextState()
     val statsConnector = StatsConnector(searcher)
 
     // Filters
-    val facetList = FacetListCompose()
+    val facetList = FacetListState()
     val filterState = FilterState()
     val manufacturer = Attribute("category")
     val searcherForFacet = SearcherForFacets(index, manufacturer)
