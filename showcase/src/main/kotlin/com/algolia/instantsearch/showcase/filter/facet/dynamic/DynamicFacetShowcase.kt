@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
+import com.algolia.instantsearch.helper.android.filter.facet.dynamic.DynamicFacetListAdapter
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.filter.facet.dynamic.DynamicFacetConnector
+import com.algolia.instantsearch.helper.filter.facet.dynamic.DynamicFacetListConnector
 import com.algolia.instantsearch.helper.filter.facet.dynamic.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterOperator
 import com.algolia.instantsearch.helper.filter.state.FilterState
@@ -28,9 +29,9 @@ import kotlinx.android.synthetic.main.showcase_facet_list_search.*
 class DynamicFacetShowcase : AppCompatActivity() {
 
     val client = ClientSearch(
-            ApplicationID("RVURKQXRHU"),
-            APIKey("937e4e6ec422ff69fe89b569dba30180"),
-            LogLevel.ALL
+        ApplicationID("RVURKQXRHU"),
+        APIKey("937e4e6ec422ff69fe89b569dba30180"),
+        LogLevel.ALL
     )
     val index = client.initIndex(IndexName("test_facet_ordering"))
     val searcher = SearcherSingleIndex(index)
@@ -40,17 +41,17 @@ class DynamicFacetShowcase : AppCompatActivity() {
     val country = Attribute("country")
     val brand = Attribute("brand")
     val size = Attribute("size")
-    val dynamicFacets = DynamicFacetConnector(
-            searcher = searcher,
-            filterState = filterState,
-            selectionModeForAttribute = mapOf(
-                    color to SelectionMode.Multiple,
-                    country to SelectionMode.Multiple
-            ),
-            filterGroupForAttribute = mapOf(
-                    brand to (brand to FilterOperator.Or),
-                    color to (color to FilterOperator.Or),
-            )
+    val dynamicFacets = DynamicFacetListConnector(
+        searcher = searcher,
+        filterState = filterState,
+        selectionModeForAttribute = mapOf(
+            color to SelectionMode.Multiple,
+            country to SelectionMode.Multiple
+        ),
+        filterGroupForAttribute = mapOf(
+            brand to (brand to FilterOperator.Or),
+            color to (color to FilterOperator.Or),
+        )
     )
     private val connection = ConnectionHandler(searchBox, dynamicFacets)
 
@@ -61,7 +62,8 @@ class DynamicFacetShowcase : AppCompatActivity() {
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         connection += searchBox.connectView(searchBoxView)
 
-        val adapter = DynamicFacetAdapter()
+        val factory = ViewHolderFactory()
+        val adapter = DynamicFacetListAdapter(factory)
         connection += dynamicFacets.connectView(adapter)
 
         configureToolbar(toolbar)
