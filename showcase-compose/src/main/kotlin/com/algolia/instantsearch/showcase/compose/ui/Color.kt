@@ -20,3 +20,8 @@ val BlackLight = Color(0xFF0f1114)
 val Orange = Color(0xFFfec168)
 val OrangeA50 = Color(0x80fec168)
 val Purple = Color(0xFFb84592)
+
+val HoloRedDark = Color(0xFFCC0000)
+val HoloBlueDark = Color(0XFF0099CC)
+val HoloGreenDark = Color(0XFF669900)
+val HoloPurple = Color(0XFFAA66CC)

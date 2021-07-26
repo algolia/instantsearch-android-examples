@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.algolia.showcase.compose"
-        minSdk 21
+        minSdk 23
         targetSdk 30
         versionCode 1
         versionName "1.0"
@@ -33,12 +33,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
-        useIR = true
     }
     buildFeatures {
         compose true
     }
     composeOptions {
+        kotlinCompilerVersion kotlin_version
         kotlinCompilerExtensionVersion compose_version
     }
 }
@@ -47,7 +47,6 @@ dependencies {
     implementation "com.algolia:instantsearch-compose:$instantsearch"
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.0'
-    implementation 'com.google.android.material:material:1.4.0'
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
