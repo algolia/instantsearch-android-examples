@@ -14,10 +14,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Restore
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -33,7 +31,6 @@ import com.algolia.instantsearch.helper.filter.current.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
-import com.algolia.instantsearch.helper.filter.state.toFilterGroups
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.stats.StatsConnector
@@ -85,7 +82,6 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
     private val chipGroupAll = FilterCurrentState()
     private val chipGroupColors = FilterCurrentState()
 
-
     private val connection = ConnectionHandler(
         // connectors
         currentFiltersAll,
@@ -101,63 +97,64 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
     )
 
     private val colors: Map<String, Color> = filterColors(color, price, tags)
-    private var filterGroups: Set<FilterGroup<*>> by mutableStateOf(emptySet())
-
-    init {
-        filterState.filters.subscribePast {
-            filterGroups = it.toFilterGroups()
-        }
-    }
+    private val filterGroupsState = FilterGroupsState(filterState)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val title = intent.extras?.getString(KeyName) ?: ""
         setContent {
-            Column(Modifier.fillMaxWidth()) {
-                TitleTopBar(
-                    title = title,
-                    onBackPressed = ::onBackPressed
-                )
-
-                HeaderFilter(
-                    modifier = Modifier.padding(16.dp),
-                    onClear = clearAll::clear,
-                    stats = hitsStats.stats
-                )
-
-                Text(
-                    modifier = Modifier.padding(start = 16.dp),
-                    text = "Current filters",
-                    style = MaterialTheme.typography.caption
-                )
-                FilterChips(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(6.dp),
-                    filterCurrentState = chipGroupAll,
-                    rows = 2
-                )
-
-                Text(
-                    modifier = Modifier.padding(start = 16.dp),
-                    text = "Current colors filters",
-                    style = MaterialTheme.typography.caption
-                )
-                FilterChips(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(6.dp),
-                    filterCurrentState = chipGroupColors,
-                    rows = 1
-                )
-            }
+            Scaffold(
+                topBar = {
+                    TitleTopBar(
+                        title = title,
+                        onBackPressed = ::onBackPressed
+                    )
+                },
+                content = {
+                    Column(Modifier.fillMaxWidth()) {
+                        HeaderFilter(
+                            modifier = Modifier.padding(16.dp),
+                            filterGroups = filterGroupsState.filterGroups,
+                            onClear = clearAll::clear,
+                            stats = hitsStats.stats
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp),
+                            text = "Current filters",
+                            style = MaterialTheme.typography.caption
+                        )
+                        FilterChips(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(6.dp),
+                            filterCurrentState = chipGroupAll,
+                            rows = 2
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 16.dp),
+                            text = "Current colors filters",
+                            style = MaterialTheme.typography.caption
+                        )
+                        FilterChips(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(6.dp),
+                            filterCurrentState = chipGroupColors,
+                            rows = 1
+                        )
+                    }
+                },
+                floatingActionButton = {
+                    FloatingActionButton(onClick = { filterState.notify { set(filters) } }) {
+                        Icon(imageVector = Icons.Default.Restore, contentDescription = "restore")
+                    }
+                }
+            )
         }
-
 
         configureSearcher(searcher)
         searcher.searchAsync()
     }
-
 
     @Composable
     fun TitleTopBar(modifier: Modifier = Modifier, title: String, onBackPressed: () -> Unit = {}) {
@@ -181,6 +178,7 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
     fun HeaderFilter(
         modifier: Modifier = Modifier,
         title: String = stringResource(R.string.filters),
+        filterGroups: Set<FilterGroup<*>>,
         onClear: () -> Unit = {},
         stats: String = ""
     ) {
@@ -213,20 +211,22 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
     }
 
     @Composable
-    fun FilterChips(modifier: Modifier = Modifier, filterCurrentState: FilterCurrentState, rows: Int) {
+    fun FilterChips(
+        modifier: Modifier = Modifier,
+        filterCurrentState: FilterCurrentState,
+        rows: Int
+    ) {
         Row(modifier = modifier.horizontalScroll(rememberScrollState()),
             content = {
                 StaggeredGrid(rows = rows) {
                     filterCurrentState.filters.forEach { (filterGroupAndID, filter) ->
-                        Chip(
-                            modifier = Modifier.padding(8.dp),
-                            text = filter
-                        ) {
+                        Chip(modifier = Modifier.padding(8.dp), text = filter) {
                             filterCurrentState.selectFilter(filterGroupAndID)
                         }
                     }
                 }
-            })
+            }
+        )
     }
 
     override fun onDestroy() {
