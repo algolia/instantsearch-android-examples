@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.compose
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
@@ -24,6 +25,7 @@ import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.FilterGroup
 import com.algolia.search.model.filter.FilterGroupsConverter
 import com.algolia.search.serialize.KeyIndexName
+import com.algolia.search.serialize.KeyName
 import io.ktor.client.features.logging.*
 
 val client = ClientSearch(
@@ -90,3 +92,6 @@ fun filterColors(vararg attributes: Attribute): Map<String, Color> {
         }
     }.toMap()
 }
+
+val Activity.showcaseTitle: String
+    get() = intent.extras?.getString(KeyName) ?: ""

@@ -22,5 +22,14 @@
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
     </style>
 
+    <style name="InstantSearchShowcase.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="InstantSearchShowcase.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="InstantSearchShowcase.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 
 </resources>

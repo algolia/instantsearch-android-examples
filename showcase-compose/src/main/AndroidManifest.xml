@@ -3,7 +3,6 @@
     package="com.algolia.instantsearch.showcase.compose">
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -21,6 +20,9 @@
         </activity>
         <activity
             android:name=".filter.current.ShowcaseFilterCurrent"
+            android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.clear.ShowcaseFilterClear"
             android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 

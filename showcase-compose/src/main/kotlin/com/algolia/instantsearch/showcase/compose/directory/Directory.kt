@@ -1,11 +1,12 @@
 package com.algolia.instantsearch.showcase.compose.directory
 
+import com.algolia.instantsearch.showcase.compose.filter.clear.ShowcaseFilterClear
 import com.algolia.instantsearch.showcase.compose.filter.current.ShowcaseFilterCurrent
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
     ObjectID("filter_current") to ShowcaseFilterCurrent::class,
-    ObjectID("filter_clear") to ShowcaseFilterCurrent::class,
+    ObjectID("filter_clear") to ShowcaseFilterClear::class,
     ObjectID("filter_toggle") to ShowcaseFilterCurrent::class,
     ObjectID("filter_segment") to ShowcaseFilterCurrent::class,
     ObjectID("filter_list_all") to ShowcaseFilterCurrent::class,
