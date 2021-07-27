@@ -11,14 +11,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.algolia.instantsearch.compose.filter.clear.FilterClear
 import com.algolia.instantsearch.compose.filter.current.FilterCurrentState
-import com.algolia.instantsearch.compose.item.StatsTextState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.filter.clear.FilterClearConnector
-import com.algolia.instantsearch.helper.filter.clear.connectView
 import com.algolia.instantsearch.helper.filter.current.FilterCurrentConnector
 import com.algolia.instantsearch.helper.filter.current.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
@@ -26,11 +21,8 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.helper.stats.StatsConnector
-import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
-import com.algolia.instantsearch.helper.stats.connectView
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.filter.FilterGroupsState
+import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.FilterChips
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.TitleTopBar
@@ -42,7 +34,7 @@ import com.algolia.instantsearch.showcase.compose.ui.component.RestoreFab
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.NumericOperator
 
-class ShowcaseFilterCurrent : AppCompatActivity() {
+class FilterCurrentShowcase : AppCompatActivity() {
 
     private val color = Attribute("color")
     private val price = Attribute("price")
@@ -68,31 +60,26 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
     private val currentFiltersAll = FilterCurrentConnector(filterState)
     private val currentFiltersColor = FilterCurrentConnector(filterState, listOf(groupColor))
 
-    private val hitsStats = StatsTextState()
-    private val stats = StatsConnector(searcher)
-
-    private val clearAll = FilterClear()
-    private val filterClear = FilterClearConnector(filterState)
-
     private val chipGroupAll = FilterCurrentState()
     private val chipGroupColors = FilterCurrentState()
+
+    private val filterHeader = HeaderFilterConnector(
+        searcher = searcher,
+        filterState = filterState,
+        filterColors = filterColors(color, price, tags)
+    )
 
     private val connection = ConnectionHandler(
         // connectors
         currentFiltersAll,
         currentFiltersColor,
-        filterClear,
-        stats,
         // view connections
         searcher.connectFilterState(filterState),
-        filterClear.connectView(clearAll),
-        stats.connectView(hitsStats, StatsPresenterImpl()),
         currentFiltersAll.connectView(chipGroupAll),
         currentFiltersColor.connectView(chipGroupColors),
+        // showcase view
+        filterHeader
     )
-
-    private val colors: Map<String, Color> = filterColors(color, price, tags)
-    private val filterGroupsState = FilterGroupsState(filterState)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -119,10 +106,7 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
                 Column(Modifier.fillMaxWidth()) {
                     HeaderFilter(
                         modifier = Modifier.padding(16.dp),
-                        filterGroups = filterGroupsState.filterGroups,
-                        onClear = clearAll::clear,
-                        stats = hitsStats.stats,
-                        colors = colors
+                        filterHeader = filterHeader
                     )
                     Text(
                         modifier = Modifier.padding(start = 16.dp),

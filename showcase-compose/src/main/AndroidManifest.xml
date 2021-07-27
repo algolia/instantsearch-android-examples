@@ -19,10 +19,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".filter.current.ShowcaseFilterCurrent"
+            android:name=".filter.current.FilterCurrentShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
         <activity
-            android:name=".filter.clear.ShowcaseFilterClear"
+            android:name=".filter.clear.FilterClearShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.facet.FacetListShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
