@@ -2,7 +2,9 @@ package com.algolia.instantsearch.showcase.compose.filter.current.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -18,14 +20,35 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.algolia.instantsearch.showcase.compose.ui.HoloBlueDark
-import com.algolia.instantsearch.showcase.compose.ui.White
+import com.algolia.instantsearch.compose.filter.current.FilterCurrentState
+import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import kotlin.math.max
+
+@Composable
+fun FilterChips(
+    modifier: Modifier = Modifier,
+    filterCurrentState: FilterCurrentState,
+    rows: Int
+) {
+    Row(modifier = modifier.horizontalScroll(rememberScrollState()),
+        content = {
+            StaggeredGrid(rows = rows) {
+                filterCurrentState.filters.forEach { (filterGroupAndID, filter) ->
+                    Chip(modifier = Modifier.padding(8.dp), text = filter) {
+                        filterCurrentState.selectFilter(filterGroupAndID)
+                    }
+                }
+            }
+        }
+    )
+}
 
 @Preview
 @Composable
 fun ChipPreview() {
-    Chip(text = "price: 0 to 100")
+    ShowcaseTheme {
+        Chip(text = "price: 0 to 100")
+    }
 }
 
 @Composable
@@ -39,7 +62,7 @@ fun Chip(
         modifier = modifier,
         elevation = 1.dp,
         shape = MaterialTheme.shapes.medium,
-        color = HoloBlueDark
+        color = MaterialTheme.colors.primary
     ) {
         Row(
             modifier = Modifier
@@ -50,14 +73,14 @@ fun Chip(
             Text(
                 text = text,
                 style = MaterialTheme.typography.body2,
-                color = White,
+                color = MaterialTheme.colors.onPrimary,
                 modifier = Modifier.padding(4.dp)
             )
 
             if (isClosable) IconClose(
                 modifier = Modifier.height(14.dp),
-                background = White,
-                iconColor = HoloBlueDark
+                background = MaterialTheme.colors.background,
+                iconColor = MaterialTheme.colors.primary
             )
         }
     }
@@ -78,10 +101,12 @@ fun IconClose(modifier: Modifier = Modifier, background: Color, iconColor: Color
 @Preview
 @Composable
 fun StaggeredGridPreview() {
-    val filters = listOf("green", "mobile", "price != 42", "price: 0 to 100", "red")
-    StaggeredGrid {
-        filters.forEach { filter ->
-            Chip(modifier = Modifier.padding(8.dp), text = filter)
+    ShowcaseTheme {
+        val filters = listOf("green", "mobile", "price != 42", "price: 0 to 100", "red")
+        StaggeredGrid {
+            filters.forEach { filter ->
+                Chip(modifier = Modifier.padding(8.dp), text = filter)
+            }
         }
     }
 }

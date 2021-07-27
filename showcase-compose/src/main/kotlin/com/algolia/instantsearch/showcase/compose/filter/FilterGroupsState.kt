@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.compose.filter.current
+package com.algolia.instantsearch.showcase.compose.filter
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,7 +8,6 @@ import com.algolia.instantsearch.helper.filter.state.toFilterGroups
 import com.algolia.search.model.filter.FilterGroup
 
 interface FilterGroupsState {
-
     val filterGroups: Set<FilterGroup<*>>
 }
 
@@ -17,9 +16,7 @@ fun FilterGroupsState(filterState: FilterState): FilterGroupsState {
 }
 
 class FilterGroupStateImpl(filterState: FilterState) : FilterGroupsState {
-
     override var filterGroups: Set<FilterGroup<*>> by mutableStateOf(emptySet()) // order of this statement and init block matters!
-
     init {
         filterState.filters.subscribePast {
             filterGroups = it.toFilterGroups()
