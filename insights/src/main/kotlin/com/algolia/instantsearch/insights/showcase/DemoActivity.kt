@@ -12,7 +12,7 @@ import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.algolia.instantsearch.insights.Insights
 import com.algolia.instantsearch.insights.shared
-import com.algolia.instantsearch.insights.showcase.App.Companion.INDEX_NAME
+import com.algolia.instantsearch.insights.showcase.App.Companion.IndexName
 import com.algolia.instantsearch.insights.showcase.extension.configureRecyclerView
 import com.algolia.instantsearch.insights.showcase.extension.configureSearchView
 import com.algolia.search.client.ClientSearch
@@ -27,19 +27,19 @@ class DemoActivity : AppCompatActivity() {
 
     private val client = ClientSearch(
         ConfigurationSearch(
-            applicationID = App.APP_ID,
-            apiKey = App.API_KEY,
+            applicationID = App.AppID,
+            apiKey = App.ApiKey,
             logLevel = LogLevel.ALL
         )
     )
-    private val stubIndex = client.initIndex(INDEX_NAME)
+    private val stubIndex = client.initIndex(IndexName)
     private val searcher = SearcherSingleIndex(stubIndex)
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
 
     private val hitsTracker = HitsTracker(
         eventName = EventName("demo"),
         searcher = searcher,
-        insights = Insights.shared(INDEX_NAME)
+        insights = Insights.shared(IndexName)
     )
     private val connection = ConnectionHandler(searchBox, hitsTracker)
 
