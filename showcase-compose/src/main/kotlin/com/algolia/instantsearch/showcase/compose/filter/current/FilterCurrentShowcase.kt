@@ -24,7 +24,7 @@ import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.FilterChips
-import com.algolia.instantsearch.showcase.compose.filter.current.ui.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.TitleTopBar
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle

@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.compose.filter.current.ui
+package com.algolia.instantsearch.showcase.compose.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
