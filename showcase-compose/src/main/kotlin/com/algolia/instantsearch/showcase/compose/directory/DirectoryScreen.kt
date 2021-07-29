@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.defaultSearchBoxColors
 import com.algolia.instantsearch.showcase.compose.R
 import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.White
@@ -29,16 +30,17 @@ fun Directory(
     onClick: (DirectoryItem.Item) -> Unit = {}
 ) {
     Column(Modifier.background(MaterialTheme.colors.background)) {
-        Surface(
-            elevation = 1.dp,
-            color = MaterialTheme.colors.surface,
-        ) {
+        Surface(elevation = 1.dp) {
             SearchBox(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
                 searchQuery = searchQuery,
-                placeHolderText = stringResource(R.string.search_showcases)
+                placeHolderText = stringResource(R.string.search_showcases),
+                colors = defaultSearchBoxColors(
+                    backgroundColor = MaterialTheme.colors.background,
+                    onBackgroundColor = MaterialTheme.colors.onBackground,
+                )
             )
         }
         LazyColumn {

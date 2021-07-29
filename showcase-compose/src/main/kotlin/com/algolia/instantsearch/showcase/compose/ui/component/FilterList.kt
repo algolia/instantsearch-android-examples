@@ -72,7 +72,7 @@ fun FilterList(
 fun FilterList(
     modifier: Modifier = Modifier,
     title: String? = null,
-    titleColor: Color,
+    titleColor: Color? = null,
     facetListState: FacetListState
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
@@ -80,7 +80,7 @@ fun FilterList(
             Text(
                 modifier = Modifier.padding(4.dp),
                 text = title,
-                color = titleColor,
+                color = titleColor ?: Color.Unspecified,
                 style = MaterialTheme.typography.caption
             )
         }

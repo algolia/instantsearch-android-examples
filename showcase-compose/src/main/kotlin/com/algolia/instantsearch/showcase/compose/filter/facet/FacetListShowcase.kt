@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,7 +26,7 @@ import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
-import com.algolia.instantsearch.showcase.compose.filter.current.ui.TitleTopBar
+import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.stubIndex
@@ -113,7 +111,7 @@ class FacetListShowcase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ShowcaseTheme {
-                FilterCurrentScreen()
+                FilterListScreen()
             }
         }
 
@@ -121,9 +119,8 @@ class FacetListShowcase : AppCompatActivity() {
         searcher.searchAsync()
     }
 
-    @OptIn(ExperimentalFoundationApi::class)
     @Composable
-    fun FilterCurrentScreen(title: String = showcaseTitle) {
+    fun FilterListScreen(title: String = showcaseTitle) {
         Scaffold(
             topBar = {
                 TitleTopBar(
