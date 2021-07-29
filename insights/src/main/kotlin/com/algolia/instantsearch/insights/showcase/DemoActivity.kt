@@ -10,8 +10,7 @@ import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.tracker.HitsTracker
-import com.algolia.instantsearch.insights.Insights
-import com.algolia.instantsearch.insights.shared
+import com.algolia.instantsearch.insights.sharedInsights
 import com.algolia.instantsearch.insights.showcase.App.Companion.IndexName
 import com.algolia.instantsearch.insights.showcase.extension.configureRecyclerView
 import com.algolia.instantsearch.insights.showcase.extension.configureSearchView
@@ -19,7 +18,7 @@ import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.insights.EventName
-import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.*
 import kotlinx.android.synthetic.main.demo_activity.*
 import kotlinx.android.synthetic.main.include_search.*
 
@@ -39,7 +38,7 @@ class DemoActivity : AppCompatActivity() {
     private val hitsTracker = HitsTracker(
         eventName = EventName("demo"),
         searcher = searcher,
-        insights = Insights.shared(IndexName)
+        insights = sharedInsights(IndexName)
     )
     private val connection = ConnectionHandler(searchBox, hitsTracker)
 
