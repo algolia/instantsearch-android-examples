@@ -5,6 +5,7 @@ import com.algolia.instantsearch.showcase.compose.filter.current.FilterCurrentSh
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListPersistentShowcase
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListSearchShowcase
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListShowcase
+import com.algolia.instantsearch.showcase.compose.filter.list.FilterListAllShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -13,4 +14,5 @@ val showcases = mapOf(
     ObjectID("facet_list") to FacetListShowcase::class,
     ObjectID("facet_list_search") to FacetListSearchShowcase::class,
     ObjectID("facet_list_persistent") to FacetListPersistentShowcase::class,
+    ObjectID("filter_list_all") to FilterListAllShowcase::class,
 )

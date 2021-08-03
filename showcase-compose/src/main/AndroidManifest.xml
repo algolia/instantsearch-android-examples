@@ -33,6 +33,9 @@
         <activity
             android:name=".filter.facet.FacetListPersistentShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.list.FilterListAllShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>

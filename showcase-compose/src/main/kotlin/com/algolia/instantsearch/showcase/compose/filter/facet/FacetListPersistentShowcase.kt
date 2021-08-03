@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,13 +18,11 @@ import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
-import com.algolia.instantsearch.showcase.compose.ui.HoloBlueDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloGreenDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
-import com.algolia.instantsearch.showcase.compose.ui.component.FilterList
+import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
-import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
@@ -101,13 +97,13 @@ class FacetListPersistentShowcase : AppCompatActivity() {
                         filterHeader = filterHeader
                     )
                     Row(Modifier.padding(horizontal = 16.dp)) {
-                        FilterList(
+                        FacetList(
                             modifier = Modifier.weight(0.5f),
                             titleColor = HoloRedDark,
                             title = "Multiple Choice",
                             facetListState = facetListStateColor
                         )
-                        FilterList(
+                        FacetList(
                             modifier = Modifier.weight(0.5f),
                             titleColor = HoloGreenDark,
                             title = "Since Choice",

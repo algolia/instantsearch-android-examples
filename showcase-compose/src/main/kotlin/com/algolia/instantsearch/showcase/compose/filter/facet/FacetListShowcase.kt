@@ -3,7 +3,6 @@ package com.algolia.instantsearch.showcase.compose.filter.facet
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,7 +33,7 @@ import com.algolia.instantsearch.showcase.compose.ui.HoloBlueDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloGreenDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
-import com.algolia.instantsearch.showcase.compose.ui.component.FilterList
+import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.search.model.Attribute
 
@@ -136,13 +135,13 @@ class FacetListShowcase : AppCompatActivity() {
                     )
                     Row(Modifier.padding(horizontal = 16.dp)) {
                         Column(Modifier.weight(0.5f)) {
-                            FilterList(
+                            FacetList(
                                 titleColor = HoloRedDark,
                                 presenter = colorPresenter,
                                 filterGroupID = groupColor,
                                 facetListState = facetListStateColor
                             )
-                            FilterList(
+                            FacetList(
                                 titleColor = HoloGreenDark,
                                 presenter = promotionPresenter,
                                 filterGroupID = groupPromotions,
@@ -151,7 +150,7 @@ class FacetListShowcase : AppCompatActivity() {
                         }
 
                         Column(Modifier.weight(0.5f)) {
-                            FilterList(
+                            FacetList(
                                 titleColor = HoloBlueDark,
                                 presenter = categoryPresenter,
                                 filterGroupID = groupCategory,

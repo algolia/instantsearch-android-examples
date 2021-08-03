@@ -3,20 +3,14 @@ package com.algolia.instantsearch.showcase.compose.filter.facet
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.facet.FacetListState
-import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
@@ -31,10 +25,9 @@ import com.algolia.instantsearch.helper.searcher.SearcherForFacets
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.*
-import com.algolia.instantsearch.showcase.compose.R
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
-import com.algolia.instantsearch.showcase.compose.ui.component.FilterList
+import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.model.Attribute
@@ -107,7 +100,7 @@ class FacetListSearchShowcase : AppCompatActivity() {
                         filterHeader = filterHeader
                     )
                     val scrollState = rememberScrollState()
-                    FilterList(
+                    FacetList(
                         modifier = Modifier
                             .fillMaxWidth()
                             .verticalScroll(scrollState),
