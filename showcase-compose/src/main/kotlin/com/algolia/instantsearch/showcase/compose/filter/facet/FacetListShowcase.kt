@@ -134,7 +134,7 @@ class FacetListShowcase : AppCompatActivity() {
                         modifier = Modifier.padding(16.dp),
                         filterHeader = filterHeader
                     )
-                    Row(Modifier.padding(16.dp)) {
+                    Row(Modifier.padding(horizontal = 16.dp)) {
                         Column(Modifier.weight(0.5f)) {
                             FilterList(
                                 titleColor = HoloRedDark,

@@ -3,100 +3,94 @@ package com.algolia.instantsearch.showcase.compose.filter.facet
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.facet.FacetListState
-import com.algolia.instantsearch.compose.searchbox.SearchBox
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
-import com.algolia.instantsearch.helper.filter.facet.FacetListPresenterImpl
-import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion
 import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
-import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherForFacets
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.*
-import com.algolia.instantsearch.showcase.compose.R
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.ui.HoloBlueDark
+import com.algolia.instantsearch.showcase.compose.ui.HoloGreenDark
+import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.FilterList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
+import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
+import com.algolia.search.model.IndexName
 
-class FacetListSearchShowcase : AppCompatActivity() {
+class FacetListPersistentShowcase : AppCompatActivity() {
 
-    private val brand = Attribute("brand")
-    private val searcher = SearcherSingleIndex(stubIndex)
-    private val searcherForFacet = SearcherForFacets(stubIndex, brand)
+    private val color = Attribute("color")
+    private val category = Attribute("category")
+    private val index = client.initIndex(IndexName("stub"))
     private val filterState = FilterState()
+    private val searcher = SearcherSingleIndex(index)
 
-    private val searchQuery = SearchQuery()
-    private val searchBox = SearchBoxConnector(searcherForFacet)
-
-    private val facetListState = FacetListState()
-    private val facetPresenter = FacetListPresenterImpl(
-        sortBy = listOf(FacetSortCriterion.IsRefined, FacetSortCriterion.CountDescending),
-        limit = 100
-    )
-    private val facetList = FacetListConnector(
-        searcher = searcherForFacet,
+    private val facetListStateColor = FacetListState()
+    private val facetListColor = FacetListConnector(
+        searcher = searcher,
         filterState = filterState,
-        attribute = brand,
-        selectionMode = SelectionMode.Multiple
+        attribute = color,
+        selectionMode = SelectionMode.Multiple,
+        persistentSelection = true
     )
+
+    private val facetListStateCategory = FacetListState()
+    private val facetListCategory = FacetListConnector(
+        searcher = searcher,
+        filterState = filterState,
+        attribute = category,
+        selectionMode = SelectionMode.Single,
+        persistentSelection = true
+    )
+
     private val filterHeader = HeaderFilterConnector(
         searcher = searcher,
         filterState = filterState,
-        filterColors = filterColors(brand)
+        filterColors = filterColors(color, color, category)
     )
 
     private val connection = ConnectionHandler(
-        searchBox,
-        facetList,
+        facetListColor,
+        facetListCategory,
         searcher.connectFilterState(filterState),
-        searchBox.connectView(searchQuery),
-        facetList.connectView(facetListState, facetPresenter),
+        facetListColor.connectView(facetListStateColor),
+        facetListCategory.connectView(facetListStateCategory),
         filterHeader
-    )
 
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ShowcaseTheme {
-                FilterScreenScreen()
+                FacetListPersistentScreen()
             }
         }
 
-        val index = client.initIndex(intent.indexName)
-        searcher.index = index
-        searcherForFacet.index = index
+        configureSearcher(searcher)
         searcher.searchAsync()
-        searcherForFacet.searchAsync()
     }
 
     @Composable
-    fun FilterScreenScreen() {
+    fun FacetListPersistentScreen(title: String = showcaseTitle) {
         Scaffold(
             topBar = {
-                SearchTopBar(
-                    searchQuery = searchQuery,
+                TitleTopBar(
+                    title = title,
                     onBackPressed = ::onBackPressed
                 )
             },
@@ -106,13 +100,20 @@ class FacetListSearchShowcase : AppCompatActivity() {
                         modifier = Modifier.padding(16.dp),
                         filterHeader = filterHeader
                     )
-                    val scrollState = rememberScrollState()
-                    FilterList(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .verticalScroll(scrollState),
-                        facetListState = facetListState
-                    )
+                    Row(Modifier.padding(horizontal = 16.dp)) {
+                        FilterList(
+                            modifier = Modifier.weight(0.5f),
+                            titleColor = HoloRedDark,
+                            title = "Multiple Choice",
+                            facetListState = facetListStateColor
+                        )
+                        FilterList(
+                            modifier = Modifier.weight(0.5f),
+                            titleColor = HoloGreenDark,
+                            title = "Since Choice",
+                            facetListState = facetListStateCategory
+                        )
+                    }
                 }
             }
         )
@@ -121,7 +122,6 @@ class FacetListSearchShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        searcherForFacet.cancel()
         connection.clear()
     }
 }
