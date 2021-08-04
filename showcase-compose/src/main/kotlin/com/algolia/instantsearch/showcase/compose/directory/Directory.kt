@@ -8,6 +8,7 @@ import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListShowcase
 import com.algolia.instantsearch.showcase.compose.filter.list.FilterListAllShowcase
 import com.algolia.instantsearch.showcase.compose.filter.list.FilterListFacetShowcase
 import com.algolia.instantsearch.showcase.compose.filter.list.FilterListNumericShowcase
+import com.algolia.instantsearch.showcase.compose.filter.list.FilterListTagShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -19,4 +20,5 @@ val showcases = mapOf(
     ObjectID("filter_list_all") to FilterListAllShowcase::class,
     ObjectID("filter_list_facet") to FilterListFacetShowcase::class,
     ObjectID("filter_list_numeric") to FilterListNumericShowcase::class,
+    ObjectID("filter_list_tag") to FilterListTagShowcase::class,
 )

@@ -42,6 +42,9 @@
         <activity
             android:name=".filter.list.FilterListNumericShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.list.FilterListTagShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>
