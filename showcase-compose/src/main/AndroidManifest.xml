@@ -48,6 +48,9 @@
         <activity
             android:name=".filter.map.FilterMapShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.numeric.comparison.FilterComparisonShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>
