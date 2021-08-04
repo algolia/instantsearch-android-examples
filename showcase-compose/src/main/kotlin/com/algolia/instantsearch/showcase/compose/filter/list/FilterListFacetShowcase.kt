@@ -5,6 +5,7 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.compose.filter.list.FilterListState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
+import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.filter.list.FilterListConnector
 import com.algolia.instantsearch.helper.filter.list.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
@@ -15,36 +16,36 @@ import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.stubIndex
-import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
-import com.algolia.search.model.filter.NumericOperator
 
 
-class FilterListAllShowcase : AppCompatActivity() {
+class FilterListFacetShowcase : AppCompatActivity() {
 
     private val color = Attribute("color")
-    private val price = Attribute("price")
-    private val tags = Attribute("tags")
-    private val all = Attribute("all")
-    private val groupAll = groupAnd(all)
+    private val groupColor = groupAnd(color)
     private val filterState = FilterState()
     private val searcher = SearcherSingleIndex(stubIndex)
-    private val filters = listOf(
-        Filter.Numeric(price, 5..10),
-        Filter.Tag("coupon"),
+    private val facetFilters = listOf(
         Filter.Facet(color, "red"),
-        Filter.Facet(color, "black"),
-        Filter.Numeric(price, NumericOperator.Greater, 100)
+        Filter.Facet(color, "green"),
+        Filter.Facet(color, "blue"),
+        Filter.Facet(color, "yellow"),
+        Filter.Facet(color, "black")
     )
 
-    private val filterListState = FilterListState<Filter>()
-    private val filterList = FilterListConnector.All(filters, filterState, groupID = groupAll)
+    private val filterListState = FilterListState<Filter.Facet>()
+    private val filterList = FilterListConnector.Facet(
+        filters = facetFilters,
+        filterState = filterState,
+        selectionMode = SelectionMode.Single,
+        groupID = groupColor
+    )
 
     private val filterHeader = HeaderFilterConnector(
         searcher = searcher,
         filterState = filterState,
-        filterColors = filterColors(color, price, tags, all)
+        filterColors = filterColors(color)
     )
 
     private val connection = ConnectionHandler(
@@ -57,9 +58,7 @@ class FilterListAllShowcase : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ShowcaseTheme {
-                FilterListScreen(filterHeader = filterHeader, filterListState = filterListState)
-            }
+            FilterListScreen(filterHeader = filterHeader, filterListState = filterListState)
         }
 
         configureSearcher(searcher)

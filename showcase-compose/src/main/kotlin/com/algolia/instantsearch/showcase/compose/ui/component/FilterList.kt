@@ -43,10 +43,10 @@ fun FilterListPreview() {
 }
 
 @Composable
-fun FilterList(
+fun <T : Filter> FilterList(
     modifier: Modifier = Modifier,
     presenter: FilterPresenter = FilterPresenterImpl(),
-    filterListState: FilterListState<Filter>
+    filterListState: FilterListState<T>
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Surface(
@@ -70,11 +70,11 @@ fun FilterList(
 }
 
 @Composable
-fun FilterRow(
+fun <T : Filter> FilterRow(
     modifier: Modifier = Modifier,
-    selectableFilter: SelectableItem<Filter>,
+    selectableFilter: SelectableItem<T>,
     presenter: FilterPresenter = FilterPresenterImpl(),
-    onClick: (Filter) -> Unit = {}
+    onClick: (T) -> Unit = {}
 ) {
     val (filter, isSelected) = selectableFilter
     Row(
