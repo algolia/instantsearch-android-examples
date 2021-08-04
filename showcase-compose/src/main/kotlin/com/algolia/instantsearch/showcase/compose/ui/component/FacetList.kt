@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.facet.FacetListState
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
-import com.algolia.instantsearch.helper.filter.FilterPresenter
 import com.algolia.instantsearch.helper.filter.facet.FacetListPresenterImpl
 import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
