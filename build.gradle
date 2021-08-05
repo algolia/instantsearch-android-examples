@@ -4,7 +4,7 @@ buildscript {
     ext.build_tools_version = "30.0.3"
     ext.instantsearch = '2.11.0-beta03'
     ext.canary = '2.6'
-    ext.compose_version = '1.0.0-rc02'
+    ext.compose_version = '1.0.0'
     repositories {
         mavenCentral()
         google()

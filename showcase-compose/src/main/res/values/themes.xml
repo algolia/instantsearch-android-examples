@@ -13,6 +13,7 @@
         <item name="android:windowBackground">@color/white_light</item>
         <item name="toolbarStyle">@style/Toolbar</item>
         <item name="actionBarTheme">@style/Toolbar</item>
+        <item name="android:thumb">@drawable/thumb</item>
     </style>
 
     <style name="Toolbar" parent="Widget.AppCompat.Toolbar">

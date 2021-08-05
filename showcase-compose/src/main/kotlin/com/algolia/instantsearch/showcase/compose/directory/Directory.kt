@@ -11,6 +11,7 @@ import com.algolia.instantsearch.showcase.compose.filter.list.FilterListNumericS
 import com.algolia.instantsearch.showcase.compose.filter.list.FilterListTagShowcase
 import com.algolia.instantsearch.showcase.compose.filter.map.FilterMapShowcase
 import com.algolia.instantsearch.showcase.compose.filter.numeric.comparison.FilterComparisonShowcase
+import com.algolia.instantsearch.showcase.compose.filter.range.FilterRangeShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -25,4 +26,5 @@ val showcases = mapOf(
     ObjectID("filter_list_tag") to FilterListTagShowcase::class,
     ObjectID("filter_segment") to FilterMapShowcase::class,
     ObjectID("filter_numeric_comparison") to FilterComparisonShowcase::class,
+    ObjectID("filter_numeric_range") to FilterRangeShowcase::class,
 )
