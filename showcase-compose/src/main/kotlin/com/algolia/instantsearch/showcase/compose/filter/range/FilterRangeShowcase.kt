@@ -5,15 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.number.range.NumberRangeState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
@@ -26,12 +20,9 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.R
-import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
-import com.algolia.instantsearch.showcase.compose.filterColors
-import com.algolia.instantsearch.showcase.compose.showcaseTitle
-import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.ui.component.RestoreFab
@@ -135,11 +126,22 @@ class FilterRangeShowcase : AppCompatActivity() {
                             Text(text = boundsText(sliderState.bounds))
                         }
 
+                        val range = sliderState.range?.toClosedFloatRange()
+                        val bounds = sliderState.bounds?.toClosedFloatRange() ?: 0f..1f
+                        var sliderPosition by remember { mutableStateOf(range ?: bounds) }
+                        val steps = sliderState.bounds?.let { it.max - it.min + 1 } ?: 0
+                        @OptIn(ExperimentalMaterialApi::class)
                         RangeSlider(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 21.dp),
-                            numberRangeState = sliderState
+                                .padding(vertical = 4.dp),
+                            steps = steps,
+                            values = sliderPosition,
+                            onValueChange = { sliderPosition = it },
+                            valueRange = bounds,
+                            onValueChangeFinished = {
+                                sliderState.onRangeChanged?.invoke(sliderPosition.toRange())
+                            },
                         )
 
                         Row(
