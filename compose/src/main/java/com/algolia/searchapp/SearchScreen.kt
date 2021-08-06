@@ -184,7 +184,7 @@ fun FacetList(
             modifier = Modifier.padding(14.dp)
         )
         LazyColumn(Modifier.background(MaterialTheme.colors.background)) {
-            items(facetList.facets) { item ->
+            items(facetList.items) { item ->
                 FacetRow(
                     modifier = Modifier
                         .clickable { facetList.onSelection?.invoke(item.first) }

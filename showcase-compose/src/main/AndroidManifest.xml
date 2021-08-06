@@ -57,6 +57,9 @@
         <activity
             android:name=".filter.rating.RatingShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.toggle.FilterToggleShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>

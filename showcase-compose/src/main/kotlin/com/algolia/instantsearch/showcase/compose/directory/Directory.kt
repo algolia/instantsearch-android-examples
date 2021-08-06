@@ -13,6 +13,7 @@ import com.algolia.instantsearch.showcase.compose.filter.map.FilterMapShowcase
 import com.algolia.instantsearch.showcase.compose.filter.numeric.comparison.FilterComparisonShowcase
 import com.algolia.instantsearch.showcase.compose.filter.range.FilterRangeShowcase
 import com.algolia.instantsearch.showcase.compose.filter.rating.RatingShowcase
+import com.algolia.instantsearch.showcase.compose.filter.toggle.FilterToggleShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -29,4 +30,5 @@ val showcases = mapOf(
     ObjectID("filter_numeric_comparison") to FilterComparisonShowcase::class,
     ObjectID("filter_numeric_range") to FilterRangeShowcase::class,
     ObjectID("filter_rating") to RatingShowcase::class,
+    ObjectID("filter_toggle") to FilterToggleShowcase::class,
 )
