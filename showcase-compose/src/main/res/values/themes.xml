@@ -31,6 +31,4 @@
     <style name="InstantSearchShowcase.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="InstantSearchShowcase.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
 </resources>

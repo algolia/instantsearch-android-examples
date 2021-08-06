@@ -3,15 +3,34 @@ package com.algolia.instantsearch.showcase.compose.filter.rating
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Remove
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.algolia.instantsearch.compose.number.range.NumberRangeState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
+import com.algolia.instantsearch.core.number.range.Range
 import com.algolia.instantsearch.core.searcher.Debouncer
 import com.algolia.instantsearch.helper.filter.range.FilterRangeConnector
+import com.algolia.instantsearch.helper.filter.range.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.client
+import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.filterColors
+import com.algolia.instantsearch.showcase.compose.showcaseTitle
+import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.Filter
@@ -34,34 +53,111 @@ class RatingShowcase : AppCompatActivity() {
         }
     }
     private val filterState = FilterState(filters)
+
+    private val ratingState = NumberRangeState<Float>()
     private val range =
         FilterRangeConnector(filterState, rating, range = initialRange, bounds = primaryBounds)
+
+    private val filterHeader = HeaderFilterConnector(
+        searcher = searcher,
+        filterState = filterState,
+        filterColors = filterColors(rating)
+    )
+
     private val connection = ConnectionHandler(
         range,
-        searcher.connectFilterState(filterState, Debouncer(100))
+        searcher.connectFilterState(filterState, Debouncer(100)),
+        range.connectView(ratingState),
+        filterHeader
     )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-
+            ShowcaseTheme {
+                RatingScreen()
+            }
         }
-
-        //val ratingBarView = RatingBarView(ratingBar).apply {
-        //    stepSize = STEP
-        //    plus.setOnClickListener { rating += stepSize }
-        //    minus.setOnClickListener { rating -= stepSize }
-        //}
-        //connection += range.connectView(ratingBarView)
-        //connection += range.connectView(RatingTextView(ratingLabel))
-
-        //configureToolbar(toolbar)
-        //onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, rating)
-        //onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        //onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        //onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
-
         searcher.searchAsync()
+    }
+
+    @Composable
+    fun RatingScreen(title: String = showcaseTitle) {
+        Scaffold(
+            topBar = {
+                TitleTopBar(
+                    title = title,
+                    onBackPressed = ::onBackPressed
+                )
+            },
+            content = {
+                Column(Modifier.fillMaxWidth()) {
+                    HeaderFilter(
+                        modifier = Modifier.padding(16.dp),
+                        filterHeader = filterHeader,
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        val step = 0.5f
+                        RatingBar(
+                            ratingState = ratingState,
+                            step = step
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 6.dp),
+                            text = "${ratingState.range?.min ?: 0}",
+                            style = MaterialTheme.typography.body2,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colors.primary
+                        )
+                        PlusMinusButton(
+                            onPlusClick = {
+                                ratingState.range?.let {
+                                    ratingState.onRangeChanged?.invoke(
+                                        Range((it.min + step).coerceAtMost(it.max), it.max)
+                                    )
+                                }
+                            },
+                            onMinusClick = {
+                                ratingState.range?.let {
+                                    ratingState.onRangeChanged?.invoke(
+                                        Range((it.min - step).coerceAtLeast(0f), it.max)
+                                    )
+                                }
+                            }
+                        )
+                    }
+                }
+            }
+        )
+    }
+
+    @Composable
+    fun PlusMinusButton(
+        modifier: Modifier = Modifier,
+        onPlusClick: () -> Unit,
+        onMinusClick: () -> Unit,
+    ) {
+        Row(modifier) {
+            OutlinedButton(
+                shape = MaterialTheme.shapes.large,
+                onClick = onMinusClick,
+            ) {
+                Icon(imageVector = Icons.Default.Remove, contentDescription = null)
+            }
+            OutlinedButton(
+                shape = MaterialTheme.shapes.large,
+                onClick = onPlusClick
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            }
+        }
     }
 
     override fun onDestroy() {
