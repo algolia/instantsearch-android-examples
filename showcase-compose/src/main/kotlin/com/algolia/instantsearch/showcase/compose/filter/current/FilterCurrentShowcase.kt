@@ -22,7 +22,7 @@ import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.FilterChips
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar

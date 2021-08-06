@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.list.FilterListState
-import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.ui.component.FilterList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter

@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.compose.filter
+package com.algolia.instantsearch.showcase.compose.ui.component
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

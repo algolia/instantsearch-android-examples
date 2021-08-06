@@ -20,7 +20,7 @@ import com.algolia.instantsearch.helper.filter.state.groupAnd
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.filter.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.stubIndex

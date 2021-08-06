@@ -60,6 +60,9 @@
         <activity
             android:name=".filter.toggle.FilterToggleShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".hierarchical.HierarchicalShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>
