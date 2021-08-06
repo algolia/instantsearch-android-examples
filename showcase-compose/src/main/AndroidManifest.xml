@@ -66,6 +66,9 @@
         <activity
             android:name=".highlighting.HighlightingShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".list.merged.MergedListShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>

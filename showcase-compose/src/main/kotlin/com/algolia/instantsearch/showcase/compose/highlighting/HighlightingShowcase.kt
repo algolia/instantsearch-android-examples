@@ -32,7 +32,9 @@ import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Movie
 import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.GreyDark
+import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.White
+import com.algolia.instantsearch.showcase.compose.ui.component.MoviesList
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.helper.deserialize
 import java.util.*
@@ -54,7 +56,9 @@ class HighlightingShowcase : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            HighlightingShowcase()
+            ShowcaseTheme {
+                HighlightingShowcase()
+            }
         }
         configureSearcher(searcher)
         searcher.searchAsync()
@@ -77,89 +81,6 @@ class HighlightingShowcase : AppCompatActivity() {
                 )
             }
         )
-    }
-
-    @Composable
-    fun MoviesList(modifier: Modifier = Modifier, movies: List<Movie>) {
-        LazyColumn(modifier) {
-            items(movies) { movie ->
-                Surface(elevation = 1.dp) {
-                    MovieItem(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        movie = movie
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun MovieItem(modifier: Modifier = Modifier, movie: Movie) {
-        Row(modifier, verticalAlignment = Alignment.CenterVertically) {
-            Image(
-                modifier = Modifier.size(68.dp),
-                painter = rememberImagePainter(
-                    data = movie.image,
-                    builder = {
-                        placeholder(android.R.drawable.ic_media_play)
-                        error(android.R.drawable.ic_media_play)
-                    },
-                ),
-                contentDescription = "movie image",
-            )
-
-            Column(
-                Modifier
-                    .padding(start = 16.dp)
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.SpaceEvenly
-            ) {
-                Text(
-                    text = titleOf(movie),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.body1
-                )
-                Text(
-                    text = genresOf(movie),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.body2,
-                    color = GreyDark
-                )
-                Text(
-                    text = actorsOf(movie),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.caption,
-                    color = GreyDark
-                )
-            }
-        }
-    }
-
-    private fun titleOf(movie: Movie): AnnotatedString {
-        return movie.highlightedTitle?.toAnnotatedString()
-            ?: AnnotatedString(movie.title) + AnnotatedString(" ($movie.year)")
-    }
-
-    private fun genresOf(movie: Movie): AnnotatedString {
-        return movie.highlightedGenres?.toAnnotatedString(SpanStyle(background = Color.Yellow))
-            ?: AnnotatedString("unknown genre", SpanStyle(fontStyle = FontStyle.Italic))
-    }
-
-    private fun actorsOf(movie: Movie): String {
-        return movie.highlightedActors?.let { list ->
-            list.sortedByDescending { it.highlightedTokens.size }
-                .joinToString { highlight ->
-                    highlight.tokens.joinToString("") {
-                        if (it.highlighted) it.content.uppercase(Locale.getDefault()) else it.content
-                    }
-                }
-        } ?: ""
     }
 
     @Composable
