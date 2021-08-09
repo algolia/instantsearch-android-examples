@@ -21,7 +21,6 @@ import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
 import com.algolia.search.client.ClientSearch
-import com.algolia.search.helper.deserialize
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
@@ -43,9 +42,7 @@ class MainViewModel : ViewModel() {
     val searchBoxConnector = SearchBoxConnector(searcher)
 
     // Hits
-    val hitsPaginator = Paginator(searcher) { response ->
-        response.hits.deserialize(Product.serializer())
-    }
+    val hitsPaginator = Paginator(searcher) { it.deserialize(Product.serializer()) }
 
     // Stats
     val statsText = StatsTextState()

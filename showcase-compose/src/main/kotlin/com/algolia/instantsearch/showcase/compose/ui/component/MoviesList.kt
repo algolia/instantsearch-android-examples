@@ -3,7 +3,9 @@ package com.algolia.instantsearch.showcase.compose.ui.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -42,8 +44,12 @@ fun MoviesList(modifier: Modifier = Modifier, movies: List<Movie>) {
 }
 
 @Composable
-fun MoviesList(modifier: Modifier = Modifier, movies: LazyPagingItems<Movie>) {
-    LazyColumn(modifier) {
+fun MoviesList(
+    modifier: Modifier = Modifier,
+    movies: LazyPagingItems<Movie>,
+    listState: LazyListState = rememberLazyListState()
+) {
+    LazyColumn(modifier, listState) {
         items(movies) { movie ->
             movie ?: return@items
             Surface(elevation = 1.dp) {

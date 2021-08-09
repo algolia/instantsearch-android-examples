@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -33,16 +34,13 @@ import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.MoviesList
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
-import com.algolia.search.helper.deserialize
 import kotlinx.coroutines.flow.Flow
 
 class PagingSingleIndexShowcase : AppCompatActivity() {
 
     private val searcher = SearcherSingleIndex(stubIndex)
     private val pagingConfig = PagingConfig(pageSize = 10)
-    private val paginator = Paginator(searcher, pagingConfig) {
-        it.hits.deserialize(Movie.serializer())
-    }
+    private val paginator = Paginator(searcher, pagingConfig) { it.deserialize(Movie.serializer()) }
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
 
@@ -72,12 +70,14 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
 
     @Composable
     fun PagingSingleIndexScreen(stats: String, moviesFlow: Flow<PagingData<Movie>>) {
+        val moviesListState = rememberLazyListState()
         Scaffold(
             topBar = {
                 SearchTopBar(
                     placeHolderText = "Search for movies",
                     searchBoxState = searchBoxState,
-                    onBackPressed = ::onBackPressed
+                    onBackPressed = ::onBackPressed,
+                    lazyListState = moviesListState
                 )
             },
             content = {
@@ -89,7 +89,10 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
                         maxLines = 1,
                         color = GreyLight,
                     )
-                    MoviesList(movies = moviesFlow.collectAsLazyPagingItems())
+                    MoviesList(
+                        movies = moviesFlow.collectAsLazyPagingItems(),
+                        listState = moviesListState
+                    )
                 }
             }
         )
