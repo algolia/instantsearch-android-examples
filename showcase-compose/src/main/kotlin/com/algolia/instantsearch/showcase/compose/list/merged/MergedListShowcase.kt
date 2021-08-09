@@ -30,6 +30,7 @@ import com.algolia.instantsearch.showcase.compose.model.Actor
 import com.algolia.instantsearch.showcase.compose.model.Movie
 import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
+import com.algolia.instantsearch.showcase.compose.ui.component.ActorsList
 import com.algolia.instantsearch.showcase.compose.ui.component.MoviesList
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.helper.deserialize
@@ -102,27 +103,6 @@ class MergedListShowcase : AppCompatActivity() {
                 }
             }
         )
-    }
-
-    @Composable
-    fun ActorsList(modifier: Modifier = Modifier, actors: List<Actor>) {
-        LazyColumn(modifier) {
-            items(actors) { actor ->
-                Surface(elevation = 1.dp) {
-                    ActorItem(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        actor = actor
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun ActorItem(modifier: Modifier = Modifier, actor: Actor) {
-        Text(modifier = modifier, text = actor.name)
     }
 
     override fun onDestroy() {

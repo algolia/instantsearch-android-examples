@@ -70,7 +70,26 @@ fun SearchTopBar(
     placeHolderText: String = "Search...",
     searchBoxState: SearchBoxState,
     onBackPressed: () -> Unit = {},
-    lazyListState: LazyListState? = null,
+    lazyListState: LazyListState,
+    scope: CoroutineScope = rememberCoroutineScope()
+) {
+    return SearchTopBar(
+        modifier,
+        placeHolderText,
+        searchBoxState,
+        onBackPressed,
+        listOf(lazyListState),
+        scope,
+    )
+}
+
+@Composable
+fun SearchTopBar(
+    modifier: Modifier = Modifier,
+    placeHolderText: String = "Search...",
+    searchBoxState: SearchBoxState,
+    onBackPressed: () -> Unit = {},
+    lazyListStates: List<LazyListState>? = null,
     scope: CoroutineScope = rememberCoroutineScope()
 
 ) {
@@ -83,8 +102,8 @@ fun SearchTopBar(
                 placeHolderText = placeHolderText,
                 textStyle = MaterialTheme.typography.body1,
                 onValueChange = { _, _ ->
-                    lazyListState?.let {
-                        scope.launch { it.scrollToItem(0) }
+                    lazyListStates?.let { listStates ->
+                        scope.launch { listStates.forEach { it.scrollToItem(0) } }
                     }
                 },
                 elevation = 0.dp

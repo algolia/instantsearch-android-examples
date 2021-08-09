@@ -2,10 +2,8 @@ package com.algolia.instantsearch.showcase.compose.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
+import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -13,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontStyle
@@ -131,3 +130,65 @@ private fun actorsOf(movie: Movie): String {
             }
     } ?: ""
 }
+
+@Composable
+fun MoviesHorizontalList(
+    modifier: Modifier = Modifier,
+    movies: LazyPagingItems<Movie>,
+    listState: LazyListState = rememberLazyListState(),
+) {
+    LazyRow(modifier, listState) {
+        items(movies) { movie ->
+            movie ?: return@items
+            MovieCardItem(
+                modifier = Modifier
+                    .width(IntrinsicSize.Min)
+                    .padding(horizontal = 6.dp),
+                movie = movie
+            )
+        }
+    }
+}
+
+@Composable
+fun MovieCardItem(modifier: Modifier = Modifier, movie: Movie) {
+    Card(modifier) {
+        Column {
+            Image(
+                modifier = Modifier.size(192.dp),
+                contentScale = ContentScale.Crop,
+                painter = rememberImagePainter(
+                    data = movie.image,
+                    builder = {
+                        placeholder(android.R.drawable.ic_media_play)
+                        error(android.R.drawable.ic_media_play)
+                    },
+                ),
+                contentDescription = "movie image",
+            )
+            Column(Modifier.padding(8.dp)) {
+                Text(
+                    text = titleOf(movie),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.subtitle2
+                )
+                Text(
+                    text = genresOf(movie),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.body2,
+                    color = GreyDark
+                )
+                Text(
+                    text = movie.year,
+                    maxLines = 1,
+                    style = MaterialTheme.typography.caption,
+                    color = GreyDark
+                )
+            }
+        }
+    }
+}
+
+
