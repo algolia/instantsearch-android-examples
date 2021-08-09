@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.algolia.instantsearch.compose.hits.HitsState
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
@@ -23,7 +23,7 @@ class DirectoryShowcase : ComponentActivity() {
     private val index = client.initIndex(IndexName("mobile_demo_home"))
     private val searcher = SearcherSingleIndex(index, Query(hitsPerPage = 100))
     private val hitsState = HitsState<DirectoryItem>(emptyList())
-    private val searchQuery = SearchQuery()
+    private val searchBoxState = SearchBoxState()
     private val connections = ConnectionHandler()
 
     init {
@@ -43,10 +43,10 @@ class DirectoryShowcase : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ShowcaseTheme {
-                Directory(searchQuery, hitsState, ::navigateToShowcase)
+                Directory(searchBoxState, hitsState, ::navigateToShowcase)
             }
         }
-        configureSearchBox(searcher, searchQuery, connections)
+        configureSearchBox(searcher, searchBoxState, connections)
         searcher.searchAsync()
     }
 

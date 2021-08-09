@@ -1,6 +1,5 @@
 package com.algolia.instantsearch.showcase.compose.ui.component
 
-import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -17,6 +16,8 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
 import com.algolia.instantsearch.showcase.compose.model.Movie
@@ -41,6 +42,24 @@ fun MoviesList(modifier: Modifier = Modifier, movies: List<Movie>) {
 }
 
 @Composable
+fun MoviesList(modifier: Modifier = Modifier, movies: LazyPagingItems<Movie>) {
+    LazyColumn(modifier) {
+        items(movies) { movie ->
+            movie ?: return@items
+            Surface(elevation = 1.dp) {
+                MovieItem(
+                    modifier = Modifier
+                        .height(100.dp)
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    movie = movie
+                )
+            }
+        }
+    }
+}
+
+@Composable
 fun MovieItem(modifier: Modifier = Modifier, movie: Movie) {
     Row(modifier, verticalAlignment = Alignment.CenterVertically) {
         Image(
@@ -48,8 +67,8 @@ fun MovieItem(modifier: Modifier = Modifier, movie: Movie) {
             painter = rememberImagePainter(
                 data = movie.image,
                 builder = {
-                    placeholder(R.drawable.ic_media_play)
-                    error(R.drawable.ic_media_play)
+                    placeholder(android.R.drawable.ic_media_play)
+                    error(android.R.drawable.ic_media_play)
                 },
             ),
             contentDescription = "movie image",

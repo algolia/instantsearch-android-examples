@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.searchbox.SearchBox
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 
 @Preview
@@ -54,9 +54,9 @@ fun TitleTopBar(modifier: Modifier = Modifier, title: String, onBackPressed: () 
 @Preview
 @Composable
 fun SearchTopBarPreview() {
-    val searchQuery = SearchQuery()
+    val searchBoxState = SearchBoxState()
     ShowcaseTheme {
-        SearchTopBar(searchQuery = searchQuery)
+        SearchTopBar(searchBoxState = searchBoxState)
     }
 }
 
@@ -64,7 +64,7 @@ fun SearchTopBarPreview() {
 fun SearchTopBar(
     modifier: Modifier = Modifier,
     placeHolderText: String = "Search...",
-    searchQuery: SearchQuery,
+    searchBoxState: SearchBoxState,
     onBackPressed: () -> Unit = {}
 ) {
     TopAppBar(
@@ -72,7 +72,7 @@ fun SearchTopBar(
         title = {
             SearchBox(
                 modifier = Modifier.fillMaxWidth(),
-                searchQuery = searchQuery,
+                searchBoxState = searchBoxState,
                 placeHolderText = placeHolderText,
                 textStyle = MaterialTheme.typography.body1,
                 elevation = 0.dp

@@ -8,7 +8,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.searcher.Searcher
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
@@ -50,7 +50,7 @@ val Intent.indexName: IndexName get() = IndexName(extras!!.getString(KeyIndexNam
 
 fun <R> configureSearchBox(
     searcher: Searcher<R>,
-    searcherQuery: SearchQuery,
+    searcherQuery: SearchBoxState,
     connections: ConnectionHandler
 ) {
     SearchBoxConnector(searcher).also {

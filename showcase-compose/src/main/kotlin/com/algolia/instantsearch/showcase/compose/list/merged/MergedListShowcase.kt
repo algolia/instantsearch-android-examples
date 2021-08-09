@@ -19,7 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.searcher.connectView
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
@@ -47,13 +47,13 @@ class MergedListShowcase : AppCompatActivity() {
         )
     )
 
-    private val searchQuery = SearchQuery()
+    private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
     private var mergedList by mutableStateOf<MergedList?>(null)
 
     private val connection = ConnectionHandler(
         searchBox,
-        searchBox.connectView(searchQuery),
+        searchBox.connectView(searchBoxState),
         searcher.connectView(view = { mergedList = it }) {
             it?.let { response ->
                 val actors = response.results[1].hits.deserialize(Actor.serializer())
@@ -79,7 +79,7 @@ class MergedListShowcase : AppCompatActivity() {
             topBar = {
                 SearchTopBar(
                     placeHolderText = "Search for movies",
-                    searchQuery = searchQuery,
+                    searchBoxState = searchBoxState,
                     onBackPressed = ::onBackPressed
                 )
             },

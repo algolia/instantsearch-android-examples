@@ -5,7 +5,7 @@ import com.algolia.instantsearch.compose.filter.facet.FacetListState
 import com.algolia.instantsearch.compose.filter.facet.connectPaginator
 import com.algolia.instantsearch.compose.item.StatsTextState
 import com.algolia.instantsearch.compose.list.Paginator
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.compose.searchbox.connectPaginator
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
@@ -39,7 +39,7 @@ class MainViewModel : ViewModel() {
     val searcher = SearcherSingleIndex(index)
 
     // Search Box
-    val searchQuery = SearchQuery()
+    val searchBoxState = SearchBoxState()
     val searchBoxConnector = SearchBoxConnector(searcher)
 
     // Hits
@@ -66,7 +66,7 @@ class MainViewModel : ViewModel() {
     val connections = ConnectionHandler(searchBoxConnector, statsConnector, facetListConnector)
 
     init {
-        connections += searchBoxConnector.connectView(searchQuery)
+        connections += searchBoxConnector.connectView(searchBoxState)
         connections += statsConnector.connectView(statsText, StatsPresenterImpl())
         connections += searcher.connectFilterState(filterState)
         connections += facetListConnector.connectView(facetList)

@@ -27,6 +27,7 @@ import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
 import com.algolia.instantsearch.compose.item.StatsState
 import com.algolia.instantsearch.compose.list.Paginator
 import com.algolia.instantsearch.compose.searchbox.SearchBox
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
 import com.algolia.search.model.search.Facet
@@ -76,7 +77,7 @@ fun TextAnnotated(
 @Composable
 fun Search(
     modifier: Modifier = Modifier,
-    searchQuery: SearchQuery,
+    searchBoxState: SearchBoxState,
     paginator: Paginator<Product>,
     statsText: StatsState<String>,
     facetList: FacetListState,
@@ -102,7 +103,7 @@ fun Search(
                         modifier = Modifier
                             .weight(1f)
                             .padding(top = 12.dp, start = 12.dp),
-                        searchQuery = searchQuery,
+                        searchBoxState = searchBoxState,
                         onValueChange = { _, _ -> scope.launch { listState.scrollToItem(0) } },
                     )
 

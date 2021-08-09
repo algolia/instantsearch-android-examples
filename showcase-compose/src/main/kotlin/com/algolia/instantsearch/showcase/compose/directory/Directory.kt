@@ -17,6 +17,7 @@ import com.algolia.instantsearch.showcase.compose.filter.toggle.FilterToggleShow
 import com.algolia.instantsearch.showcase.compose.hierarchical.HierarchicalShowcase
 import com.algolia.instantsearch.showcase.compose.highlighting.HighlightingShowcase
 import com.algolia.instantsearch.showcase.compose.list.merged.MergedListShowcase
+import com.algolia.instantsearch.showcase.compose.list.paging.PagingSingleIndexShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -37,4 +38,5 @@ val showcases = mapOf(
     ObjectID("filter_hierarchical") to HierarchicalShowcase::class,
     ObjectID("highlighting") to HighlightingShowcase::class,
     ObjectID("merged_list") to MergedListShowcase::class,
+    ObjectID("paging_single_index") to PagingSingleIndexShowcase::class,
 )

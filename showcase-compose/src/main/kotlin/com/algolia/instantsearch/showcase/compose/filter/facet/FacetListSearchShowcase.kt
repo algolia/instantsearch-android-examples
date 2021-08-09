@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.facet.FacetListState
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
@@ -39,7 +39,7 @@ class FacetListSearchShowcase : AppCompatActivity() {
     private val searcherForFacet = SearcherForFacets(stubIndex, brand)
     private val filterState = FilterState()
 
-    private val searchQuery = SearchQuery()
+    private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcherForFacet)
 
     private val facetListState = FacetListState()
@@ -63,7 +63,7 @@ class FacetListSearchShowcase : AppCompatActivity() {
         searchBox,
         facetList,
         searcher.connectFilterState(filterState),
-        searchBox.connectView(searchQuery),
+        searchBox.connectView(searchBoxState),
         facetList.connectView(facetListState, facetPresenter),
         filterHeader
     )
@@ -89,7 +89,7 @@ class FacetListSearchShowcase : AppCompatActivity() {
         Scaffold(
             topBar = {
                 SearchTopBar(
-                    searchQuery = searchQuery,
+                    searchBoxState = searchBoxState,
                     onBackPressed = ::onBackPressed
                 )
             },

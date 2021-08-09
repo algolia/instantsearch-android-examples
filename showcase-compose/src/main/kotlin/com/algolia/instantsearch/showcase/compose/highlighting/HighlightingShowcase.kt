@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
 import com.algolia.instantsearch.compose.hits.HitsState
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
@@ -44,13 +44,13 @@ class HighlightingShowcase : AppCompatActivity() {
     private val searcher = SearcherSingleIndex(stubIndex)
     private val hitsState = HitsState<Movie>()
 
-    private val searchQuery = SearchQuery()
+    private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
 
     private val connection = ConnectionHandler(
         searchBox,
         searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) },
-        searchBox.connectView(searchQuery)
+        searchBox.connectView(searchBoxState)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +70,7 @@ class HighlightingShowcase : AppCompatActivity() {
             topBar = {
                 SearchTopBar(
                     placeHolderText = "Search for movies",
-                    searchQuery = searchQuery,
+                    searchBoxState = searchBoxState,
                     onBackPressed = ::onBackPressed
                 )
             },
