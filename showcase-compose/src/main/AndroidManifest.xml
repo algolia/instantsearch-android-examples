@@ -75,6 +75,9 @@
         <activity
             android:name=".list.paging.PagingMultipleIndexShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".loading.LoadingShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>
