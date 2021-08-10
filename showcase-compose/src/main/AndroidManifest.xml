@@ -78,6 +78,9 @@
         <activity
             android:name=".loading.LoadingShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".relateditems.RelatedItemsShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>

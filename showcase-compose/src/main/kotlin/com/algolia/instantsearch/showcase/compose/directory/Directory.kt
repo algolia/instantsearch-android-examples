@@ -20,6 +20,7 @@ import com.algolia.instantsearch.showcase.compose.list.merged.MergedListShowcase
 import com.algolia.instantsearch.showcase.compose.list.paging.PagingMultipleIndexShowcase
 import com.algolia.instantsearch.showcase.compose.list.paging.PagingSingleIndexShowcase
 import com.algolia.instantsearch.showcase.compose.loading.LoadingShowcase
+import com.algolia.instantsearch.showcase.compose.relateditems.RelatedItemsShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -43,4 +44,5 @@ val showcases = mapOf(
     ObjectID("paging_single_index") to PagingSingleIndexShowcase::class,
     ObjectID("paging_multiple_index") to PagingMultipleIndexShowcase::class,
     ObjectID("loading") to LoadingShowcase::class,
+    ObjectID("personalisation_related_items") to RelatedItemsShowcase::class,
 )
