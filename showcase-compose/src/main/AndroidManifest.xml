@@ -81,6 +81,12 @@
         <activity
             android:name=".relateditems.RelatedItemsShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".search.SearchAsYouTypeShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".search.SearchOnSubmitShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>

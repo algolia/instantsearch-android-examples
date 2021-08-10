@@ -26,8 +26,12 @@ import com.algolia.instantsearch.showcase.compose.ui.GreyDark
 import java.util.*
 
 @Composable
-fun MoviesList(modifier: Modifier = Modifier, movies: List<Movie>) {
-    LazyColumn(modifier) {
+fun MoviesList(
+    modifier: Modifier = Modifier,
+    movies: List<Movie>,
+    listState: LazyListState = rememberLazyListState()
+) {
+    LazyColumn(modifier, listState) {
         items(movies) { movie ->
             Surface(elevation = 1.dp) {
                 MovieItem(
