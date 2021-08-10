@@ -22,6 +22,7 @@ import com.algolia.instantsearch.showcase.compose.list.paging.PagingSingleIndexS
 import com.algolia.instantsearch.showcase.compose.loading.LoadingShowcase
 import com.algolia.instantsearch.showcase.compose.relateditems.RelatedItemsShowcase
 import com.algolia.instantsearch.showcase.compose.search.SearchAsYouTypeShowcase
+import com.algolia.instantsearch.showcase.compose.search.SearchAutoCompleteShowcase
 import com.algolia.instantsearch.showcase.compose.search.SearchOnSubmitShowcase
 import com.algolia.search.model.ObjectID
 
@@ -49,4 +50,5 @@ val showcases = mapOf(
     ObjectID("personalisation_related_items") to RelatedItemsShowcase::class,
     ObjectID("search_as_you_type") to SearchAsYouTypeShowcase::class,
     ObjectID("search_on_submit") to SearchOnSubmitShowcase::class,
+    ObjectID("search_auto_complete_text_view") to SearchAutoCompleteShowcase::class,
 )

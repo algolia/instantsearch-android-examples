@@ -33,7 +33,7 @@ fun TitleTopBarPreview() {
 }
 
 @Composable
-fun TitleTopBar(modifier: Modifier = Modifier, title: String, onBackPressed: () -> Unit = {}) {
+fun TitleTopBar(modifier: Modifier = Modifier, title: String = "", onBackPressed: () -> Unit = {}) {
     TopAppBar(
         modifier = modifier,
         title = { Text(title) },
