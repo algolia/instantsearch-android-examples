@@ -25,6 +25,7 @@ import com.algolia.instantsearch.showcase.compose.search.SearchAsYouTypeShowcase
 import com.algolia.instantsearch.showcase.compose.search.SearchAutoCompleteShowcase
 import com.algolia.instantsearch.showcase.compose.search.SearchOnSubmitShowcase
 import com.algolia.instantsearch.showcase.compose.sortby.SortByShowcase
+import com.algolia.instantsearch.showcase.compose.stats.StatsShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -53,4 +54,5 @@ val showcases = mapOf(
     ObjectID("search_on_submit") to SearchOnSubmitShowcase::class,
     ObjectID("search_auto_complete_text_view") to SearchAutoCompleteShowcase::class,
     ObjectID("sort_by") to SortByShowcase::class,
+    ObjectID("stats") to StatsShowcase::class,
 )
