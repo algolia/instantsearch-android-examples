@@ -22,15 +22,15 @@ import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filter.current.ui.FilterChips
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
-import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.RestoreFab
+import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.NumericOperator
 
@@ -69,17 +69,15 @@ class FilterCurrentShowcase : AppCompatActivity() {
         filterColors = filterColors(color, price, tags)
     )
 
-    private val connection = ConnectionHandler(
-        // connectors
-        currentFiltersAll,
-        currentFiltersColor,
-        // view connections
-        searcher.connectFilterState(filterState),
-        currentFiltersAll.connectView(chipGroupAll),
-        currentFiltersColor.connectView(chipGroupColors),
-        // showcase view
-        filterHeader
+    private val connections = ConnectionHandler(
+        currentFiltersAll, currentFiltersColor, filterHeader
     )
+
+    init {
+        connections += searcher.connectFilterState(filterState)
+        connections += currentFiltersAll.connectView(chipGroupAll)
+        connections += currentFiltersColor.connectView(chipGroupColors)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,6 +141,6 @@ class FilterCurrentShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

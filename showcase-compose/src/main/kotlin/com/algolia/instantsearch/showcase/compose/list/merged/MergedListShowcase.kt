@@ -5,13 +5,9 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -52,17 +48,18 @@ class MergedListShowcase : AppCompatActivity() {
     private val searchBox = SearchBoxConnector(searcher)
     private var mergedList by mutableStateOf<MergedList?>(null)
 
-    private val connection = ConnectionHandler(
-        searchBox,
-        searchBox.connectView(searchBoxState),
-        searcher.connectView(view = { mergedList = it }) {
+    private val connections = ConnectionHandler(searchBox)
+
+    init {
+        connections += searchBox.connectView(searchBoxState)
+        connections += searcher.connectView(view = { mergedList = it }) {
             it?.let { response ->
                 val actors = response.results[1].hits.deserialize(Actor.serializer())
                 val movies = response.results[0].hits.deserialize(Movie.serializer())
                 MergedList(actors, movies)
             }
         }
-    )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +105,7 @@ class MergedListShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }
 

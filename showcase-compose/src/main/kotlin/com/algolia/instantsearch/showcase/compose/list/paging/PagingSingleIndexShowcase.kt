@@ -48,13 +48,13 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
     private val statsState = StatsTextState()
     private val stats = StatsConnector(searcher)
 
-    private val connection = ConnectionHandler(
-        searchBox,
-        stats,
-        searchBox.connectView(searchBoxState),
-        searchBox.connectPaginator(paginator),
-        stats.connectView(statsState, StatsPresenterImpl())
-    )
+    private val connections = ConnectionHandler(searchBox, stats)
+
+    init {
+        connections += searchBox.connectView(searchBoxState)
+        connections += searchBox.connectPaginator(paginator)
+        connections += stats.connectView(statsState, StatsPresenterImpl())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +102,6 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

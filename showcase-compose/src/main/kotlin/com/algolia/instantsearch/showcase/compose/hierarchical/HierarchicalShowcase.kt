@@ -65,11 +65,14 @@ class HierarchicalShowcase : AppCompatActivity() {
         filterColors = filterColors(hierarchicalCategory)
     )
 
-    private val connection = ConnectionHandler(
-        hierarchical,
-        searcher.connectFilterState(filterState),
-        hierarchical.connectView(hierarchicalState, HierarchicalPresenterImpl(separator))
-    )
+    private val connections = ConnectionHandler(hierarchical)
+
+    init {
+        connections += searcher.connectFilterState(filterState)
+        connections += hierarchical.connectView(
+            hierarchicalState, HierarchicalPresenterImpl(separator)
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -163,6 +166,6 @@ class HierarchicalShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

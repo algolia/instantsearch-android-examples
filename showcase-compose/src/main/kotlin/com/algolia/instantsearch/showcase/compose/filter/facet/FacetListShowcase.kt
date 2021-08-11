@@ -24,8 +24,6 @@ import com.algolia.instantsearch.helper.filter.state.groupOr
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
-import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.stubIndex
@@ -35,6 +33,8 @@ import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 
 class FacetListShowcase : AppCompatActivity() {
@@ -95,16 +95,16 @@ class FacetListShowcase : AppCompatActivity() {
         filterColors = filterColors(color, promotions, category)
     )
 
-    private val connection = ConnectionHandler(
-        facetListColor,
-        facetListPromotions,
-        facetListCategory,
-        searcher.connectFilterState(filterState),
-        facetListColor.connectView(facetListStateColor),
-        facetListCategory.connectView(facetListStateCategory),
-        facetListPromotions.connectView(facetListStatePromotions),
-        filterHeader,
+    private val connections = ConnectionHandler(
+        facetListColor, facetListPromotions, facetListCategory, filterHeader
     )
+
+    init {
+        connections += searcher.connectFilterState(filterState)
+        connections += facetListColor.connectView(facetListStateColor)
+        connections += facetListCategory.connectView(facetListStateCategory)
+        connections += facetListPromotions.connectView(facetListStatePromotions)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -166,6 +166,6 @@ class FacetListShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

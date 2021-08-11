@@ -42,10 +42,10 @@ class RelatedItemsShowcase : AppCompatActivity() {
         MatchingPattern(Attribute("categories"), 2, Product::categories)
     )
 
-    private val productsSearchConnection = searcher.connectHitsView(productsHits) {
-        it.hits.deserialize(Product.serializer())
-    }.also { it.connect() }
     private var relatedItemConnection: Connection? = null
+    private val productsSearchConnection = searcher
+        .connectHitsView(productsHits) { it.hits.deserialize(Product.serializer()) }
+        .also { it.connect() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

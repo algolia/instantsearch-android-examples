@@ -22,9 +22,9 @@ import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.R
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.RestoreFab
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
@@ -55,12 +55,12 @@ class FilterRangeShowcase : AppCompatActivity() {
         filterColors = filterColors(price)
     )
 
-    private val connection = ConnectionHandler(
-        rangeConnector,
-        searcher.connectFilterState(filterState, Debouncer(100)),
-        rangeConnector.connectView(sliderState),
-        filterHeader
-    )
+    private val connections = ConnectionHandler(rangeConnector, filterHeader)
+
+    init {
+        connections += searcher.connectFilterState(filterState, Debouncer(100))
+        connections += rangeConnector.connectView(sliderState)
+    }
 
     private var changeButtonEnabled by mutableStateOf(true)
     private var resetButtonEnabled by mutableStateOf(true)
@@ -174,7 +174,7 @@ class FilterRangeShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }
 

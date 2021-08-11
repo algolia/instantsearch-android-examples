@@ -35,9 +35,9 @@ import com.algolia.instantsearch.helper.searcher.addFacet
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.R
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
@@ -72,14 +72,15 @@ class FilterComparisonShowcase : AppCompatActivity() {
     private val yearLabel = "$year ${comparisonYear.operator.raw}"
     private val priceLabel = "$price ${comparisonPrice.operator.raw}"
 
-    private val connection = ConnectionHandler(
-        comparisonPrice,
-        comparisonYear,
-        searcher.connectFilterState(filterState),
-        comparisonPrice.connectView(comparisonPriceState),
-        comparisonYear.connectView(comparisonYearState) { year -> year?.toString() ?: "" },
-        filterHeader
-    )
+    private val connection = ConnectionHandler(comparisonPrice, comparisonYear, filterHeader)
+
+    init {
+        connection += searcher.connectFilterState(filterState)
+        connection += comparisonPrice.connectView(comparisonPriceState)
+        connection += comparisonYear.connectView(comparisonYearState) { year ->
+            year?.toString() ?: ""
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

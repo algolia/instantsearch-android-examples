@@ -50,12 +50,13 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
 
-    private val connection = ConnectionHandler(
-        searchBox,
-        searchBox.connectView(searchBoxState),
-        searchBox.connectPaginator(moviesPaginator),
-        searchBox.connectPaginator(actorsPaginator),
-    )
+    private val connections = ConnectionHandler(searchBox)
+
+    init {
+        connections += searchBox.connectView(searchBoxState)
+        connections += searchBox.connectPaginator(moviesPaginator)
+        connections += searchBox.connectPaginator(actorsPaginator)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +117,6 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

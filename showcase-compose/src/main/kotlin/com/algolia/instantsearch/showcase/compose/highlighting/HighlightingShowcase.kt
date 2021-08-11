@@ -35,11 +35,12 @@ class HighlightingShowcase : AppCompatActivity() {
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
 
-    private val connection = ConnectionHandler(
-        searchBox,
-        searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) },
-        searchBox.connectView(searchBoxState)
-    )
+    private val connections = ConnectionHandler(searchBox)
+
+    init {
+        connections += searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) }
+        connections += searchBox.connectView(searchBoxState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +87,6 @@ class HighlightingShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

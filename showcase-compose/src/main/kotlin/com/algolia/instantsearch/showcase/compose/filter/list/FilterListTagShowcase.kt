@@ -12,9 +12,9 @@ import com.algolia.instantsearch.helper.filter.state.groupOr
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
 
@@ -42,12 +42,12 @@ class FilterListTagShowcase : AppCompatActivity() {
         filterColors = filterColors(tags)
     )
 
-    private val connection = ConnectionHandler(
-        filterList,
-        searcher.connectFilterState(filterState),
-        filterList.connectView(filterListState),
-        filterHeader
-    )
+    private val connections = ConnectionHandler(filterList, filterHeader)
+
+    init {
+        connections += searcher.connectFilterState(filterState)
+        connections += filterList.connectView(filterListState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +61,6 @@ class FilterListTagShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

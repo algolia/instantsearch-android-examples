@@ -23,14 +23,14 @@ import com.algolia.instantsearch.helper.filter.state.groupOr
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
-import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.RestoreFab
+import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 
 class FilterClearShowcase : AppCompatActivity() {
@@ -64,13 +64,14 @@ class FilterClearShowcase : AppCompatActivity() {
     )
 
     private val connection = ConnectionHandler(
-        filterClearSpecified,
-        filterClearExcept,
-        searcher.connectFilterState(filterState),
-        filterClearSpecified.connectView(clearSpecified),
-        filterClearExcept.connectView(clearExcept),
-        filterHeader
+        filterClearSpecified, filterClearExcept, filterHeader
     )
+
+    init {
+        connection += searcher.connectFilterState(filterState)
+        connection += filterClearSpecified.connectView(clearSpecified)
+        connection += filterClearExcept.connectView(clearExcept)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

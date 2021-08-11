@@ -3,7 +3,10 @@ package com.algolia.instantsearch.showcase.compose.filter.facet
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,13 +19,16 @@ import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.compose.*
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.client
+import com.algolia.instantsearch.showcase.compose.configureSearcher
+import com.algolia.instantsearch.showcase.compose.filterColors
+import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.ui.HoloGreenDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
@@ -59,15 +65,13 @@ class FacetListPersistentShowcase : AppCompatActivity() {
         filterColors = filterColors(color, color, category)
     )
 
-    private val connection = ConnectionHandler(
-        facetListColor,
-        facetListCategory,
-        searcher.connectFilterState(filterState),
-        facetListColor.connectView(facetListStateColor),
-        facetListCategory.connectView(facetListStateCategory),
-        filterHeader
+    private val connections = ConnectionHandler(facetListColor, facetListCategory, filterHeader)
 
-    )
+    init {
+        connections += searcher.connectFilterState(filterState)
+        connections += facetListColor.connectView(facetListStateColor)
+        connections += facetListCategory.connectView(facetListStateCategory)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +122,6 @@ class FacetListPersistentShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

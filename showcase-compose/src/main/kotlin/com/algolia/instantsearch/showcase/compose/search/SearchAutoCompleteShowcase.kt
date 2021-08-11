@@ -30,13 +30,14 @@ class SearchAutoCompleteShowcase : AppCompatActivity() {
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
     private val hitsState = HitsState<String>()
-    private val connection = ConnectionHandler(
-        searchBox,
-        searchBox.connectView(searchBoxState),
-        searcher.connectHitsView(hitsState) {
+    private val connections = ConnectionHandler(searchBox)
+
+    init {
+        connections += searchBox.connectView(searchBoxState)
+        connections += searcher.connectHitsView(hitsState) {
             it.hits.deserialize(Movie.serializer()).map(Movie::title)
         }
-    )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,9 @@ class SearchAutoCompleteShowcase : AppCompatActivity() {
             },
             content = {
                 AutoCompleteTextField(
-                    modifier = Modifier.fillMaxWidth().padding(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                     searchBoxState = searchBoxState,
                     label = "Search for items",
                     suggestions = hitsState.hits
@@ -71,6 +74,6 @@ class SearchAutoCompleteShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

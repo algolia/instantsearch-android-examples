@@ -31,11 +31,12 @@ class SearchOnSubmitShowcase : AppCompatActivity() {
 
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.OnSubmit)
-    private val connection = ConnectionHandler(
-        searchBox,
-        searchBox.connectView(searchBoxState),
-        searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) }
-    )
+    private val connections = ConnectionHandler(searchBox)
+
+    init {
+        connections += searchBox.connectView(searchBoxState)
+        connections += searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +81,6 @@ class SearchOnSubmitShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

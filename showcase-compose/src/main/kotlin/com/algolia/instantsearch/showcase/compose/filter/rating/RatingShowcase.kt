@@ -25,11 +25,11 @@ import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.client
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.RatingBar
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
@@ -65,13 +65,12 @@ class RatingShowcase : AppCompatActivity() {
         filterColors = filterColors(rating)
     )
 
-    private val connection = ConnectionHandler(
-        range,
-        searcher.connectFilterState(filterState, Debouncer(100)),
-        range.connectView(ratingState),
-        filterHeader
-    )
+    private val connections = ConnectionHandler(range, filterHeader)
 
+    init {
+        connections += searcher.connectFilterState(filterState, Debouncer(100))
+        connections += range.connectView(ratingState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -164,7 +163,7 @@ class RatingShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 
     companion object {

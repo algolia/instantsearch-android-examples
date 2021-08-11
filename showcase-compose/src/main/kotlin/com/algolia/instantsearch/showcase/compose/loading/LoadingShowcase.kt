@@ -39,13 +39,13 @@ class LoadingShowcase : AppCompatActivity() {
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
 
-    private val connection = ConnectionHandler(
-        loading,
-        searchBox,
-        loading.connectView(loadingState),
-        searchBox.connectView(searchBoxState),
-        searchBox.connectPaginator(paginator)
-    )
+    private val connections = ConnectionHandler(loading, searchBox)
+
+    init {
+        connections += loading.connectView(loadingState)
+        connections += searchBox.connectView(searchBoxState)
+        connections += searchBox.connectPaginator(paginator)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,6 +95,6 @@ class LoadingShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

@@ -41,18 +41,19 @@ class SortByShowcase : AppCompatActivity() {
     )
     private val sortByState = SortByState()
     private val sortBy = SortByConnector(indexes, searcher, selected = 0)
-    private val connection = ConnectionHandler(
-        sortBy,
-        searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) },
-        sortBy.connectView(sortByState) { index ->
+    private val connections = ConnectionHandler(sortBy)
+
+    init {
+        connections += searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) }
+        connections += sortBy.connectView(sortByState) { index ->
             when (index) {
                 indexTitle -> "Default"
                 indexYearAsc -> "Year Asc"
                 indexYearDesc -> "Year Desc"
                 else -> index.indexName.raw
             }
-        },
-    )
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +99,6 @@ class SortByShowcase : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
-        connection.clear()
+        connections.clear()
     }
 }

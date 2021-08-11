@@ -3,7 +3,9 @@ package com.algolia.instantsearch.showcase.compose.filter.facet
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -24,11 +26,14 @@ import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherForFacets
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.compose.*
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
+import com.algolia.instantsearch.showcase.compose.client
+import com.algolia.instantsearch.showcase.compose.filterColors
+import com.algolia.instantsearch.showcase.compose.indexName
+import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.model.Attribute
 
@@ -59,15 +64,13 @@ class FacetListSearchShowcase : AppCompatActivity() {
         filterColors = filterColors(brand)
     )
 
-    private val connection = ConnectionHandler(
-        searchBox,
-        facetList,
-        searcher.connectFilterState(filterState),
-        searchBox.connectView(searchBoxState),
-        facetList.connectView(facetListState, facetPresenter),
-        filterHeader
-    )
+    private val connections = ConnectionHandler(searchBox, facetList, filterHeader)
 
+    init {
+        connections += searcher.connectFilterState(filterState)
+        connections += searchBox.connectView(searchBoxState)
+        connections += facetList.connectView(facetListState, facetPresenter)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +118,6 @@ class FacetListSearchShowcase : AppCompatActivity() {
         super.onDestroy()
         searcher.cancel()
         searcherForFacet.cancel()
-        connection.clear()
+        connections.clear()
     }
 }
