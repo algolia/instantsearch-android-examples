@@ -90,6 +90,9 @@
         <activity
             android:name=".search.SearchAutoCompleteShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".sortby.SortByShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
     </application>
 
 </manifest>

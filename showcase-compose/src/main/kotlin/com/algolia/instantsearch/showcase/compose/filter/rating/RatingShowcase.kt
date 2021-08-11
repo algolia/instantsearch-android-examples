@@ -30,6 +30,7 @@ import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
+import com.algolia.instantsearch.showcase.compose.ui.component.RatingBar
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName

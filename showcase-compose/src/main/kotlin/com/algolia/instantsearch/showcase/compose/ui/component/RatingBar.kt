@@ -1,4 +1,4 @@
-package com.algolia.instantsearch.showcase.compose.filter.rating
+package com.algolia.instantsearch.showcase.compose.ui.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

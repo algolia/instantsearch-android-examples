@@ -3,9 +3,9 @@ package com.algolia.instantsearch.showcase.compose.search
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,7 +20,7 @@ import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Movie
 import com.algolia.instantsearch.showcase.compose.stubIndex
-import com.algolia.instantsearch.showcase.compose.ui.component.AutoCompleteText
+import com.algolia.instantsearch.showcase.compose.ui.component.AutoCompleteTextField
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.helper.deserialize
 
@@ -43,7 +43,6 @@ class SearchAutoCompleteShowcase : AppCompatActivity() {
         setContent {
             SearchAutoCompleteScreen(searchBoxState = searchBoxState)
         }
-        searcher.query.hitsPerPage = 5
         configureSearcher(searcher)
         searcher.searchAsync()
     }
@@ -59,10 +58,9 @@ class SearchAutoCompleteShowcase : AppCompatActivity() {
                 )
             },
             content = {
-                AutoCompleteText(
-                    modifier = Modifier.padding(12.dp),
+                AutoCompleteTextField(
+                    modifier = Modifier.fillMaxWidth().padding(12.dp),
                     searchBoxState = searchBoxState,
-                    label = { Text(text = "Search for items") },
                     suggestions = hitsState.hits
                 )
             }
