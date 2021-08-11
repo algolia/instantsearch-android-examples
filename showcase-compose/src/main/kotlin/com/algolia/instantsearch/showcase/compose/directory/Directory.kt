@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.compose.directory
 
+import com.algolia.instantsearch.showcase.compose.customdata.QueryRuleCustomDataShowcase
 import com.algolia.instantsearch.showcase.compose.filter.clear.FilterClearShowcase
 import com.algolia.instantsearch.showcase.compose.filter.current.FilterCurrentShowcase
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListPersistentShowcase
@@ -55,4 +56,5 @@ val showcases = mapOf(
     ObjectID("search_auto_complete_text_view") to SearchAutoCompleteShowcase::class,
     ObjectID("sort_by") to SortByShowcase::class,
     ObjectID("stats") to StatsShowcase::class,
+    ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
 )

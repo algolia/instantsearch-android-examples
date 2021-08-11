@@ -96,6 +96,33 @@
         <activity
             android:name=".stats.StatsShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".customdata.QueryRuleCustomDataShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity android:name=".customdata.TemplateActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- Accepts URIs that begin with "algoliademo://discounts” -->
+                <data
+                    android:host="discounts"
+                    android:scheme="algoliademo" />
+                <data
+                    android:host="help"
+                    android:scheme="algoliademo" />
+            </intent-filter>
+        </activity>
     </application>
+
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" />
+        </intent>
+    </queries>
 
 </manifest>
