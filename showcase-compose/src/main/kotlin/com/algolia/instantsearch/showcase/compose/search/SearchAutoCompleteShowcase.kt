@@ -61,6 +61,7 @@ class SearchAutoCompleteShowcase : AppCompatActivity() {
                 AutoCompleteTextField(
                     modifier = Modifier.fillMaxWidth().padding(12.dp),
                     searchBoxState = searchBoxState,
+                    label = "Search for items",
                     suggestions = hitsState.hits
                 )
             }

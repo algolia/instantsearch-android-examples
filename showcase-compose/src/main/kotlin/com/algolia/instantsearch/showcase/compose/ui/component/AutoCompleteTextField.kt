@@ -3,7 +3,6 @@ package com.algolia.instantsearch.showcase.compose.ui.component
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View.inflate
-import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.compose.runtime.Composable
@@ -17,12 +16,14 @@ import com.google.android.material.textfield.TextInputLayout
 fun AutoCompleteTextField(
     modifier: Modifier = Modifier,
     searchBoxState: SearchBoxState,
+    label: String,
     suggestions: List<String> = emptyList()
 ) {
     AndroidView(
         modifier = modifier,
         factory = { context ->
             (inflate(context, R.layout.autocompletetextfield, null) as TextInputLayout).apply {
+                hint = label
                 findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView).apply {
                     addTextChangedListener(textWatcherOf(searchBoxState))
                     val adapter = ArrayAdapter<String>(context, android.R.layout.simple_list_item_1)
@@ -38,9 +39,6 @@ fun AutoCompleteTextField(
         }
     )
 }
-
-private fun autoCompleteTextViewOf(it: TextInputLayout) =
-    (it.getChildAt(0) as ViewGroup).getChildAt(0) as? AutoCompleteTextView
 
 private fun textWatcherOf(searchBoxState: SearchBoxState) =
     object : TextWatcher {

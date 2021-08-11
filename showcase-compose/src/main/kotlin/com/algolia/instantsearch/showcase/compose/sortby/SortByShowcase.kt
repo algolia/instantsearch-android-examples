@@ -3,8 +3,12 @@ package com.algolia.instantsearch.showcase.compose.sortby
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.sortby.SortByState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
@@ -15,7 +19,7 @@ import com.algolia.instantsearch.helper.sortby.connectView
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.model.Movie
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
-import com.algolia.instantsearch.showcase.compose.ui.component.DropdownList
+import com.algolia.instantsearch.showcase.compose.ui.component.DropdownTextField
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.IndexName
@@ -65,7 +69,10 @@ class SortByShowcase : AppCompatActivity() {
                 )
             },
             content = {
-                DropdownList(
+                DropdownTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp),
                     sortByState = sortByState
                 )
             }
