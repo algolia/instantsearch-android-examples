@@ -3,6 +3,7 @@ package com.algolia.instantsearch.showcase.compose.directory
 import com.algolia.instantsearch.showcase.compose.customdata.QueryRuleCustomDataShowcase
 import com.algolia.instantsearch.showcase.compose.filter.clear.FilterClearShowcase
 import com.algolia.instantsearch.showcase.compose.filter.current.FilterCurrentShowcase
+import com.algolia.instantsearch.showcase.compose.filter.facet.DynamicFacetShowcase
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListPersistentShowcase
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListSearchShowcase
 import com.algolia.instantsearch.showcase.compose.filter.facet.FacetListShowcase
@@ -57,4 +58,5 @@ val showcases = mapOf(
     ObjectID("sort_by") to SortByShowcase::class,
     ObjectID("stats") to StatsShowcase::class,
     ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
+    ObjectID("dynamic_facets") to DynamicFacetShowcase::class,
 )

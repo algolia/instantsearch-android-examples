@@ -13,6 +13,7 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureSearchView
@@ -51,6 +52,8 @@ class DynamicFacetShowcase : AppCompatActivity() {
         filterGroupForAttribute = mapOf(
             brand to (brand to FilterOperator.Or),
             color to (color to FilterOperator.Or),
+            size to (color to FilterOperator.Or),
+            country to (color to FilterOperator.Or),
         )
     )
     private val connection = ConnectionHandler(searchBox, dynamicFacets)
@@ -58,6 +61,8 @@ class DynamicFacetShowcase : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.showcase_dynamic_facet_list)
+
+        connection += searcher.connectFilterState(filterState)
 
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         connection += searchBox.connectView(searchBoxView)

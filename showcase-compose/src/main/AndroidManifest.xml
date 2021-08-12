@@ -99,6 +99,9 @@
         <activity
             android:name=".customdata.QueryRuleCustomDataShowcase"
             android:parentActivityName=".directory.DirectoryShowcase" />
+        <activity
+            android:name=".filter.facet.DynamicFacetShowcase"
+            android:parentActivityName=".directory.DirectoryShowcase" />
         <activity android:name=".customdata.TemplateActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
