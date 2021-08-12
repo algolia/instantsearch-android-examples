@@ -54,7 +54,10 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
 
     private val queryRuleCustomDataState = QueryRuleCustomDataState<Banner>()
-    private val queryRuleCustomData = QueryRuleCustomDataConnector<Banner>(searcher)
+    private val queryRuleCustomData = QueryRuleCustomDataConnector<Banner>(
+        searcher = searcher,
+        presenter = queryRuleCustomDataState
+    )
 
     private val connections = ConnectionHandler(searchBox, queryRuleCustomData)
 
@@ -62,7 +65,6 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
         connections += searchBox.connectView(searchBoxState)
         connections += searcher.connectHitsView(hitsState) { it.hits.deserialize(Product.serializer()) }
 
-        queryRuleCustomData.subscribe(queryRuleCustomDataState)
         searchBox.viewModel.eventSubmit.subscribe {
             val model = queryRuleCustomData.viewModel.item.value ?: return@subscribe
             if (model.banner == null && model.title == null) {
@@ -76,7 +78,11 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
         setContent {
             ShowcaseTheme {
                 val content = stringResource(id = R.string.redirect_via_banner_tap)
-                QueryRuleCustomDataScreen(searchBoxState, hitsState, queryRuleCustomDataState) { link ->
+                QueryRuleCustomDataScreen(
+                    searchBoxState,
+                    hitsState,
+                    queryRuleCustomDataState
+                ) { link ->
                     redirect(link, content)
                 }
             }
