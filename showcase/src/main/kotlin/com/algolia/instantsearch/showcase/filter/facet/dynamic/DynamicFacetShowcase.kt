@@ -62,8 +62,6 @@ class DynamicFacetShowcase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.showcase_dynamic_facet_list)
 
-        connection += searcher.connectFilterState(filterState)
-
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         connection += searchBox.connectView(searchBoxView)
 

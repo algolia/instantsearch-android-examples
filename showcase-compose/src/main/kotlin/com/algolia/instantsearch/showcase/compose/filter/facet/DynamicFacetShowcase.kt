@@ -69,10 +69,9 @@ class DynamicFacetShowcase : AppCompatActivity() {
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher)
 
-    val connections = ConnectionHandler(dynamicFacets, searchBox)
+    private val connections = ConnectionHandler(dynamicFacets, searchBox)
 
     init {
-        connections += searcher.connectFilterState(filterState)
         connections += dynamicFacets.connectView(dynamicFacetListState)
         connections += searchBox.connectView(searchBoxState)
     }

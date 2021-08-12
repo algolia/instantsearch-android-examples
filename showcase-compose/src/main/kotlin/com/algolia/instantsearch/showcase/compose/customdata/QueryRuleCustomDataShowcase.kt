@@ -11,12 +11,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -98,11 +99,14 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
         queryRuleCustomDataState: QueryRuleCustomDataState<Banner>,
         onBannerClick: (String) -> Unit = {}
     ) {
+        val openDialog = remember { mutableStateOf(false) }
         Scaffold(
             topBar = {
                 SearchTopBar(
                     searchBoxState = searchBoxState,
-                    onBackPressed = ::onBackPressed
+                    onBackPressed = ::onBackPressed,
+                    icon = Icons.Default.Info,
+                    onIconClick = { openDialog.value = true }
                 )
             },
             content = {
@@ -115,6 +119,7 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
                 }
             }
         )
+        Help(openDialog)
     }
 
     @Composable
@@ -165,6 +170,32 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
         content?.let { intent.putExtra(EXTRA_CONTENT, it) }
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
+        }
+    }
+
+    @Composable
+    fun Help(openDialog: MutableState<Boolean>) {
+        if (openDialog.value) {
+            AlertDialog(
+                onDismissRequest = {
+                    openDialog.value = false
+                },
+                title = {
+                    Text(text = stringResource(R.string.help))
+                },
+                text = {
+                    Column {
+                        stringArrayResource(R.array.query_rule_custom_data_help).forEach {
+                            Text(text = it, modifier = Modifier.padding(vertical = 2.dp))
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { openDialog.value = false }) {
+                        Text(stringResource(R.string.ok))
+                    }
+                }
+            )
         }
     }
 

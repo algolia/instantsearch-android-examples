@@ -2,6 +2,7 @@ package com.algolia.instantsearch.showcase.compose.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,10 +13,12 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.searchbox.SearchBox
@@ -60,7 +63,7 @@ fun TitleTopBar(modifier: Modifier = Modifier, title: String = "", onBackPressed
 fun SearchTopBarPreview() {
     val searchBoxState = SearchBoxState()
     ShowcaseTheme {
-        SearchTopBar(searchBoxState = searchBoxState)
+        SearchTopBar(searchBoxState = searchBoxState, icon = Icons.Default.Info)
     }
 }
 
@@ -73,7 +76,7 @@ fun SearchTopBar(
     lazyListState: LazyListState,
     scope: CoroutineScope = rememberCoroutineScope()
 ) {
-    return SearchTopBar(
+    SearchTopBar(
         modifier,
         placeHolderText,
         searchBoxState,
@@ -90,24 +93,27 @@ fun SearchTopBar(
     searchBoxState: SearchBoxState,
     onBackPressed: () -> Unit = {},
     lazyListStates: List<LazyListState>? = null,
-    scope: CoroutineScope = rememberCoroutineScope()
-
+    scope: CoroutineScope = rememberCoroutineScope(),
+    icon: ImageVector? = null,
+    onIconClick: () -> Unit = {}
 ) {
     TopAppBar(
         modifier = modifier,
         title = {
-            SearchBox(
-                modifier = Modifier.fillMaxWidth(),
-                searchBoxState = searchBoxState,
-                placeHolderText = placeHolderText,
-                textStyle = MaterialTheme.typography.body1,
-                onValueChange = { _, _ ->
-                    lazyListStates?.let { listStates ->
-                        scope.launch { listStates.forEach { it.scrollToItem(0) } }
-                    }
-                },
-                elevation = 0.dp
-            )
+            Row {
+                SearchBox(
+                    modifier = Modifier.fillMaxWidth(),
+                    searchBoxState = searchBoxState,
+                    placeHolderText = placeHolderText,
+                    textStyle = MaterialTheme.typography.body1,
+                    onValueChange = { _, _ ->
+                        lazyListStates?.let { listStates ->
+                            scope.launch { listStates.forEach { it.scrollToItem(0) } }
+                        }
+                    },
+                    elevation = 0.dp
+                )
+            }
         },
         backgroundColor = MaterialTheme.colors.surface,
         navigationIcon = {
@@ -124,5 +130,13 @@ fun SearchTopBar(
                     .padding(start = 16.dp)
             )
         },
+        actions = {
+            icon?.let {
+                Icon(it, null,
+                    Modifier
+                        .padding(4.dp)
+                        .clickable(onClick = onIconClick))
+            }
+        }
     )
 }
