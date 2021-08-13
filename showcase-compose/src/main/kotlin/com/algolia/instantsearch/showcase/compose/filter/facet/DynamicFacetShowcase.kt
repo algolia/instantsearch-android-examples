@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +24,6 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.White
@@ -100,7 +101,7 @@ class DynamicFacetShowcase : AppCompatActivity() {
                 )
             },
             content = {
-                Column {
+                Column(Modifier.verticalScroll(rememberScrollState())) {
                     dynamicFacetListState.orderedFacets.onEach { attributedFacet ->
                         OrderedFacets(Modifier.padding(8.dp), attributedFacet) { facet, attribute ->
                             dynamicFacetListState.toggle(facet, attribute)
