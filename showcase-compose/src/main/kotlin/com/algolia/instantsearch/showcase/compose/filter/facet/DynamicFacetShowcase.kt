@@ -9,8 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.facet.dynamic.DynamicFacetListState
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
@@ -24,10 +29,12 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.showcase.compose.R
 import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.White
 import com.algolia.instantsearch.showcase.compose.ui.component.FacetRow
+import com.algolia.instantsearch.showcase.compose.ui.component.HelpDialog
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.model.APIKey
@@ -93,11 +100,14 @@ class DynamicFacetShowcase : AppCompatActivity() {
         searchBoxState: SearchBoxState,
         dynamicFacetListState: DynamicFacetListState
     ) {
+        val openDialog = remember { mutableStateOf(false) }
         Scaffold(
             topBar = {
                 SearchTopBar(
                     searchBoxState = searchBoxState,
-                    onBackPressed = ::onBackPressed
+                    onBackPressed = ::onBackPressed,
+                    icon = Icons.Default.Info,
+                    onIconClick = { openDialog.value = true }
                 )
             },
             content = {
@@ -110,6 +120,7 @@ class DynamicFacetShowcase : AppCompatActivity() {
                 }
             }
         )
+        HelpDialog(openDialog, stringResource(R.string.dynamic_facet_help))
     }
 
     @Composable

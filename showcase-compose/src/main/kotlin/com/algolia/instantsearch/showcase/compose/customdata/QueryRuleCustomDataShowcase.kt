@@ -42,6 +42,7 @@ import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.BlueDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.WhiteLight
+import com.algolia.instantsearch.showcase.compose.ui.component.HelpDialog
 import com.algolia.instantsearch.showcase.compose.ui.component.ProductList
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.helper.deserialize
@@ -119,7 +120,7 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
                 }
             }
         )
-        Help(openDialog)
+        HelpDialog(openDialog, stringArrayResource(R.array.query_rule_custom_data_help))
     }
 
     @Composable
@@ -170,32 +171,6 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
         content?.let { intent.putExtra(EXTRA_CONTENT, it) }
         if (intent.resolveActivity(packageManager) != null) {
             startActivity(intent)
-        }
-    }
-
-    @Composable
-    fun Help(openDialog: MutableState<Boolean>) {
-        if (openDialog.value) {
-            AlertDialog(
-                onDismissRequest = {
-                    openDialog.value = false
-                },
-                title = {
-                    Text(text = stringResource(R.string.help))
-                },
-                text = {
-                    Column {
-                        stringArrayResource(R.array.query_rule_custom_data_help).forEach {
-                            Text(text = it, modifier = Modifier.padding(vertical = 2.dp))
-                        }
-                    }
-                },
-                confirmButton = {
-                    TextButton(onClick = { openDialog.value = false }) {
-                        Text(stringResource(R.string.ok))
-                    }
-                }
-            )
         }
     }
 

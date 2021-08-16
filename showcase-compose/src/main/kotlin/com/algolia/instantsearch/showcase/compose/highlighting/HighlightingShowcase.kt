@@ -4,13 +4,9 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
-import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
@@ -70,18 +66,6 @@ class HighlightingShowcase : AppCompatActivity() {
                 )
             }
         )
-    }
-
-    @Composable
-    fun TextAnnotated(
-        text: CharSequence,
-        modifier: Modifier = Modifier,
-        style: TextStyle = LocalTextStyle.current
-    ) {
-        when (text) {
-            is AnnotatedString -> Text(modifier = modifier, text = text, style = style)
-            else -> Text(modifier = modifier, text = text.toString(), style = style)
-        }
     }
 
     override fun onDestroy() {
