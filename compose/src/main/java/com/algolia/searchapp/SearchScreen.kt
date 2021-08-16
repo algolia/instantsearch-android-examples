@@ -28,7 +28,6 @@ import com.algolia.instantsearch.compose.item.StatsState
 import com.algolia.instantsearch.compose.list.Paginator
 import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
 import com.algolia.search.model.search.Facet
 import kotlinx.coroutines.launch
