@@ -5,7 +5,7 @@ import com.algolia.instantsearch.compose.filter.facet.FacetListState
 import com.algolia.instantsearch.compose.filter.facet.connectPaginator
 import com.algolia.instantsearch.compose.item.StatsTextState
 import com.algolia.instantsearch.compose.list.Paginator
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.compose.searchbox.connectPaginator
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
@@ -21,7 +21,6 @@ import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
 import com.algolia.search.client.ClientSearch
-import com.algolia.search.helper.deserialize
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
@@ -39,13 +38,11 @@ class MainViewModel : ViewModel() {
     val searcher = SearcherSingleIndex(index)
 
     // Search Box
-    val searchQuery = SearchQuery()
+    val searchBoxState = SearchBoxState()
     val searchBoxConnector = SearchBoxConnector(searcher)
 
     // Hits
-    val hitsPaginator = Paginator(searcher) { response ->
-        response.hits.deserialize(Product.serializer())
-    }
+    val hitsPaginator = Paginator(searcher) { it.deserialize(Product.serializer()) }
 
     // Stats
     val statsText = StatsTextState()
@@ -66,7 +63,7 @@ class MainViewModel : ViewModel() {
     val connections = ConnectionHandler(searchBoxConnector, statsConnector, facetListConnector)
 
     init {
-        connections += searchBoxConnector.connectView(searchQuery)
+        connections += searchBoxConnector.connectView(searchBoxState)
         connections += statsConnector.connectView(statsText, StatsPresenterImpl())
         connections += searcher.connectFilterState(filterState)
         connections += facetListConnector.connectView(facetList)

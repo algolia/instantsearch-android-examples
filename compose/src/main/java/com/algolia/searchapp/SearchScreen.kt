@@ -27,7 +27,7 @@ import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
 import com.algolia.instantsearch.compose.item.StatsState
 import com.algolia.instantsearch.compose.list.Paginator
 import com.algolia.instantsearch.compose.searchbox.SearchBox
-import com.algolia.instantsearch.compose.searchbox.SearchQuery
+import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
 import com.algolia.search.model.search.Facet
 import kotlinx.coroutines.launch
@@ -76,7 +76,7 @@ fun TextAnnotated(
 @Composable
 fun Search(
     modifier: Modifier = Modifier,
-    searchQuery: SearchQuery,
+    searchBoxState: SearchBoxState,
     paginator: Paginator<Product>,
     statsText: StatsState<String>,
     facetList: FacetListState,
@@ -102,7 +102,7 @@ fun Search(
                         modifier = Modifier
                             .weight(1f)
                             .padding(top = 12.dp, start = 12.dp),
-                        searchQuery = searchQuery,
+                        searchBoxState = searchBoxState,
                         onValueChange = { _, _ -> scope.launch { listState.scrollToItem(0) } },
                     )
 
@@ -184,7 +184,7 @@ fun FacetList(
             modifier = Modifier.padding(14.dp)
         )
         LazyColumn(Modifier.background(MaterialTheme.colors.background)) {
-            items(facetList.facets) { item ->
+            items(facetList.items) { item ->
                 FacetRow(
                     modifier = Modifier
                         .clickable { facetList.onSelection?.invoke(item.first) }
