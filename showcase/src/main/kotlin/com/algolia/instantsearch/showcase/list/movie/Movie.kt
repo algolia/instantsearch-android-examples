@@ -19,15 +19,12 @@ data class Movie(
     override val _highlightResult: JsonObject?
 ) : Indexable, Highlightable {
 
-    @Transient
     public val highlightedTitle
         get() = getHighlight(Attribute("title"))
 
-    @Transient
     public val highlightedGenres
         get() = getHighlights(Attribute("genre"))
 
-    @Transient
     public val highlightedActors
         get() = getHighlights(Attribute("actors"))
 }
