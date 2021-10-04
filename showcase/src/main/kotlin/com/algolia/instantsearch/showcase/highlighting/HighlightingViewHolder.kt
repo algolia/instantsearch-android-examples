@@ -13,6 +13,7 @@ import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.list_item_highlighting.view.*
+import java.util.*
 
 
 class HighlightingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -37,7 +38,7 @@ class HighlightingViewHolder(private val view: View) : RecyclerView.ViewHolder(v
         view.text = highlightedActors?.let { list ->
             list.sortedByDescending { it.highlightedTokens.size }.joinToString { highlight ->
                 highlight.tokens.joinToString("") {
-                    if (it.highlighted) it.content.toUpperCase() else it.content
+                    if (it.highlighted) it.content.uppercase() else it.content
                 }
             }
         }

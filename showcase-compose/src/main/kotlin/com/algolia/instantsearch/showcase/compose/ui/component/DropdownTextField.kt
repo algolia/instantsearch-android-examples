@@ -5,6 +5,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ListAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -36,11 +37,14 @@ fun DropdownTextField(
         },
         update = {
             val autoComplete = it.findViewById<AutoCompleteTextView>(id.autoCompleteTextView)
-            val adapter = autoComplete?.adapter as? ArrayAdapter<String>
+            val adapter = autoComplete?.adapter?.asArrayAdapter()
             adapter?.setOptions(sortByState)
         }
     )
 }
+
+@Suppress("UNCHECKED_CAST")
+private fun ListAdapter.asArrayAdapter() = this as? ArrayAdapter<String>
 
 fun onItemClickOf(sortByState: SortByState) = AdapterView.OnItemClickListener { _, _, position, _ ->
     sortByState.onSelectionChange?.invoke(position)

@@ -17,7 +17,6 @@ data class DirectoryHit(
     override val _highlightResult: JsonObject? = null
 ) : Indexable, Highlightable {
 
-    @Transient
     public val highlightedName
         get() = getHighlight(Attribute("name"), preTag = "<b>", postTag = "</b>")
 }

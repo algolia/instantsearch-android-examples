@@ -33,12 +33,15 @@ fun AutoCompleteTextField(
         },
         update = {
             val autoComplete = it.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
-            val adapter = autoComplete?.adapter as? ArrayAdapter<String>
+            val adapter = autoComplete.asArrayAdapter()
             adapter?.clear()
             adapter?.addAll(suggestions)
         }
     )
 }
+
+@Suppress("UNCHECKED_CAST")
+private fun AutoCompleteTextView.asArrayAdapter() = this as? ArrayAdapter<String>
 
 private fun textWatcherOf(searchBoxState: SearchBoxState) =
     object : TextWatcher {

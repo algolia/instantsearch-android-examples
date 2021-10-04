@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    compileSdk 30
-    buildToolsVersion "30.0.3"
+    compileSdk 31
+    buildToolsVersion build_tools_version
 
     defaultConfig {
         applicationId "com.algolia.instantsearch.showcase.compose"
         minSdk 23
-        targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -63,4 +63,13 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$canary"
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += [
+                '-Xopt-in=kotlin.RequiresOptIn',
+                '-Xopt-in=com.algolia.instantsearch.core.ExperimentalInstantSearch'
+        ]
+    }
 }
