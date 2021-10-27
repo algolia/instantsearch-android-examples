@@ -1,10 +1,10 @@
 buildscript {
-    ext.kotlin_version = "1.5.21"
+    ext.kotlin_version = "1.5.31"
     ext.lifecycle_version = "2.2.0"
     ext.build_tools_version = "31.0.0"
     ext.instantsearch = '2.11.1'
     ext.canary = '2.7'
-    ext.compose_version = '1.0.1'
+    ext.compose_version = '1.0.4'
     repositories {
         mavenCentral()
         google()
