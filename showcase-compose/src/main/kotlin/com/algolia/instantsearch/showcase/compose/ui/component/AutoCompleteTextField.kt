@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.view.View.inflate
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.ListAdapter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
@@ -33,7 +34,7 @@ fun AutoCompleteTextField(
         },
         update = {
             val autoComplete = it.findViewById<AutoCompleteTextView>(R.id.autoCompleteTextView)
-            val adapter = autoComplete.asArrayAdapter()
+            val adapter = autoComplete.adapter.asArrayAdapter()
             adapter?.clear()
             adapter?.addAll(suggestions)
         }
@@ -41,7 +42,7 @@ fun AutoCompleteTextField(
 }
 
 @Suppress("UNCHECKED_CAST")
-private fun AutoCompleteTextView.asArrayAdapter() = this as? ArrayAdapter<String>
+private fun ListAdapter.asArrayAdapter() = this as? ArrayAdapter<String>
 
 private fun textWatcherOf(searchBoxState: SearchBoxState) =
     object : TextWatcher {

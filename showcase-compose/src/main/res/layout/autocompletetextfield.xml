@@ -9,6 +9,9 @@
         android:id="@+id/autoCompleteTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:hint="@string/search_items"
         />
 
 </com.google.android.material.textfield.TextInputLayout>
