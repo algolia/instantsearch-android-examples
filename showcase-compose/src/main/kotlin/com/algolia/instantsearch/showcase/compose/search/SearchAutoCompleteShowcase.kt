@@ -16,17 +16,18 @@ import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.multi.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Movie
-import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.showcase.compose.stubIndexName
 import com.algolia.instantsearch.showcase.compose.ui.component.AutoCompleteTextField
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.helper.deserialize
 
 class SearchAutoCompleteShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val searchBoxState = SearchBoxState()
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
     private val hitsState = HitsState<String>()

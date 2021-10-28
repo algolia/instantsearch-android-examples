@@ -15,6 +15,7 @@ import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherForFacets
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.multi.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.ui.*
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch
@@ -36,7 +37,8 @@ val client = ClientSearch(
     )
 )
 
-val stubIndex = client.initIndex(IndexName("stub"))
+val stubIndexName = IndexName("stub")
+val stubIndex = client.initIndex(stubIndexName)
 
 fun AppCompatActivity.configureSearcher(searcher: SearcherSingleIndex) {
     searcher.index = client.initIndex(intent.indexName)
@@ -44,6 +46,10 @@ fun AppCompatActivity.configureSearcher(searcher: SearcherSingleIndex) {
 
 fun AppCompatActivity.configureSearcher(searcher: SearcherForFacets) {
     searcher.index = client.initIndex(intent.indexName)
+}
+
+fun Activity.configureSearcher(searcher: HitsSearcher) {
+    searcher.indexName = intent.indexName
 }
 
 val Intent.indexName: IndexName get() = IndexName(extras!!.getString(KeyIndexName)!!)

@@ -63,6 +63,7 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$canary"
+    implementation "androidx.work:work-runtime-ktx:2.7.0"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
