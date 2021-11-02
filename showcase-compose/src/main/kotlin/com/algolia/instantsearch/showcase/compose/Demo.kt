@@ -15,7 +15,7 @@ import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherForFacets
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.helper.searcher.multi.hits.HitsSearcher
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.ui.*
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch

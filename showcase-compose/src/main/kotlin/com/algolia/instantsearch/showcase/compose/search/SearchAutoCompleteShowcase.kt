@@ -16,7 +16,7 @@ import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.multi.hits.HitsSearcher
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Movie

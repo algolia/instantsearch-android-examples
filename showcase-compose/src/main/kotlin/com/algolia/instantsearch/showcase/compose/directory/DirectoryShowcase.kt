@@ -8,7 +8,7 @@ import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearchBox
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
@@ -20,8 +20,8 @@ import com.algolia.search.serialize.KeyName
 
 class DirectoryShowcase : ComponentActivity() {
 
-    private val index = client.initIndex(IndexName("mobile_demo_home"))
-    private val searcher = SearcherSingleIndex(index, Query(hitsPerPage = 100))
+    private val indexName = IndexName("mobile_demo_home")
+    private val searcher = HitsSearcher(client, indexName, Query(hitsPerPage = 100))
     private val hitsState = HitsState<DirectoryItem>(emptyList())
     private val searchBoxState = SearchBoxState()
     private val connections = ConnectionHandler()
