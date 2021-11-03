@@ -15,9 +15,9 @@ import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.sortby.SortByState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.helper.sortby.SortByConnector
-import com.algolia.instantsearch.helper.sortby.connectView
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.helper.sortby.searcher.SortByConnector
+import com.algolia.instantsearch.helper.sortby.searcher.connectView
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.model.Movie
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
@@ -29,28 +29,28 @@ import com.algolia.search.model.IndexName
 
 class SortByShowcase : AppCompatActivity() {
 
-    private val indexTitle = client.initIndex(IndexName("mobile_demo_movies"))
-    private val indexYearAsc = client.initIndex(IndexName("mobile_demo_movies_year_asc"))
-    private val indexYearDesc = client.initIndex(IndexName("mobile_demo_movies_year_desc"))
-    private val searcher = SearcherSingleIndex(indexTitle)
+    private val movies = IndexName("mobile_demo_movies")
+    private val moviesAsc = IndexName("mobile_demo_movies_year_asc")
+    private val moviesDesc = IndexName("mobile_demo_movies_year_desc")
     private val hitsState = HitsState<Movie>()
     private val indexes = mapOf(
-        0 to indexTitle,
-        1 to indexYearAsc,
-        2 to indexYearDesc
+        0 to movies,
+        1 to moviesAsc,
+        2 to moviesDesc
     )
+    private val searcher = HitsSearcher(client, movies)
     private val sortByState = SortByState()
-    private val sortBy = SortByConnector(indexes, searcher, selected = 0)
+    private val sortBy = SortByConnector(searcher, indexes, selected = 0)
     private val connections = ConnectionHandler(sortBy)
 
     init {
         connections += searcher.connectHitsView(hitsState) { it.hits.deserialize(Movie.serializer()) }
-        connections += sortBy.connectView(sortByState) { index ->
-            when (index) {
-                indexTitle -> "Default"
-                indexYearAsc -> "Year Asc"
-                indexYearDesc -> "Year Desc"
-                else -> index.indexName.raw
+        connections += sortBy.connectView(sortByState) { indexName ->
+            when (indexName) {
+                movies -> "Default"
+                moviesAsc -> "Year Asc"
+                moviesDesc -> "Year Desc"
+                else -> indexName.raw
             }
         }
     }
