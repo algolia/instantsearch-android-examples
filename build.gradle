@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = "1.5.31"
     ext.lifecycle_version = "2.2.0"
     ext.build_tools_version = "31.0.0"
-    ext.instantsearch = '2.11.3'
+    ext.instantsearch = '2.12.0-beta01'
     ext.canary = '2.7'
     ext.compose_version = '1.0.5'
     repositories {
@@ -18,8 +18,10 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
         mavenCentral()
         google()
+        maven { url = "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
 
