@@ -3,6 +3,7 @@ package com.algolia.instantsearch.showcase.compose.customdata
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
@@ -33,12 +34,12 @@ import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.R
-import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.customdata.TemplateActivity.Companion.EXTRA_CONTENT
 import com.algolia.instantsearch.showcase.compose.model.Banner
 import com.algolia.instantsearch.showcase.compose.model.Product
-import com.algolia.instantsearch.showcase.compose.stubIndex
 import com.algolia.instantsearch.showcase.compose.ui.BlueDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.WhiteLight
@@ -49,7 +50,7 @@ import com.algolia.search.helper.deserialize
 
 class QueryRuleCustomDataShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val hitsState = HitsState<Product>()
 
     private val searchBoxState = SearchBoxState()
@@ -69,7 +70,7 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
 
         searchBox.viewModel.eventSubmit.subscribe {
             val model = queryRuleCustomData.viewModel.item.value ?: return@subscribe
-            if (model.banner == null && model.title == null) {
+            if (model.banner == null && model.title ==null) {
                 redirect(model.link, resources.getString(R.string.redirect_via_submit))
             }
         }
