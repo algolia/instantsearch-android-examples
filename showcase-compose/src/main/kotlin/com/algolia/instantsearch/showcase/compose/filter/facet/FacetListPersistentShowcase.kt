@@ -17,12 +17,9 @@ import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
 import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.compose.client
-import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.filterColors
-import com.algolia.instantsearch.showcase.compose.showcaseTitle
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.ui.HoloGreenDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
@@ -39,7 +36,7 @@ class FacetListPersistentShowcase : AppCompatActivity() {
     private val category = Attribute("category")
     private val index = client.initIndex(IndexName("stub"))
     private val filterState = FilterState()
-    private val searcher = SearcherSingleIndex(index)
+    private val searcher = HitsSearcher(client, stubIndexName)
 
     private val facetListStateColor = FacetListState()
     private val facetListColor = FacetListConnector(

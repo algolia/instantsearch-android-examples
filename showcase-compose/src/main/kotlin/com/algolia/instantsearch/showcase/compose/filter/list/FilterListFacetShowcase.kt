@@ -10,11 +10,12 @@ import com.algolia.instantsearch.helper.filter.list.FilterListConnector
 import com.algolia.instantsearch.helper.filter.list.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.groupAnd
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.filterColors
-import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.showcase.compose.stubIndexName
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
@@ -25,7 +26,7 @@ class FilterListFacetShowcase : AppCompatActivity() {
     private val color = Attribute("color")
     private val groupColor = groupAnd(color)
     private val filterState = FilterState()
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val facetFilters = listOf(
         Filter.Facet(color, "red"),
         Filter.Facet(color, "green"),

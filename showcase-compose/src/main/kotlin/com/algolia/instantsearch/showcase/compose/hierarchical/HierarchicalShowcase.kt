@@ -23,12 +23,9 @@ import com.algolia.instantsearch.helper.hierarchical.HierarchicalConnector
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalItem
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalPresenterImpl
 import com.algolia.instantsearch.helper.hierarchical.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.compose.configureSearcher
-import com.algolia.instantsearch.showcase.compose.filterColors
-import com.algolia.instantsearch.showcase.compose.showcaseTitle
-import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.White
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
@@ -47,7 +44,7 @@ class HierarchicalShowcase : AppCompatActivity() {
         hierarchicalCategoryLvl1,
         hierarchicalCategoryLvl2
     )
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val filterState = FilterState()
     private val separator = " > "
     private val hierarchicalState = HierarchicalState()

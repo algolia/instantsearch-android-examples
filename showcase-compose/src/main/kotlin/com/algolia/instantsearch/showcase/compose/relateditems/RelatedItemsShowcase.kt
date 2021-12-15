@@ -17,11 +17,12 @@ import com.algolia.instantsearch.core.connection.Connection
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.relateditems.MatchingPattern
 import com.algolia.instantsearch.helper.relateditems.connectRelatedHitsView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Product
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
-import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.showcase.compose.stubIndexName
 import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.ProductList
@@ -31,8 +32,8 @@ import com.algolia.search.model.Attribute
 
 class RelatedItemsShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
-    private val relatedItemsSearcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
+    private val relatedItemsSearcher = HitsSearcher(client, stubIndexName)
 
     private val productsHits = HitsState<Product>()
     private val relatedItems = HitsState<Product>()

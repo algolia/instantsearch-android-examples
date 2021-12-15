@@ -12,14 +12,14 @@ import com.algolia.instantsearch.helper.filter.clear.FilterClearConnector
 import com.algolia.instantsearch.helper.filter.clear.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.toFilterGroups
-import com.algolia.instantsearch.helper.searcher.SearcherIndex
+import com.algolia.instantsearch.helper.searcher.util.SearcherForHits
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
 import com.algolia.search.model.filter.FilterGroup
 
 class HeaderFilterConnector(
-    searcher: SearcherIndex<*>,
+    searcher: SearcherForHits<*>,
     filterState: FilterState,
     val filterColors: Map<String, Color> = emptyMap(),
     val hitsStats: StatsState<String> = StatsTextState(),

@@ -30,9 +30,9 @@ import com.algolia.instantsearch.helper.filter.numeric.comparison.connectView
 import com.algolia.instantsearch.helper.filter.numeric.comparison.setBoundsFromFacetStatsInt
 import com.algolia.instantsearch.helper.filter.numeric.comparison.setBoundsFromFacetStatsLong
 import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.addFacet
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.R
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
@@ -40,7 +40,6 @@ import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
 import com.algolia.instantsearch.showcase.compose.ui.component.TitleTopBar
 import com.algolia.search.model.Attribute
-import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.NumericOperator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -50,9 +49,8 @@ class FilterComparisonShowcase : AppCompatActivity() {
 
     private val price = Attribute("price")
     private val year = Attribute("year")
-    private val index = client.initIndex(IndexName("stub"))
     private val filterState = FilterState()
-    private val searcher = SearcherSingleIndex(index)
+    private val searcher = HitsSearcher(client, stubIndexName)
 
     private val comparisonPriceState = NumberState<Long>("-")
     private val comparisonPrice =

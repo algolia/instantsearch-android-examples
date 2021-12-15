@@ -22,8 +22,8 @@ import com.algolia.instantsearch.helper.filter.range.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.filterColors
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
@@ -38,8 +38,7 @@ import com.algolia.search.model.filter.Filter
 
 class RatingShowcase : AppCompatActivity() {
 
-    private val index = client.initIndex(IndexName("instant_search"))
-    private val searcher = SearcherSingleIndex(index)
+    private val searcher = HitsSearcher(client, IndexName("instant_search"))
     private val rating = Attribute("rating")
     private val groupID = FilterGroupID(rating)
     private val primaryBounds = 0f..5f

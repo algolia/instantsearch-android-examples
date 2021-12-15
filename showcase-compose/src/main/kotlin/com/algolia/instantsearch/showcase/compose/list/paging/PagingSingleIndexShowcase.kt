@@ -23,13 +23,14 @@ import com.algolia.instantsearch.compose.searchbox.connectPaginator
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
+import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Movie
-import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.showcase.compose.stubIndexName
 import com.algolia.instantsearch.showcase.compose.ui.GreyLight
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.MoviesList
@@ -38,7 +39,7 @@ import kotlinx.coroutines.flow.Flow
 
 class PagingSingleIndexShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val pagingConfig = PagingConfig(pageSize = 10)
     private val paginator = Paginator(searcher, pagingConfig) { it.deserialize(Movie.serializer()) }
 

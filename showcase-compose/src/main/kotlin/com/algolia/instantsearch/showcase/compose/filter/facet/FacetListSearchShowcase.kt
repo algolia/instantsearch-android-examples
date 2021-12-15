@@ -23,13 +23,10 @@ import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherForFacets
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.compose.client
-import com.algolia.instantsearch.showcase.compose.filterColors
-import com.algolia.instantsearch.showcase.compose.indexName
-import com.algolia.instantsearch.showcase.compose.stubIndex
+import com.algolia.instantsearch.helper.searcher.facets.FacetsSearcher
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
@@ -40,8 +37,8 @@ import com.algolia.search.model.Attribute
 class FacetListSearchShowcase : AppCompatActivity() {
 
     private val brand = Attribute("brand")
-    private val searcher = SearcherSingleIndex(stubIndex)
-    private val searcherForFacet = SearcherForFacets(stubIndex, brand)
+    private val searcher = HitsSearcher(client, stubIndexName)
+    private val searcherForFacet = FacetsSearcher(client, stubIndexName, brand)
     private val filterState = FilterState()
 
     private val searchBoxState = SearchBoxState()
@@ -80,9 +77,8 @@ class FacetListSearchShowcase : AppCompatActivity() {
             }
         }
 
-        val index = client.initIndex(intent.indexName)
-        searcher.index = index
-        searcherForFacet.index = index
+        searcher.indexName = intent.indexName
+        searcherForFacet.indexName = intent.indexName
         searcher.searchAsync()
         searcherForFacet.searchAsync()
     }

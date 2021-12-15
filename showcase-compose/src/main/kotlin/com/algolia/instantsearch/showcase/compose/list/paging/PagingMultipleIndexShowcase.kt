@@ -21,7 +21,8 @@ import com.algolia.instantsearch.compose.searchbox.connectPaginator
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherMultipleIndex
+import com.algolia.instantsearch.helper.searcher.hits.addHitsSearcher
+import com.algolia.instantsearch.helper.searcher.multi.MultiSearcher
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.model.Actor
 import com.algolia.instantsearch.showcase.compose.model.Movie
@@ -31,24 +32,23 @@ import com.algolia.instantsearch.showcase.compose.ui.component.ActorsHorizontalL
 import com.algolia.instantsearch.showcase.compose.ui.component.MoviesHorizontalList
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.model.IndexName
-import com.algolia.search.model.multipleindex.IndexQuery
 import kotlinx.coroutines.flow.Flow
 
 
 class PagingMultipleIndexShowcase : AppCompatActivity() {
 
-    private val indexMovies = IndexQuery(IndexName("mobile_demo_movies"))
-    private val indexActors = IndexQuery(IndexName("mobile_demo_actors"))
-    private val searcher = SearcherMultipleIndex(client, listOf(indexMovies, indexActors))
-    private val moviesPaginator = Paginator(searcher, indexMovies) {
+    private val multiSearcher = MultiSearcher(client)
+    private val searcherMovies = multiSearcher.addHitsSearcher(IndexName("mobile_demo_movies"))
+    private val searcherActors = multiSearcher.addHitsSearcher(IndexName("mobile_demo_actors"))
+    private val moviesPaginator = Paginator(searcherMovies) {
         it.deserialize(Movie.serializer())
     }
-    private val actorsPaginator = Paginator(searcher, indexActors) {
+    private val actorsPaginator = Paginator(searcherActors) {
         it.deserialize(Actor.serializer())
     }
 
     private val searchBoxState = SearchBoxState()
-    private val searchBox = SearchBoxConnector(searcher)
+    private val searchBox = SearchBoxConnector(multiSearcher)
 
     private val connections = ConnectionHandler(searchBox)
 
@@ -116,7 +116,7 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        searcher.cancel()
+        multiSearcher.cancel()
         connections.clear()
     }
 }
