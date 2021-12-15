@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 data class Product(
     val name: String,
     val description: String,
-    val brand: String,
+    val brand: String? = null,
     val categories: List<String>,
     val type: String,
     val price: Double,
@@ -17,7 +17,7 @@ data class Product(
     val image: String,
     val url: String,
     @SerialName("free_shipping") val freeShipping: Boolean,
-    val rating: Int,
+    val rating: Int = 0,
     val popularity: Long,
     override val objectID: ObjectID
 ) : Indexable
