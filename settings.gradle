@@ -1,2 +1,2 @@
-include ':showcase', ':guides', ':insights', ':compose'
-include ':showcase-compose'
+include ':showcase', ':showcase-compose', ':guides', ':insights', ':compose'
+include ':exchange:query-suggestions'
