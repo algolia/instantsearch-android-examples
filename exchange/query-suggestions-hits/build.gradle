@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.algolia.exchange.querysuggestions"
-        minSdk 23
+        minSdk 21
         targetSdk 31
         versionCode 1
         versionName "1.0"
