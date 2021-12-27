@@ -9,7 +9,7 @@ android {
     buildToolsVersion build_tools_version
 
     defaultConfig {
-        applicationId "com.algolia.exchange.querysuggestions"
+        applicationId "com.algolia.exchange.query.suggestions"
         minSdk 23
         targetSdk 31
         versionCode 1

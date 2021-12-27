@@ -1,4 +1,4 @@
-package com.algolia.exchange.querysuggestions
+package com.algolia.exchange.query.suggestions.hits
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,7 +16,8 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 QuerySuggestion(
                     searchBoxState = viewModel.searchBoxState,
-                    hitsState = viewModel.suggestionsState,
+                    suggestionsState = viewModel.suggestionsState,
+                    hitsState = viewModel.hitsState
                 )
             }
         }

@@ -1,4 +1,4 @@
-package com.algolia.exchange.querysuggestions
+package com.algolia.exchange.query.suggestions
 
 import androidx.lifecycle.ViewModel
 import com.algolia.instantsearch.compose.hits.HitsState

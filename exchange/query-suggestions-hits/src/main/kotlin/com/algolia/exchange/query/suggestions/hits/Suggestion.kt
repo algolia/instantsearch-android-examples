@@ -1,4 +1,4 @@
-package com.algolia.exchange.querysuggestions
+package com.algolia.exchange.query.suggestions.hits
 
 import com.algolia.instantsearch.core.highlighting.HighlightedString
 import com.algolia.instantsearch.helper.highlighting.Highlightable

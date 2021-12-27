@@ -1,10 +1,10 @@
-package com.algolia.exchange.querysuggestions
+package com.algolia.exchange.query.suggestions
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import com.algolia.exchange.querysuggestions.ui.theme.SearchAppTheme
+import androidx.compose.material.MaterialTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SearchAppTheme {
+            MaterialTheme {
                 QuerySuggestion(
                     searchBoxState = viewModel.searchBoxState,
                     hitsState = viewModel.suggestionsState,
