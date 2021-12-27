@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 QuerySuggestion(
                     searchBoxState = viewModel.searchBoxState,
-                    hitsState = viewModel.suggestionsState,
+                    suggestionsState = viewModel.suggestionsState,
                 )
             }
         }

@@ -14,6 +14,7 @@ import com.algolia.search.helper.deserialize
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
+import com.algolia.search.model.search.Query
 import io.ktor.client.features.logging.*
 
 class MainViewModel : ViewModel() {
@@ -23,10 +24,15 @@ class MainViewModel : ViewModel() {
         APIKey("afc3dd66dd1293e2e2736a5a51b05c0a"),
         LogLevel.ALL
     )
+
     private val multiSearcher = MultiSearcher(client)
-    private val suggestionsSearcher = multiSearcher.addHitsSearcher(IndexName("instantsearch_query_suggestions"))
+    private val suggestionsSearcher = multiSearcher.addHitsSearcher(
+        IndexName("instantsearch_query_suggestions"),
+        Query(hitsPerPage = 3)
+    )
     private val hitsSearchers = multiSearcher.addHitsSearcher(IndexName("instant_search"))
     private val searchBoxConnector = SearchBoxConnector(multiSearcher)
+
     private val connections = ConnectionHandler(searchBoxConnector)
 
     val searchBoxState = SearchBoxState()

@@ -27,7 +27,7 @@ import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 fun QuerySuggestion(
     modifier: Modifier = Modifier,
     searchBoxState: SearchBoxState,
-    hitsState: HitsState<Suggestion>,
+    suggestionsState: HitsState<Suggestion>,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         var showSuggestion by remember { mutableStateOf(false) }
@@ -37,12 +37,12 @@ fun QuerySuggestion(
                 .padding(12.dp),
             searchBoxState = searchBoxState,
             onValueChange = { query, _ ->
-                showSuggestion = query.isNotEmpty() && hitsState.hits.isNotEmpty()
+                showSuggestion = query.isNotEmpty() && suggestionsState.hits.isNotEmpty()
             }
         )
         if (showSuggestion) {
             LazyColumn {
-                items(hitsState.hits) { suggestion ->
+                items(suggestionsState.hits) { suggestion ->
                     SuggestionRow(
                         modifier = Modifier.clickable {
                             searchBoxState.setText(suggestion.query, true)

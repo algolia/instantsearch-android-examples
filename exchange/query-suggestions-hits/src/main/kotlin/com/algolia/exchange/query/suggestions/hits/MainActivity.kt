@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
                 QuerySuggestion(
                     searchBoxState = viewModel.searchBoxState,
                     suggestionsState = viewModel.suggestionsState,
-                    hitsState = viewModel.hitsState
+                    hitsState = viewModel.hitsState,
                 )
             }
         }
