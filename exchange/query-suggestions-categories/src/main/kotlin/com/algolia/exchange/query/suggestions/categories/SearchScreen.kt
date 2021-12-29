@@ -29,7 +29,7 @@ import com.algolia.instantsearch.core.highlighting.HighlightTokenizer
 import com.algolia.search.model.search.Facet
 
 @Composable
-fun QuerySuggestion(
+fun SearchScreen(
     modifier: Modifier = Modifier,
     searchBoxState: SearchBoxState,
     suggestionsState: HitsState<Suggestion>,

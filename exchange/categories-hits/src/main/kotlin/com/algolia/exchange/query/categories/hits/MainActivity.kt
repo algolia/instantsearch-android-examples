@@ -1,4 +1,4 @@
-package com.algolia.exchange.query.suggestions.categories
+package com.algolia.exchange.query.categories.hits
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -16,8 +16,8 @@ class MainActivity : ComponentActivity() {
             MaterialTheme {
                 SearchScreen(
                     searchBoxState = viewModel.searchBoxState,
-                    suggestionsState = viewModel.suggestionsState,
-                    recentSearches = viewModel.recentSearches,
+                    hitsState = viewModel.hitsState,
+                    categoriesState = viewModel.categoriesState,
                 )
             }
         }

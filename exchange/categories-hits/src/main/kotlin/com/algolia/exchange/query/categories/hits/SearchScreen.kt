@@ -1,18 +1,17 @@
-package com.algolia.exchange.query.suggestions.hits
+package com.algolia.exchange.query.categories.hits
 
+import android.R
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.NorthWest
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Category
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
@@ -23,91 +22,84 @@ import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
+import com.algolia.instantsearch.core.highlighting.DefaultPostTag
+import com.algolia.instantsearch.core.highlighting.DefaultPreTag
+import com.algolia.instantsearch.core.highlighting.HighlightTokenizer
+import com.algolia.search.model.search.Facet
 
 @Composable
-fun QuerySuggestion(
+fun SearchScreen(
     modifier: Modifier = Modifier,
     searchBoxState: SearchBoxState,
-    suggestionsState: HitsState<Suggestion>,
     hitsState: HitsState<Product>,
+    categoriesState: HitsState<Facet>,
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
-        var showSuggestion by remember { mutableStateOf(false) }
+    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(scrollState)
+    ) {
         SearchBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
             searchBoxState = searchBoxState,
-            onValueChange = { query, _ ->
-                showSuggestion = query.isNotEmpty() && suggestionsState.hits.isNotEmpty()
-            }
         )
-        Suggestions(suggestionsState = suggestionsState, showSuggestion = showSuggestion) { query ->
-            searchBoxState.setText(query, true)
-            showSuggestion = false
-        }
-        Results(hitsState)
+
+        Categories(categories = categoriesState.hits)
+        Products(products = hitsState.hits)
     }
 }
 
 @Composable
-private fun Suggestions(
+private fun Categories(
     modifier: Modifier = Modifier,
-    suggestionsState: HitsState<Suggestion>,
-    showSuggestion: Boolean,
-    onClick: (String) -> Unit = {}
+    categories: List<Facet>,
 ) {
-    if (!showSuggestion) return
     Column(modifier) {
-        SectionTitle("Suggestions")
-        LazyColumn {
-            items(suggestionsState.hits) { suggestion ->
-                SuggestionRow(
-                    modifier = Modifier.clickable { onClick(suggestion.query) },
-                    suggestion = suggestion,
-                )
-            }
+        SectionTitle(
+            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
+            title = "Categories"
+        )
+        categories.forEach { category ->
+            CategoryRow(category = category)
         }
     }
 }
 
 @Composable
-private fun SuggestionRow(
+private fun CategoryRow(
     modifier: Modifier = Modifier,
-    suggestion: Suggestion
+    category: Facet
 ) {
     Row(
         modifier
             .background(MaterialTheme.colors.surface)
+            .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
         Icon(
-            imageVector = Icons.Default.Search,
+            imageVector = Icons.Default.Category,
             tint = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
             contentDescription = null
         )
-        val text = suggestion.highlightedQuery?.toAnnotatedString()
-            ?: AnnotatedString(suggestion.query)
         Text(
-            modifier = Modifier
-                .padding(start = 12.dp)
-                .weight(1f), text = text
-        )
-        Icon(
-            imageVector = Icons.Default.NorthWest,
-            tint = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-            contentDescription = null
+            text = category.highlighted.toAnnotatedString(),
+            modifier = Modifier.padding(start = 12.dp),
         )
     }
 }
 
+
 @Composable
-private fun Results(hitsState: HitsState<Product>) {
-    SectionTitle("Results")
-    LazyColumn {
-        items(hitsState.hits) { product ->
-            ProductRow(product = product)
-        }
+private fun Products(products: List<Product>) {
+    SectionTitle(
+        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+        title = "Products"
+    )
+    products.forEach { product ->
+        ProductRow(product = product)
     }
 }
 
@@ -124,8 +116,8 @@ private fun ProductRow(modifier: Modifier = Modifier, product: Product) {
             painter = rememberImagePainter(
                 data = product.image,
                 builder = {
-                    placeholder(android.R.drawable.ic_menu_report_image)
-                    error(android.R.drawable.ic_menu_report_image)
+                    placeholder(R.drawable.ic_menu_report_image)
+                    error(R.drawable.ic_menu_report_image)
                 },
             ),
             contentDescription = product.name,
@@ -149,10 +141,14 @@ private fun ProductRow(modifier: Modifier = Modifier, product: Product) {
 }
 
 @Composable
-private fun SectionTitle(title: String) {
+private fun SectionTitle(modifier: Modifier = Modifier, title: String) {
     Text(
+        modifier = modifier,
         text = title, style = MaterialTheme.typography.subtitle2,
-        color = MaterialTheme.colors.onBackground.copy(alpha = 0.8f),
-        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)
+        color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
     )
+}
+
+private fun String.toAnnotatedString(): AnnotatedString {
+    return HighlightTokenizer(DefaultPreTag, DefaultPostTag)(this).toAnnotatedString()
 }

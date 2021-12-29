@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                QuerySuggestion(
+                SearchScreen(
                     searchBoxState = viewModel.searchBoxState,
                     suggestionsState = viewModel.suggestionsState,
                     hitsState = viewModel.hitsState,

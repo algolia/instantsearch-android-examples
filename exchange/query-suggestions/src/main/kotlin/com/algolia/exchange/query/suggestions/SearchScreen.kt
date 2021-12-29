@@ -24,7 +24,7 @@ import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 
 @Composable
-fun QuerySuggestion(
+fun SearchScreen(
     modifier: Modifier = Modifier,
     searchBoxState: SearchBoxState,
     suggestionsState: HitsState<Suggestion>,
