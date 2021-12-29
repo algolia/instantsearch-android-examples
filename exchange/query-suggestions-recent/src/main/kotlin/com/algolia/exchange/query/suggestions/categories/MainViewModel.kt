@@ -1,6 +1,7 @@
-package com.algolia.exchange.query.suggestions.recent
+package com.algolia.exchange.query.suggestions.categories
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
@@ -30,7 +31,7 @@ class MainViewModel : ViewModel() {
 
     val searchBoxState = SearchBoxState()
     val suggestionsState = HitsState<Suggestion>()
-    val recentSearches = mutableStateListOf<String>() // can be persisted
+    val recentSearches = mutableStateListOf<String>() // can be persisted and sorted by date
 
     init {
         connections += searchBoxConnector.connectView(searchBoxState)

@@ -1,4 +1,4 @@
-package com.algolia.exchange.query.suggestions.recent
+package com.algolia.exchange.query.suggestions.categories
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -6,15 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.NorthWest
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
@@ -22,40 +23,40 @@ import com.algolia.instantsearch.compose.highlighting.toAnnotatedString
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBox
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
+import com.algolia.instantsearch.core.highlighting.DefaultPostTag
+import com.algolia.instantsearch.core.highlighting.DefaultPreTag
+import com.algolia.instantsearch.core.highlighting.HighlightTokenizer
+import com.algolia.search.model.search.Facet
 
 @Composable
 fun QuerySuggestion(
     modifier: Modifier = Modifier,
     searchBoxState: SearchBoxState,
     suggestionsState: HitsState<Suggestion>,
-    recentSearches: MutableList<String>,
+    categoriesState: HitsState<Facet>,
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    val scrollState = rememberScrollState()
+    Column(modifier = modifier
+        .fillMaxWidth()
+        .verticalScroll(scrollState)) {
         var showSuggestion by remember { mutableStateOf(false) }
         SearchBox(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(12.dp),
             searchBoxState = searchBoxState,
-            onValueChange = { query, isSubmit ->
+            onValueChange = { query, _ ->
                 showSuggestion = query.isNotEmpty() && suggestionsState.hits.isNotEmpty()
-                if (isSubmit) recentSearches += query
             }
         )
 
         if (showSuggestion) {
-            RecentSearches(
-                recent = recentSearches,
-                onClearAll = recentSearches::clear,
-                onClear = { recentSearches.remove(it) }
-            ) { recentSearch ->
-                searchBoxState.setText(recentSearch, true)
-                showSuggestion = false
-            }
+            Categories(
+                categories = categoriesState.hits
+            )
 
             Suggestions(suggestionsState = suggestionsState) { suggestion ->
                 searchBoxState.setText(suggestion, true)
-                recentSearches += suggestion
                 showSuggestion = false
             }
         }
@@ -63,75 +64,44 @@ fun QuerySuggestion(
 }
 
 @Composable
-private fun RecentSearches(
+private fun Categories(
     modifier: Modifier = Modifier,
-    recent: List<String>,
-    onClear: (String) -> Unit,
-    onClearAll: () -> Unit,
-    onClick: (String) -> Unit,
+    categories: List<Facet>,
 ) {
-    if (recent.isEmpty()) return
-
     Column(modifier) {
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            SectionTitle(Modifier.weight(1.0f), title = "Recent searches")
-            Icon(
-                modifier = Modifier
-                    .padding(end = 12.dp)
-                    .clickable(onClick = onClearAll),
-                imageVector = Icons.Default.ClearAll,
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-                contentDescription = null
-            )
-        }
+        SectionTitle(
+            modifier = Modifier.padding(start = 12.dp, end = 12.dp, bottom = 4.dp),
+            title = "Categories"
+        )
 
-        LazyColumn {
-            items(recent) { recentSearch ->
-                RecentSearchRow(recentSearch = recentSearch, onClick = onClick, onClear = onClear)
+        Column {
+            categories.forEach { category ->
+                CategoryRow(category = category)
+
             }
         }
     }
 }
 
 @Composable
-private fun RecentSearchRow(
+private fun CategoryRow(
     modifier: Modifier = Modifier,
-    recentSearch: String,
-    onClear: (String) -> Unit = {},
-    onClick: (String) -> Unit = {},
+    category: Facet
 ) {
     Row(
         modifier
             .background(MaterialTheme.colors.surface)
+            .fillMaxWidth()
             .padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
-        Row(
-            Modifier
-                .weight(1.0f)
-                .clickable { onClick(recentSearch) }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Restore,
-                tint = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-                contentDescription = null
-            )
-            Text(
-                text = recentSearch,
-                modifier = Modifier
-                    .padding(start = 12.dp),
-            )
-        }
-
         Icon(
-            imageVector = Icons.Default.Clear,
+            imageVector = Icons.Default.Category,
             tint = MaterialTheme.colors.onSurface.copy(alpha = 0.2f),
-            contentDescription = null,
-            modifier = Modifier.clickable { onClear(recentSearch) }
+            contentDescription = null
+        )
+        Text(
+            text = category.highlighted.toAnnotatedString(),
+            modifier = Modifier.padding(start = 12.dp),
         )
     }
 }
@@ -147,8 +117,8 @@ private fun Suggestions(
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             title = "Suggestions"
         )
-        LazyColumn {
-            items(suggestionsState.hits) { suggestion ->
+        Column {
+            suggestionsState.hits.forEach { suggestion ->
                 SuggestionRow(suggestion = suggestion, onClick = onClick)
             }
         }
@@ -194,4 +164,8 @@ private fun SectionTitle(modifier: Modifier = Modifier, title: String) {
         text = title, style = MaterialTheme.typography.subtitle2,
         color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
     )
+}
+
+private fun String.toAnnotatedString(): AnnotatedString {
+    return HighlightTokenizer(DefaultPreTag, DefaultPostTag)(this).toAnnotatedString()
 }

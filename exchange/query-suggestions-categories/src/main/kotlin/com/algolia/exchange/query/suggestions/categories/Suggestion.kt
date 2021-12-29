@@ -1,4 +1,4 @@
-package com.algolia.exchange.query.suggestions.recent
+package com.algolia.exchange.query.suggestions.categories
 
 import com.algolia.instantsearch.core.highlighting.HighlightedString
 import com.algolia.instantsearch.helper.highlighting.Highlightable

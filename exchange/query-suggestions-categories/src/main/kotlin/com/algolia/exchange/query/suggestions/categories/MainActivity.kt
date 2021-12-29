@@ -1,4 +1,4 @@
-package com.algolia.exchange.query.suggestions.recent
+package com.algolia.exchange.query.suggestions.categories
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,7 +17,7 @@ class MainActivity : ComponentActivity() {
                 QuerySuggestion(
                     searchBoxState = viewModel.searchBoxState,
                     suggestionsState = viewModel.suggestionsState,
-                    recentSearches = viewModel.recentSearches,
+                    categoriesState = viewModel.categoriesState,
                 )
             }
         }
