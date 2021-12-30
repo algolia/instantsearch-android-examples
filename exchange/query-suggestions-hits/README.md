@@ -1,10 +1,10 @@
-#  Query suggestions with hits implementation example
+# Query suggestions & Categories implementation example
 
 Search experience consisting of two results sections:
+- Query suggestions list
+- Product categories list
 
-* Query suggestions list
-* Products list
+Demonstrates simultaneous search for hits (suggestions) and facet values.
 
-Demonstrates simultaneous search in multiple indices
 
-<img src="demo.gif" width="300"/>
+<img src="./demo.gif" width="300"/>

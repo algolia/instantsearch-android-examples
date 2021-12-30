@@ -1,6 +1,9 @@
-#  Query Suggestions implementation example
+# Query suggestions & Hits implementation example
 
-Search for query suggestions.
-Selection of a suggestions updates the search query.
+Search experience consisting of two results sections:
+- Query suggestions list
+- Products list
 
-<img src="demo.gif" width="300"/>
+Demonstrates simultaneous search in multiple indices
+
+<img src="./demo.gif" width="300"/>

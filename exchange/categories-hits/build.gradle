@@ -35,6 +35,7 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.0'
+    implementation "io.coil-kt:coil-compose:1.4.0"
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {

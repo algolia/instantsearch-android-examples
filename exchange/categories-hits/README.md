@@ -1,6 +1,9 @@
-#  Query Suggestions implementation example
+# Categories & Hits implementation example
 
-Search for query suggestions.
-Selection of a suggestions updates the search query.
+Search experience consisting of two results sections:
+- Products categories lists
+- Products list
 
-<img src="demo.gif" width="300"/>
+Demonstrates simultaneous search for hits and facet values.
+
+<img src="./demo.gif" width="300"/>
