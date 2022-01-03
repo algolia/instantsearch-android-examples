@@ -69,7 +69,7 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
     kotlinOptions {
         freeCompilerArgs += [
                 '-Xopt-in=kotlin.RequiresOptIn',
-                '-Xopt-in=com.algolia.instantsearch.core.ExperimentalInstantSearch'
+                '-Xopt-in=com.algolia.instantsearch.ExperimentalInstantSearch'
         ]
     }
 }

@@ -60,7 +60,7 @@ fun ProductItem(modifier: Modifier = Modifier, product: Product) {
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = product.brand,
+                text = product.brand ?: "",
                 style = MaterialTheme.typography.body2,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis

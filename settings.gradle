@@ -1,2 +1,4 @@
-include ':showcase', ':guides', ':insights', ':compose'
-include ':showcase-compose'
+include ':showcase', ':showcase-compose', ':guides', ':insights', ':compose',
+        ':exchange:query-suggestions', ':exchange:query-suggestions-hits',
+        ':exchange:query-suggestions-recent', ':exchange:query-suggestions-categories',
+        ':exchange:categories-hits', ':exchange:multi-index', ':exchange:voice-search'
