@@ -10,17 +10,16 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.core.searcher.connectView
+import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherMultipleIndex
+import com.algolia.instantsearch.helper.searcher.hits.addHitsSearcher
+import com.algolia.instantsearch.helper.searcher.multi.MultiSearcher
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.model.Actor
 import com.algolia.instantsearch.showcase.compose.model.Movie
@@ -31,48 +30,48 @@ import com.algolia.instantsearch.showcase.compose.ui.component.MoviesList
 import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.IndexName
-import com.algolia.search.model.multipleindex.IndexQuery
 import com.algolia.search.model.search.Query
 
 class MergedListShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherMultipleIndex(
-        client,
-        listOf(
-            IndexQuery(IndexName("mobile_demo_movies"), Query(hitsPerPage = 3)),
-            IndexQuery(IndexName("mobile_demo_actors"), Query(hitsPerPage = 5))
-        )
+
+    private val multiSearcher = MultiSearcher(client)
+    private val moviesSearcher = multiSearcher.addHitsSearcher(
+        indexName = IndexName("mobile_demo_movies"),
+        query = Query(hitsPerPage = 3)
     )
+    private val actorsSearcher = multiSearcher.addHitsSearcher(
+        indexName = IndexName("mobile_demo_actors"),
+        query = Query(hitsPerPage = 5)
+    )
+    private val searchBox = SearchBoxConnector(multiSearcher)
+    private val connections = ConnectionHandler(searchBox)
 
     private val searchBoxState = SearchBoxState()
-    private val searchBox = SearchBoxConnector(searcher)
-    private var mergedList by mutableStateOf<MergedList?>(null)
-
-    private val connections = ConnectionHandler(searchBox)
+    private val actorsState = HitsState<Actor>()
+    private val moviesState = HitsState<Movie>()
 
     init {
         connections += searchBox.connectView(searchBoxState)
-        connections += searcher.connectView(view = { mergedList = it }) {
-            it?.let { response ->
-                val actors = response.results[1].hits.deserialize(Actor.serializer())
-                val movies = response.results[0].hits.deserialize(Movie.serializer())
-                MergedList(actors, movies)
-            }
-        }
+        connections += actorsSearcher.connectHitsView(actorsState) { it.hits.deserialize(Actor.serializer()) }
+        connections += moviesSearcher.connectHitsView(moviesState) { it.hits.deserialize(Movie.serializer()) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ShowcaseTheme {
-                MergedListScreen(mergedList)
+                MergedListScreen(actorsState, moviesState)
             }
         }
-        searcher.searchAsync()
+        multiSearcher.searchAsync()
     }
 
     @Composable
-    fun MergedListScreen(mergedList: MergedList?) {
+    fun MergedListScreen(
+        actorsState: HitsState<Actor>,
+        moviesState: HitsState<Movie>,
+    ) {
         Scaffold(
             topBar = {
                 SearchTopBar(
@@ -82,7 +81,6 @@ class MergedListShowcase : AppCompatActivity() {
                 )
             },
             content = {
-                val (actors, movies) = mergedList ?: return@Scaffold
                 Column(Modifier.fillMaxWidth()) {
                     Text(
                         text = "Actors",
@@ -90,13 +88,13 @@ class MergedListShowcase : AppCompatActivity() {
                         color = GreyLight,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
-                    ActorsList(actors = actors)
+                    ActorsList(actors = actorsState.hits)
                     Text(
                         text = "Movies", style = MaterialTheme.typography.subtitle2,
                         color = GreyLight,
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
                     )
-                    MoviesList(movies = movies)
+                    MoviesList(movies = moviesState.hits)
                 }
             }
         )
@@ -104,9 +102,7 @@ class MergedListShowcase : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        searcher.cancel()
+        multiSearcher.cancel()
         connections.clear()
     }
 }
-
-data class MergedList(val actors: List<Actor>, val movies: List<Movie>)

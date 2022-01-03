@@ -83,6 +83,8 @@ class RatingShowcase : AppCompatActivity() {
 
     @Composable
     fun RatingScreen(title: String = showcaseTitle) {
+        ResetInitialRangeIfNeeded()
+
         Scaffold(
             topBar = {
                 TitleTopBar(
@@ -102,7 +104,9 @@ class RatingShowcase : AppCompatActivity() {
                             .padding(horizontal = 16.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
+
                         val step = 0.5f
+
                         RatingBar(
                             ratingState = ratingState,
                             step = step
@@ -159,13 +163,16 @@ class RatingShowcase : AppCompatActivity() {
         }
     }
 
+    @Composable
+    private fun ResetInitialRangeIfNeeded() {
+        if (ratingState.range == null) {
+            ratingState.setRange(Range(initialRange))
+        }
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         searcher.cancel()
         connections.clear()
-    }
-
-    companion object {
-        private const val STEP = 0.1f
     }
 }

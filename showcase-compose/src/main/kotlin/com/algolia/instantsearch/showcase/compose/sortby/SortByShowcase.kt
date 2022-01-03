@@ -16,8 +16,8 @@ import com.algolia.instantsearch.compose.sortby.SortByState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
-import com.algolia.instantsearch.helper.sortby.searcher.SortByConnector
-import com.algolia.instantsearch.helper.sortby.searcher.connectView
+import com.algolia.instantsearch.helper.sortby.SortByConnector
+import com.algolia.instantsearch.helper.sortby.connectView
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.model.Movie
 import com.algolia.instantsearch.showcase.compose.showcaseTitle
