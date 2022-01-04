@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -28,17 +31,15 @@ import com.algolia.instantsearch.helper.searcher.facets.FacetsSearcher
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
-import com.algolia.instantsearch.showcase.compose.ui.component.FacetList
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter
-import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilterConnector
-import com.algolia.instantsearch.showcase.compose.ui.component.SearchTopBar
+import com.algolia.instantsearch.showcase.compose.ui.component.*
 import com.algolia.search.model.Attribute
+import com.algolia.search.model.search.Query
 
 class FacetListSearchShowcase : AppCompatActivity() {
 
     private val brand = Attribute("brand")
     private val searcher = HitsSearcher(client, stubIndexName)
-    private val searcherForFacet = FacetsSearcher(client, stubIndexName, brand)
+    private val searcherForFacet = FacetsSearcher(client, stubIndexName, brand, Query(maxFacetHits = 15))
     private val filterState = FilterState()
 
     private val searchBoxState = SearchBoxState()
@@ -77,8 +78,9 @@ class FacetListSearchShowcase : AppCompatActivity() {
             }
         }
 
-        searcher.indexName = intent.indexName
-        searcherForFacet.indexName = intent.indexName
+        configureSearcher(searcher)
+        configureSearcher(searcherForFacet)
+
         searcher.searchAsync()
         searcherForFacet.searchAsync()
     }
@@ -98,11 +100,10 @@ class FacetListSearchShowcase : AppCompatActivity() {
                         modifier = Modifier.padding(16.dp),
                         filterHeader = filterHeader
                     )
-                    val scrollState = rememberScrollState()
                     FacetList(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .verticalScroll(scrollState),
+                            .verticalScroll(rememberScrollState()),
                         facetListState = facetListState
                     )
                 }
