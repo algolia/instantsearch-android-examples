@@ -1,19 +1,18 @@
 package com.algolia.instantsearch.insights.showcase
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.helper.tracker.HitsTracker
+import com.algolia.instantsearch.insights.showcase.databinding.ListItemLargeBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import kotlinx.android.synthetic.main.list_item_large.view.*
 
-class ListItemViewHolder(itemView: View, private val hitsTracker: HitsTracker) :
-    RecyclerView.ViewHolder(itemView) {
+class ListItemViewHolder(private val hitsTracker: HitsTracker, binding: ListItemLargeBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
-    private val title = itemView.itemTitle
-    private val substitle = itemView.itemSubtitle
-    private val imageView = itemView.itemImage
-    private val buy = itemView.buy
+    private val title = binding.itemTitle
+    private val substitle = binding.itemSubtitle
+    private val imageView = binding.itemImage
+    private val buy = binding.buy
 
     fun bind(model: ItemModel) {
         val listItem = model.listItem
@@ -21,7 +20,7 @@ class ListItemViewHolder(itemView: View, private val hitsTracker: HitsTracker) :
         substitle.text = listItem.shortDescription.orEmpty()
         buy.setOnClickListener { hitsTracker.trackConvert(listItem) }
         itemView.setOnClickListener {
-             hitsTracker.trackClick(listItem, model.position)
+            hitsTracker.trackClick(listItem, model.position)
         }
 
         Glide

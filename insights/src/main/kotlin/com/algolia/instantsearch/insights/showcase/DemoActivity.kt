@@ -12,6 +12,8 @@ import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.algolia.instantsearch.insights.sharedInsights
 import com.algolia.instantsearch.insights.showcase.App.Companion.IndexName
+import com.algolia.instantsearch.insights.showcase.databinding.DemoActivityBinding
+import com.algolia.instantsearch.insights.showcase.databinding.IncludeSearchBinding
 import com.algolia.instantsearch.insights.showcase.extension.configureRecyclerView
 import com.algolia.instantsearch.insights.showcase.extension.configureSearchView
 import com.algolia.search.client.ClientSearch
@@ -19,8 +21,6 @@ import com.algolia.search.configuration.ConfigurationSearch
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.insights.EventName
 import io.ktor.client.features.logging.*
-import kotlinx.android.synthetic.main.demo_activity.*
-import kotlinx.android.synthetic.main.include_search.*
 
 class DemoActivity : AppCompatActivity() {
 
@@ -41,13 +41,18 @@ class DemoActivity : AppCompatActivity() {
     )
     private val connection = ConnectionHandler(searchBox, hitsTracker)
 
+    private lateinit var binding: DemoActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.demo_activity)
-        setSupportActionBar(toolbar)
+        binding = DemoActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
 
         val adapter = ListItemAdapter(hitsTracker)
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchbox.root)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
+
         connection += searchBox.connectView(searchBoxView)
         connection += searcher.connectHitsView(adapter) { response ->
             response.hits
@@ -55,8 +60,8 @@ class DemoActivity : AppCompatActivity() {
                 .mapIndexed { index, listItem -> ItemModel(listItem, index + 1) }
         }
 
-        configureSearchView(searchView, resources.getString(R.string.search_items))
-        configureRecyclerView(adapter)
+        configureSearchView(searchBinding.searchView, resources.getString(R.string.search_items))
+        configureRecyclerView(binding.recyclerView, adapter)
 
         searcher.searchAsync()
     }
