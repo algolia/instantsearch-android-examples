@@ -10,20 +10,19 @@ import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
-import kotlinx.android.synthetic.main.activity_query_suggestion.*
+import kotlinx.android.synthetic.main.activity_directory.*
 
 
 class DirectoryActivity : AppCompatActivity() {
 
     private val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"))
-    private val index = client.initIndex(IndexName("mobile_guides"))
-    private val searcher = SearcherSingleIndex(index)
+    private val searcher = HitsSearcher(client, IndexName("mobile_guides"))
     private val connector = SearchBoxConnector(searcher)
     private val connection = ConnectionHandler(connector)
     private val adapter = DirectoryAdapter()
@@ -39,7 +38,8 @@ class DirectoryActivity : AppCompatActivity() {
                 .groupBy { it.type }
                 .toSortedMap()
                 .flatMap { (key, value) ->
-                    listOf(DirectoryItem.Header(key)) + value.map { DirectoryItem.Item(it) }.sortedBy { it.hit.objectID.raw }
+                    listOf(DirectoryItem.Header(key)) + value.map { DirectoryItem.Item(it) }
+                        .sortedBy { it.hit.objectID.raw }
                 }
         }
         connection += connector.connectView(SearchBoxViewAppCompat(searchView))

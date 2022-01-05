@@ -15,6 +15,7 @@ import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.model.APIKey
@@ -32,8 +33,7 @@ class MyViewModel : ViewModel() {
         APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"),
         LogLevel.ALL
     )
-    val index = client.initIndex(IndexName("bestbuy_promo"))
-    val searcher = SearcherSingleIndex(index)
+    val searcher = HitsSearcher(client, IndexName("bestbuy_promo"))
 
     val dataSourceFactory = SearcherSingleIndexDataSource.Factory(searcher) { hit ->
         Product(
