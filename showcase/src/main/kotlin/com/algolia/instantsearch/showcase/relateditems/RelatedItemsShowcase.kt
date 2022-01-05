@@ -7,21 +7,18 @@ import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.relateditems.MatchingPattern
 import com.algolia.instantsearch.helper.relateditems.connectRelatedHitsView
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.showcase.configureRecyclerView
-import com.algolia.instantsearch.showcase.configureSearcher
-import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.list.product.Product
 import com.algolia.instantsearch.showcase.list.product.ProductAdapter
-import com.algolia.instantsearch.showcase.stubIndex
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.Attribute
 import kotlinx.android.synthetic.main.showcase_relateditems.*
 
 class RelatedItemsShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
-    private val relatedItemsSearcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
+    private val relatedItemsSearcher = HitsSearcher(client, stubIndexName)
     private val connection = ConnectionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {

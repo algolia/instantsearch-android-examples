@@ -9,7 +9,7 @@ import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.helper.android.stats.StatsTextView
 import com.algolia.instantsearch.helper.android.stats.StatsTextViewSpanned
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenter
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.include_search.*
 
 class StatsShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val stats = StatsConnector(searcher)
     private val connection = ConnectionHandler(stats)
 

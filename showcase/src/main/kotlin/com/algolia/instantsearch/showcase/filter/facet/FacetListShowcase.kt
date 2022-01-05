@@ -14,6 +14,7 @@ import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.*
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.search.model.Attribute
 import kotlinx.android.synthetic.main.showcase_facet_list.*
 import kotlinx.android.synthetic.main.header_filter.*
@@ -29,7 +30,7 @@ class FacetListShowcase : AppCompatActivity() {
     private val groupPromotions = groupAnd(promotions)
     private val groupCategory = groupOr(category)
     private val filterState = filterState { group(groupColor) { facet(color, "green") } }
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher =  HitsSearcher(client, stubIndexName)
     private val facetListColor = FacetListConnector(
         searcher = searcher,
         filterState = filterState,

@@ -4,17 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.list.movie.Movie
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.search.helper.deserialize
-import kotlinx.android.synthetic.main.showcase_search.*
 import kotlinx.android.synthetic.main.include_search.*
+import kotlinx.android.synthetic.main.showcase_search.*
 
 
 class HighlightingShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val connection = ConnectionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -12,8 +12,7 @@ import com.algolia.instantsearch.helper.filter.state.FilterOperator
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureSearchView
@@ -34,8 +33,7 @@ class DynamicFacetShowcase : AppCompatActivity() {
         APIKey("937e4e6ec422ff69fe89b569dba30180"),
         LogLevel.ALL
     )
-    val index = client.initIndex(IndexName("test_facet_ordering"))
-    val searcher = SearcherSingleIndex(index)
+    val searcher = HitsSearcher(client, IndexName("test_facet_ordering"))
     val filterState = FilterState()
     val searchBox = SearchBoxConnector(searcher)
     val color = Attribute("color")

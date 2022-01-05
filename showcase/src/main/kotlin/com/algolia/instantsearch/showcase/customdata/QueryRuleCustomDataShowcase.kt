@@ -12,16 +12,11 @@ import com.algolia.instantsearch.helper.customdata.QueryRuleCustomDataConnector
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.showcase.configureRecyclerView
-import com.algolia.instantsearch.showcase.configureSearchView
-import com.algolia.instantsearch.showcase.configureSearcher
-import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.customdata.TemplateActivity.Companion.EXTRA_CONTENT
 import com.algolia.instantsearch.showcase.list.product.Product
 import com.algolia.instantsearch.showcase.list.product.ProductAdapter
-import com.algolia.instantsearch.showcase.stubIndex
 import com.algolia.search.helper.deserialize
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,7 +26,7 @@ import kotlinx.android.synthetic.main.showcase_query_rule_custom_data.*
 
 class QueryRuleCustomDataShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
     private val queryRuleCustomData = QueryRuleCustomDataConnector<Banner>(searcher)
     private val connection = ConnectionHandler(searchBox, queryRuleCustomData)

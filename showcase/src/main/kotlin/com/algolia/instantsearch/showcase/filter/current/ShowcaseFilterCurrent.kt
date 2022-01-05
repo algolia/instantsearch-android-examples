@@ -10,8 +10,8 @@ import com.algolia.instantsearch.helper.filter.current.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.NumericOperator
 import kotlinx.android.synthetic.main.showcase_filter_current.*
@@ -40,7 +40,7 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
         }
     }
     private val filterState = FilterState(filters)
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val currentFiltersColor = FilterCurrentConnector(filterState, listOf(groupColor))
     private val currentFiltersAll = FilterCurrentConnector(filterState)
     private val connection = ConnectionHandler(

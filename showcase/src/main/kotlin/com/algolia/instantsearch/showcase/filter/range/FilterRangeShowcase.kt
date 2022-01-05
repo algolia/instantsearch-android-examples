@@ -5,22 +5,22 @@ import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.number.range.Range
 import com.algolia.instantsearch.core.searcher.Debouncer
-import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.helper.filter.range.FilterRangeConnector
 import com.algolia.instantsearch.helper.filter.range.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.showcase_filter_range.*
 import kotlinx.android.synthetic.main.header_filter.*
+import kotlinx.android.synthetic.main.showcase_filter_range.*
 
 
 class FilterRangeShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val price = Attribute("price")
     private val groupID = FilterGroupID(price)
     private val primaryBounds = 0..15
@@ -32,7 +32,8 @@ class FilterRangeShowcase : AppCompatActivity() {
         }
     }
     private val filterState = FilterState(filters)
-    private val range = FilterRangeConnector(filterState, price, range = initialRange, bounds = primaryBounds)
+    private val range =
+        FilterRangeConnector(filterState, price, range = initialRange, bounds = primaryBounds)
     private val connection = ConnectionHandler(
         range,
         searcher.connectFilterState(filterState, Debouncer(100))

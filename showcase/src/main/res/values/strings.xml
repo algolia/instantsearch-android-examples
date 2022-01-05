@@ -33,4 +33,6 @@
     <string name="ok">OK</string>
     <string name="redirect_via_banner_tap">Redirect via banner tap</string>
     <string name="redirect_via_submit">Redirect via submit</string>
+    <string name="actors">Actors</string>
+    <string name="movies">Movies</string>
 </resources>

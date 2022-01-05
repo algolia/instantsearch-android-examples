@@ -13,6 +13,7 @@ import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.filter.state.groupOr
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.search.model.Attribute
 import kotlinx.android.synthetic.main.showcase_filter_clear.*
 import kotlinx.android.synthetic.main.showcase_filter_toggle_default.toolbar
@@ -35,7 +36,7 @@ class FilterClearShowcase : AppCompatActivity() {
         }
     }
     private val filterState = FilterState(filters)
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val clearAll = FilterClearConnector(filterState)
     private val clearSpecified = FilterClearConnector(filterState, listOf(groupColor), ClearMode.Specified)
     private val clearExcept = FilterClearConnector(filterState, listOf(groupColor), ClearMode.Except)

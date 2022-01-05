@@ -11,7 +11,7 @@ import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.search.helper.deserialize
 import kotlinx.android.synthetic.main.showcase_search.*
 import kotlinx.android.synthetic.main.include_search.*
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.include_search.*
 
 class SearchOnSubmitShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.OnSubmit)
     private val connection = ConnectionHandler(searchBox)
 

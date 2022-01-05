@@ -3,18 +3,18 @@ package com.algolia.instantsearch.showcase.filter.toggle
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.helper.android.filter.toggle.FilterToggleViewCompoundButton
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.toggle.FilterToggleConnector
 import com.algolia.instantsearch.helper.filter.toggle.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
 import com.algolia.search.model.filter.NumericOperator
-import kotlinx.android.synthetic.main.showcase_filter_toggle.*
 import kotlinx.android.synthetic.main.header_filter.*
+import kotlinx.android.synthetic.main.showcase_filter_toggle.*
 
 
 class FilterToggleShowcase : AppCompatActivity() {
@@ -23,7 +23,7 @@ class FilterToggleShowcase : AppCompatActivity() {
     private val size = Attribute("size")
     private val tags = Attribute("_tags")
     private val filterState = FilterState()
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val filterCoupon = Filter.Facet(promotions, "coupon")
     private val filterSize = Filter.Numeric(size, NumericOperator.Greater, 40)
     private val filterVintage = Filter.Tag("vintage")

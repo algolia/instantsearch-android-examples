@@ -9,15 +9,9 @@ import com.algolia.instantsearch.helper.filter.range.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterGroupID
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.showcase.client
-import com.algolia.instantsearch.showcase.configureToolbar
-import com.algolia.instantsearch.showcase.onClearAllThenClearFilters
-import com.algolia.instantsearch.showcase.onErrorThenUpdateFiltersText
-import com.algolia.instantsearch.showcase.onFilterChangedThenUpdateFiltersText
-import com.algolia.instantsearch.showcase.onResponseChangedThenUpdateNbHits
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.Filter
@@ -27,8 +21,7 @@ import kotlinx.android.synthetic.main.showcase_filter_rating.*
 
 class RatingShowcase : AppCompatActivity() {
 
-    private val index = client.initIndex(IndexName("instant_search"))
-    private val searcher = SearcherSingleIndex(index)
+    private val searcher = HitsSearcher(client, IndexName("instant_search"))
     private val rating = Attribute("rating")
     private val groupID = FilterGroupID(rating)
     private val primaryBounds = 0f..5f

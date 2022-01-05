@@ -13,6 +13,7 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.addFacet
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.NumericOperator
@@ -27,9 +28,8 @@ class FilterComparisonShowcase : AppCompatActivity() {
 
     private val price = Attribute("price")
     private val year = Attribute("year")
-    private val index = client.initIndex(IndexName("stub"))
     private val filterState = FilterState()
-    private val searcher = SearcherSingleIndex(index)
+    private val searcher =  HitsSearcher(client, stubIndexName)
     private val comparisonPrice = FilterComparisonConnector<Long>(filterState, price, NumericOperator.GreaterOrEquals)
     private val comparisonYear = FilterComparisonConnector<Int>(filterState, year, NumericOperator.Equals)
     private val connection = ConnectionHandler(

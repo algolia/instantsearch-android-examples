@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -36,8 +37,7 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.toFilterGroups
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherForFacets
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.IndexNameHolder
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenter
 import com.algolia.instantsearch.helper.stats.connectView
@@ -50,9 +50,10 @@ import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.Filter
 import com.algolia.search.model.filter.FilterGroup
 import com.algolia.search.model.filter.FilterGroupsConverter
+import com.algolia.search.model.response.ResponseSearch
 import com.algolia.search.serialize.KeyIndexName
 import com.algolia.search.serialize.KeyName
-import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.*
 
 
 val client = ClientSearch(
@@ -63,7 +64,8 @@ val client = ClientSearch(
     )
 )
 
-val stubIndex = client.initIndex(IndexName("stub"))
+val stubIndexName = IndexName("stub")
+val stubIndex = client.initIndex(stubIndexName)
 
 fun AppCompatActivity.configureToolbar(toolbar: Toolbar) {
     setSupportActionBar(toolbar)
@@ -106,7 +108,7 @@ fun AppCompatActivity.onClearAllThenClearFilters(
 }
 
 fun AppCompatActivity.onErrorThenUpdateFiltersText(
-    searcher: SearcherSingleIndex,
+    searcher: Searcher<*>,
     filtersTextView: TextView
 ) {
     searcher.error.subscribe {
@@ -115,7 +117,7 @@ fun AppCompatActivity.onErrorThenUpdateFiltersText(
 }
 
 fun AppCompatActivity.onResponseChangedThenUpdateNbHits(
-    searcher: SearcherSingleIndex,
+    searcher: Searcher<ResponseSearch>,
     nbHitsView: TextView,
     connection: ConnectionHandler
 ) {
@@ -154,12 +156,12 @@ fun AppCompatActivity.configureTitle(
     }
 }
 
-fun AppCompatActivity.configureSearcher(searcher: SearcherSingleIndex) {
-    searcher.index = client.initIndex(intent.indexName)
+fun AppCompatActivity.configureSearcher(searcher: IndexNameHolder) {
+    searcher.indexName = intent.indexName
 }
 
-fun AppCompatActivity.configureSearcher(searcher: SearcherForFacets) {
-    searcher.index = client.initIndex(intent.indexName)
+fun Activity.configureSearcher(searcher: IndexNameHolder) {
+    searcher.indexName = intent.indexName
 }
 
 fun AppCompatActivity.configureRecyclerView(

@@ -7,23 +7,12 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalConnector
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalPresenterImpl
 import com.algolia.instantsearch.helper.hierarchical.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.showcase.configureRecyclerView
-import com.algolia.instantsearch.showcase.configureSearcher
-import com.algolia.instantsearch.showcase.configureToolbar
-import com.algolia.instantsearch.showcase.onClearAllThenClearFilters
-import com.algolia.instantsearch.showcase.onErrorThenUpdateFiltersText
-import com.algolia.instantsearch.showcase.onFilterChangedThenUpdateFiltersText
-import com.algolia.instantsearch.showcase.onResetThenRestoreFilters
-import com.algolia.instantsearch.showcase.onResponseChangedThenUpdateNbHits
-import com.algolia.instantsearch.showcase.stubIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
 import com.algolia.search.model.Attribute
 import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.showcase_filter_clear.*
 import kotlinx.android.synthetic.main.showcase_hierarchical.*
-import kotlinx.android.synthetic.main.showcase_hierarchical.toolbar
 
 class HierarchicalShowcase : AppCompatActivity() {
 
@@ -36,7 +25,7 @@ class HierarchicalShowcase : AppCompatActivity() {
         hierarchicalCategoryLvl1,
         hierarchicalCategoryLvl2
     )
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, stubIndexName)
     private val filterState = FilterState()
     private val separator = " > "
     private val hierarchical = HierarchicalConnector(

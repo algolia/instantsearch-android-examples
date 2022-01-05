@@ -36,7 +36,6 @@ val client = ClientSearch(
 )
 
 val stubIndexName = IndexName("stub")
-val stubIndex = client.initIndex(stubIndexName)
 
 fun AppCompatActivity.configureSearcher(searcher: IndexNameHolder) {
     searcher.indexName = intent.indexName
