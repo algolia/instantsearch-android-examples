@@ -14,9 +14,9 @@ import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherForFacets
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.instantsearch.helper.searcher.facets.FacetsSearcher
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
@@ -27,6 +27,7 @@ import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import io.ktor.client.features.logging.*
 
+
 class MainViewModel : ViewModel() {
 
     val client = ClientSearch(
@@ -34,8 +35,8 @@ class MainViewModel : ViewModel() {
         APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"),
         LogLevel.ALL
     )
-    val index = client.initIndex(IndexName("bestbuy"))
-    val searcher = SearcherSingleIndex(index)
+    val indexName = IndexName("bestbuy")
+    val searcher = HitsSearcher(client, indexName)
 
     // Search Box
     val searchBoxState = SearchBoxState()
@@ -52,7 +53,7 @@ class MainViewModel : ViewModel() {
     val facetList = FacetListState()
     val filterState = FilterState()
     val manufacturer = Attribute("category")
-    val searcherForFacet = SearcherForFacets(index, manufacturer)
+    val searcherForFacet = FacetsSearcher(client, indexName, manufacturer)
     val facetListConnector = FacetListConnector(
         searcher = searcherForFacet,
         filterState = filterState,
