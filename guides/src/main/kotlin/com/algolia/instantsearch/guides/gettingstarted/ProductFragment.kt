@@ -5,30 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.databinding.FragmentProductBinding
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.android.searchbox.connectView
 import com.algolia.instantsearch.helper.android.stats.StatsTextView
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
-import kotlinx.android.synthetic.main.fragment_product.*
-
 
 class ProductFragment : Fragment() {
 
     private val connection = ConnectionHandler()
 
+    private var _binding: FragmentProductBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_product, container, false)
+    ): View {
+        _binding = FragmentProductBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,24 +37,22 @@ class ProductFragment : Fragment() {
         val viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
 
         val adapterProduct = ProductAdapter()
-        viewModel.products.observe(
-            viewLifecycleOwner,
-            Observer { hits -> adapterProduct.submitList(hits) })
+        viewModel.products.observe(viewLifecycleOwner, adapterProduct::submitList)
 
-        productList.let {
+        binding.productList.let {
             it.itemAnimator = null
             it.adapter = adapterProduct
             it.layoutManager = LinearLayoutManager(requireContext())
             it.autoScrollToStart(adapterProduct)
         }
 
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(binding.searchView)
         connection += viewModel.searchBox.connectView(searchBoxView)
 
-        val statsView = StatsTextView(stats)
+        val statsView = StatsTextView(binding.stats)
         connection += viewModel.stats.connectView(statsView, StatsPresenterImpl())
 
-        filters.setOnClickListener { (requireActivity() as GettingStartedGuide).showFacetFragment() }
+        binding.filters.setOnClickListener { (requireActivity() as GettingStartedGuide).showFacetFragment() }
     }
 
     override fun onDestroyView() {

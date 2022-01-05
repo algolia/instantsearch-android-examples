@@ -4,17 +4,16 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.algolia.instantsearch.guides.R
-
+import com.algolia.instantsearch.guides.databinding.ListItemSmallBinding
 
 class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(
     ProductAdapter
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_small, parent, false)
-
-        return ProductViewHolder(view)
+        return ProductViewHolder(
+            ListItemSmallBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {

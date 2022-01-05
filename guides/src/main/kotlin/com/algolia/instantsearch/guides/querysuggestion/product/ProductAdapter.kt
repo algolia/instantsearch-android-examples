@@ -1,17 +1,19 @@
 package com.algolia.instantsearch.guides.querysuggestion.product
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
-import com.algolia.instantsearch.guides.R
-import com.algolia.instantsearch.helper.android.inflate
+import com.algolia.instantsearch.guides.databinding.ListItemLargeBinding
 
 class ProductAdapter : ListAdapter<Product, ProductViewHolder>(ProductAdapter),
     HitsView<Product> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(parent.inflate(R.layout.list_item_large, false))
+        return ProductViewHolder(
+            ListItemLargeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {

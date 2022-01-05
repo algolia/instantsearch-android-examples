@@ -1,14 +1,14 @@
 package com.algolia.instantsearch.guides.querysuggestion.suggestion
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.guides.databinding.ListItemSuggestionBinding
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
-import kotlinx.android.synthetic.main.list_item_small.view.*
 
-class SuggestionViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class SuggestionViewHolder(private val binding: ListItemSuggestionBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(item: Suggestion) {
-        view.setOnClickListener(item.onClickListener)
-        view.itemName.text = item.highlightedQuery?.toSpannedString() ?: item.query
+        binding.root.setOnClickListener(item.onClickListener)
+        binding.itemName.text = item.highlightedQuery?.toSpannedString() ?: item.query
     }
 }

@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.databinding.ActivityDirectoryBinding
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
@@ -16,21 +16,24 @@ import com.algolia.search.helper.deserialize
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
-import kotlinx.android.synthetic.main.activity_directory.*
-
 
 class DirectoryActivity : AppCompatActivity() {
 
-    private val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"))
-    private val searcher = HitsSearcher(client, IndexName("mobile_guides"))
+    private val client = ClientSearch(
+        applicationID = ApplicationID("latency"),
+        apiKey = APIKey("1f6fd3a6fb973cb08419fe7d288fa4db")
+    )
+    private val searcher = HitsSearcher(client = client, indexName = IndexName("mobile_guides"))
     private val connector = SearchBoxConnector(searcher)
     private val connection = ConnectionHandler(connector)
     private val adapter = DirectoryAdapter()
 
+    private lateinit var binding: ActivityDirectoryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_directory)
-
+        binding = ActivityDirectoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         connection += searcher.connectHitsView(adapter) { response ->
             response.hits.deserialize(DirectoryHit.serializer())
@@ -42,9 +45,9 @@ class DirectoryActivity : AppCompatActivity() {
                         .sortedBy { it.hit.objectID.raw }
                 }
         }
-        connection += connector.connectView(SearchBoxViewAppCompat(searchView))
+        connection += connector.connectView(SearchBoxViewAppCompat(binding.searchView))
 
-        list.let {
+        binding.list.let {
             it.layoutManager = LinearLayoutManager(this)
             it.adapter = adapter
             it.itemAnimator = null

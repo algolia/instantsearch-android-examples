@@ -9,23 +9,25 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.databinding.FragmentFacetBinding
 import com.algolia.instantsearch.helper.android.filter.facet.FacetListAdapter
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.filter.facet.connectView
-import kotlinx.android.synthetic.main.fragment_facet.*
-
 
 class FacetFragment : Fragment() {
 
     private val connection = ConnectionHandler()
 
+    private var _binding: FragmentFacetBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_facet, container, false)
+    ): View {
+        _binding = FragmentFacetBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,13 +36,13 @@ class FacetFragment : Fragment() {
 
         val adapterFacet = FacetListAdapter(MyFacetListViewHolder.Factory)
 
-        facetList.let {
+        binding.facetList.let {
             it.adapter = adapterFacet
             it.layoutManager = LinearLayoutManager(requireContext())
             it.autoScrollToStart(adapterFacet)
         }
         (requireActivity() as AppCompatActivity).let {
-            it.setSupportActionBar(toolbar)
+            it.setSupportActionBar(binding.toolbar)
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
 
@@ -49,6 +51,7 @@ class FacetFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        _binding = null
         connection.clear()
     }
 }

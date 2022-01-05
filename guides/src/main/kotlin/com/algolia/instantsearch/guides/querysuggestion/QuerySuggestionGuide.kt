@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.databinding.ActivityQuerySuggestionBinding
 import com.algolia.instantsearch.guides.querysuggestion.product.Product
 import com.algolia.instantsearch.guides.querysuggestion.product.ProductAdapter
 import com.algolia.instantsearch.guides.querysuggestion.suggestion.Suggestion
@@ -24,32 +24,46 @@ import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.search.Query
-import io.ktor.client.features.logging.LogLevel
-import kotlinx.android.synthetic.main.activity_places.searchView
-import kotlinx.android.synthetic.main.activity_query_suggestion.*
-
+import io.ktor.client.features.logging.*
 
 class QuerySuggestionGuide : AppCompatActivity() {
 
-    val client = ClientSearch(ApplicationID("latency"), APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"), LogLevel.ALL)
+    val client = ClientSearch(
+        applicationID = ApplicationID("latency"),
+        apiKey = APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"),
+        logLevel = LogLevel.ALL
+    )
     val multiSearcher = MultiSearcher(client)
-    val suggestionSearcher = multiSearcher.addHitsSearcher(IndexName("query_suggestions"), Query(hitsPerPage = 3))
-    val productSearcher = multiSearcher.addHitsSearcher(IndexName("bestbuy_promo"), Query(hitsPerPage = 3))
+    val suggestionSearcher = multiSearcher.addHitsSearcher(
+        indexName = IndexName("query_suggestions"),
+        query = Query(hitsPerPage = 3)
+    )
+    val productSearcher = multiSearcher.addHitsSearcher(
+        indexName = IndexName("bestbuy_promo"),
+        query = Query(hitsPerPage = 3)
+    )
     val searchBox = SearchBoxConnector(multiSearcher)
     val connection = ConnectionHandler(searchBox)
 
+    private lateinit var binding: ActivityQuerySuggestionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_query_suggestion)
+        binding = ActivityQuerySuggestionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(binding.searchView)
         val productAdapter = ProductAdapter()
         val suggestionAdapter = SuggestionAdapter()
-        configureRecyclerView(suggestions, suggestionAdapter)
-        configureRecyclerView(products, productAdapter)
+        configureRecyclerView(binding.suggestions, suggestionAdapter)
+        configureRecyclerView(binding.products, productAdapter)
 
         connection += searchBox.connectView(searchBoxView)
-        connection += suggestionSearcher.connectHitsView(suggestionAdapter) { it.hits.deserialize(Suggestion.serializer()) }
+        connection += suggestionSearcher.connectHitsView(suggestionAdapter) {
+            it.hits.deserialize(
+                Suggestion.serializer()
+            )
+        }
         connection += productSearcher.connectHitsView(productAdapter) { it.hits.deserialize(Product.serializer()) }
 
         multiSearcher.searchAsync()

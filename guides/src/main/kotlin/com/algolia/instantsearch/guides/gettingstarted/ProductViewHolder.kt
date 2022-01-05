@@ -1,14 +1,14 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.guides.databinding.ListItemSmallBinding
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
-import kotlinx.android.synthetic.main.list_item_small.view.*
 
 
-class ProductViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class ProductViewHolder(private val binding: ListItemSmallBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(product: Product) {
-        view.itemName.text = product.highlightedName?.toSpannedString() ?: product.name
+        binding.itemName.text = product.highlightedName?.toSpannedString() ?: product.name
     }
 }

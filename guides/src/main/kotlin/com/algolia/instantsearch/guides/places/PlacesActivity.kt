@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.databinding.ActivityPlacesBinding
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
@@ -15,8 +15,6 @@ import com.algolia.search.model.places.Country
 import com.algolia.search.model.places.PlaceType
 import com.algolia.search.model.places.PlacesQuery
 import com.algolia.search.model.search.Language
-import kotlinx.android.synthetic.main.activity_places.*
-
 
 class PlacesActivity : AppCompatActivity() {
 
@@ -31,14 +29,17 @@ class PlacesActivity : AppCompatActivity() {
     val adapter = Adapter()
     val connection = ConnectionHandler(searchBox)
 
+    private lateinit var binding: ActivityPlacesBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_places)
+        binding = ActivityPlacesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        connection += searchBox.connectView(SearchBoxViewAppCompat(searchView))
+        connection += searchBox.connectView(SearchBoxViewAppCompat(binding.searchView))
         connection += searcher.connectHitsView(adapter) { hits -> hits.hits }
 
-        placesList.let {
+        binding.placesList.let {
             it.itemAnimator = null
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(this)

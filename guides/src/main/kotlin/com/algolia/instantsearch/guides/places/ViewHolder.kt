@@ -2,17 +2,16 @@ package com.algolia.instantsearch.guides.places
 
 import android.text.SpannedString
 import android.text.TextUtils
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.core.highlighting.HighlightTokenizer
+import com.algolia.instantsearch.guides.databinding.ListItemSmallBinding
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
 import com.algolia.search.model.places.PlaceLanguage
 import com.algolia.search.model.search.HighlightResult
 import com.algolia.search.serialize.toHighlights
-import kotlinx.android.synthetic.main.list_item_small.view.*
 
-
-class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class ViewHolder(private val binding: ListItemSmallBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(place: PlaceLanguage) {
         val name = place.highlightResultOrNull
@@ -25,10 +24,10 @@ class ViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             ?.tokenize() ?: place.county.first()
         val postCode = place.postCodeOrNull?.firstOrNull()?.let { ", $it" } ?: ""
 
-        view.itemName.text = TextUtils.concat(name, ", ", county, postCode)
+        binding.itemName.text = TextUtils.concat(name, ", ", county, postCode)
     }
 
-    fun HighlightResult.tokenize(): SpannedString {
+    private fun HighlightResult.tokenize(): SpannedString {
         return HighlightTokenizer()(value).toSpannedString()
     }
 }

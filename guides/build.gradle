@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlinx-serialization'
 apply plugin: 'kotlin-kapt'
 
@@ -34,7 +33,9 @@ android {
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
     }
-    sourceSets["main"].java.srcDir("src/main/kotlin")
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
