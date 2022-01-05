@@ -8,7 +8,7 @@ import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
+import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.tracker.HitsTracker
 import com.algolia.instantsearch.insights.sharedInsights
 import com.algolia.instantsearch.insights.showcase.App.Companion.IndexName
@@ -31,8 +31,7 @@ class DemoActivity : AppCompatActivity() {
             logLevel = LogLevel.ALL
         )
     )
-    private val stubIndex = client.initIndex(IndexName)
-    private val searcher = SearcherSingleIndex(stubIndex)
+    private val searcher = HitsSearcher(client, IndexName)
     private val searchBox = SearchBoxConnector(searcher, searchMode = SearchMode.AsYouType)
 
     private val hitsTracker = HitsTracker(
