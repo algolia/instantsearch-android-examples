@@ -12,14 +12,12 @@ import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion
 import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion.*
 import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.*
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.IncludeListBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFacetListBinding
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.showcase_facet_list.*
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.include_list.*
-
 
 class FacetListShowcase : AppCompatActivity() {
 
@@ -67,24 +65,27 @@ class FacetListShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_facet_list)
+        val binding = ShowcaseFacetListBinding.inflate(layoutInflater)
+        val listBinding = IncludeListBinding.bind(binding.list.root)
+        val headerBinding = HeaderFilterBinding.bind(listBinding.headerFilter.root)
+        setContentView(binding.root)
 
         connection += facetListColor.connectView(colorAdapter, colorPresenter)
         connection += facetListPromotions.connectView(promotionAdapter, promotionPresenter)
         connection += facetListCategory.connectView(categoryAdapter, categoryPresenter)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(listTopLeft, colorAdapter)
-        configureRecyclerView(listTopRight, categoryAdapter)
-        configureRecyclerView(listBottomLeft, promotionAdapter)
-        configureTitle(titleTopLeft, formatTitle(colorPresenter, groupColor))
-        configureTitle(titleTopRight, formatTitle(categoryPresenter, groupCategory))
-        configureTitle(titleBottomLeft, formatTitle(promotionPresenter, groupPromotions))
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, color, promotions, category)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureRecyclerView(listBinding.listTopLeft, colorAdapter)
+        configureRecyclerView(listBinding.listTopRight, categoryAdapter)
+        configureRecyclerView(listBinding.listBottomLeft, promotionAdapter)
+        configureTitle(listBinding.titleTopLeft, formatTitle(colorPresenter, groupColor))
+        configureTitle(listBinding.titleTopRight, formatTitle(categoryPresenter, groupCategory))
+        configureTitle(listBinding.titleBottomLeft, formatTitle(promotionPresenter, groupPromotions))
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, color, promotions, category)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }

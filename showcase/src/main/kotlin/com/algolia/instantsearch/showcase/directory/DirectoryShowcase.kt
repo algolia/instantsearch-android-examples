@@ -6,12 +6,11 @@ import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseDirectoryBinding
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.search.Query
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_directory.*
-
 
 class DirectoryShowcase : AppCompatActivity() {
 
@@ -23,9 +22,13 @@ class DirectoryShowcase : AppCompatActivity() {
     private val connection = ConnectionHandler()
     private val adapter = DirectoryAdapter()
 
+    private lateinit var binding: ShowcaseDirectoryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_directory)
+        binding = ShowcaseDirectoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
 
 
         connection += searcher.connectHitsView(adapter) { response ->
@@ -34,13 +37,14 @@ class DirectoryShowcase : AppCompatActivity() {
                 .groupBy { it.type }
                 .toSortedMap()
                 .flatMap { (key, value) ->
-                    listOf(DirectoryItem.Header(key)) + value.map { DirectoryItem.Item(it) }.sortedBy { it.hit.objectID.raw }
+                    listOf(DirectoryItem.Header(key)) + value.map { DirectoryItem.Item(it) }
+                        .sortedBy { it.hit.objectID.raw }
                 }
         }
 
-        configureRecyclerView(hits, adapter)
-        configureSearchView(searchView, getString(R.string.search_showcases))
-        configureSearchBox(searchView, searcher, connection)
+        configureRecyclerView(binding.hits, adapter)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_showcases))
+        configureSearchBox(searchBinding.searchView, searcher, connection)
 
         searcher.searchAsync()
     }

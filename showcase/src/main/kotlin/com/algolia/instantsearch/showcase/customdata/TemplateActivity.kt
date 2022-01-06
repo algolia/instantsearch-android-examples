@@ -3,21 +3,23 @@ package com.algolia.instantsearch.showcase.customdata
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.algolia.instantsearch.showcase.R
-import kotlinx.android.synthetic.main.showcase_query_rule_custom_data_template.*
+import com.algolia.instantsearch.showcase.databinding.ShowcaseQueryRuleCustomDataTemplateBinding
 
 class TemplateActivity : AppCompatActivity() {
 
+    private lateinit var binding: ShowcaseQueryRuleCustomDataTemplateBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_query_rule_custom_data_template)
+        binding = ShowcaseQueryRuleCustomDataTemplateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupToolbar()
         val text = intent.getStringExtra(EXTRA_CONTENT)
-        content.text = text
+        binding.content.text = text
     }
 
     private fun setupToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.let {
             it.title = null
             it.setDisplayHomeAsUpEnabled(true)

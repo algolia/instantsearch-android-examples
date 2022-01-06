@@ -1,17 +1,16 @@
 package com.algolia.instantsearch.showcase.filter.list
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.Callback
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.instantsearch.helper.filter.FilterPresenterImpl
 import com.algolia.instantsearch.helper.filter.list.FilterListView
+import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
 import com.algolia.search.model.filter.Filter
-
 
 class FilterListAdapter<T: Filter> :
     ListAdapter<SelectableItem<T>, FilterListViewHolder>(DiffUtilItem()),
@@ -20,13 +19,15 @@ class FilterListAdapter<T: Filter> :
     override var onSelection: Callback<T>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterListViewHolder {
-        return FilterListViewHolder(parent.inflate(R.layout.list_item_selectable))
+        return FilterListViewHolder(
+            ListItemSelectableBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: FilterListViewHolder, position: Int) {
         val (filter, selected) = getItem(position)
 
-        holder.bind(FilterPresenterImpl()(filter), selected, View.OnClickListener { onSelection?.invoke(filter) })
+        holder.bind(FilterPresenterImpl()(filter), selected) { onSelection?.invoke(filter) }
     }
 
     override fun setItems(items: List<SelectableItem<T>>) {

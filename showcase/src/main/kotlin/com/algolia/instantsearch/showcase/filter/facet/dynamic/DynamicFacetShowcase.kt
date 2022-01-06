@@ -17,14 +17,14 @@ import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureSearchView
 import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseDynamicFacetListBinding
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import io.ktor.client.features.logging.*
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_facet_list_search.*
 
 class DynamicFacetShowcase : AppCompatActivity() {
 
@@ -58,18 +58,20 @@ class DynamicFacetShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_dynamic_facet_list)
+        val binding = ShowcaseDynamicFacetListBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        setContentView(binding.root)
 
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
         connection += searchBox.connectView(searchBoxView)
 
         val factory = ViewHolderFactory()
         val adapter = DynamicFacetListAdapter(factory)
         connection += dynamicFacets.connectView(adapter)
 
-        configureToolbar(toolbar)
-        configureSearchView(searchView, getString(R.string.search_brands))
-        configureRecyclerView(hits, adapter)
+        configureToolbar(binding.toolbar)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_brands))
+        configureRecyclerView(binding.hits, adapter)
 
         searcher.query.facets = setOf(brand, color, size, country)
         searcher.searchAsync()

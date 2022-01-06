@@ -11,11 +11,10 @@ import com.algolia.instantsearch.helper.filter.state.groupAnd
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterMapBinding
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.showcase_filter_map.*
-
 
 class FilterMapShowcase : AppCompatActivity() {
 
@@ -32,18 +31,20 @@ class FilterMapShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ShowcaseFilterMapBinding.inflate(layoutInflater)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
         setContentView(R.layout.showcase_filter_map)
 
-        val viewGender = FilterMapViewRadioGroup(radioGroupGender)
+        val viewGender = FilterMapViewRadioGroup(binding.radioGroupGender)
 
         connection += filterMap.connectView(viewGender)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, gender)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, gender)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }

@@ -11,12 +11,11 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.IncludeListBinding
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFacetListPersistentBinding
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_facet_list_persistent.*
-
 
 class FacetListPersistentShowcase : AppCompatActivity() {
 
@@ -46,7 +45,11 @@ class FacetListPersistentShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_facet_list_persistent)
+        val binding = ShowcaseFacetListPersistentBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        val listBinding = IncludeListBinding.bind(binding.list.root)
+        val headerBinding = HeaderFilterBinding.bind(listBinding.headerFilter.root)
+        setContentView(binding.root)
 
         val adapterColor = FacetListAdapter(FacetListViewHolderImpl.Factory)
         val adapterCategory = FacetListAdapter(FacetListViewHolderImpl.Factory)
@@ -54,18 +57,18 @@ class FacetListPersistentShowcase : AppCompatActivity() {
         connection += facetListColor.connectView(adapterColor)
         connection += facetListCategory.connectView(adapterCategory)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureSearchBox(searchView, searcher, connection)
-        configureSearchView(searchView, getString(R.string.search_items))
-        configureRecyclerView(listTopLeft, adapterColor)
-        configureRecyclerView(listTopRight, adapterCategory)
-        configureTitle(titleTopLeft, getString(R.string.multiple_choice))
-        configureTitle(titleTopRight, getString(R.string.single_choice))
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, color, category)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureSearchBox(searchBinding.searchView, searcher, connection)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_items))
+        configureRecyclerView(listBinding.listTopLeft, adapterColor)
+        configureRecyclerView(listBinding.listTopRight, adapterCategory)
+        configureTitle(listBinding.titleTopLeft, getString(R.string.multiple_choice))
+        configureTitle(listBinding.titleTopRight, getString(R.string.single_choice))
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, color, category)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }

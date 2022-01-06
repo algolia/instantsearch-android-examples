@@ -1,24 +1,23 @@
 package com.algolia.instantsearch.showcase.filter.facet
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.algolia.instantsearch.core.highlighting.HighlightTokenizer
-import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.helper.android.filter.facet.FacetListViewHolder
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
-import com.algolia.instantsearch.helper.android.inflate
+import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
 import com.algolia.search.model.search.Facet
-import kotlinx.android.synthetic.main.list_item_selectable.view.*
 
-
-class FacetListViewHolderImpl(view: View) : FacetListViewHolder(view) {
+class FacetListViewHolderImpl(private val binding: ListItemSelectableBinding) :
+    FacetListViewHolder(binding.root) {
 
     override fun bind(facet: Facet, selected: Boolean, onClickListener: View.OnClickListener) {
-        view.setOnClickListener(onClickListener)
-        view.selectableItemSubtitle.text = facet.count.toString()
-        view.selectableItemSubtitle.visibility = View.VISIBLE
-        view.selectableItemIcon.visibility = if (selected) View.VISIBLE else View.INVISIBLE
-        view.selectableItemName.text = facet.highlightedOrNull?.let {
+        binding.root.setOnClickListener(onClickListener)
+        binding.selectableItemSubtitle.text = facet.count.toString()
+        binding.selectableItemSubtitle.visibility = View.VISIBLE
+        binding.selectableItemIcon.visibility = if (selected) View.VISIBLE else View.INVISIBLE
+        binding.selectableItemName.text = facet.highlightedOrNull?.let {
             HighlightTokenizer(preTag = "<b>", postTag = "</b>")(it).toSpannedString()
         } ?: facet.value
     }
@@ -26,7 +25,9 @@ class FacetListViewHolderImpl(view: View) : FacetListViewHolder(view) {
     object Factory : FacetListViewHolder.Factory {
 
         override fun createViewHolder(parent: ViewGroup): FacetListViewHolder {
-            return FacetListViewHolderImpl(parent.inflate(R.layout.list_item_selectable))
+            return FacetListViewHolderImpl(
+                ListItemSelectableBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            )
         }
     }
 }

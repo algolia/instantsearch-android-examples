@@ -10,12 +10,11 @@ import com.algolia.instantsearch.helper.filter.state.groupOr
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.IncludeListBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterListBinding
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.showcase_filter_list.*
-
 
 class FilterListTagShowcase : AppCompatActivity() {
 
@@ -35,19 +34,22 @@ class FilterListTagShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_list)
+        val binding = ShowcaseFilterListBinding.inflate(layoutInflater)
+        val listBinding = IncludeListBinding.bind(binding.list.root)
+        val headerBinding = HeaderFilterBinding.bind(listBinding.headerFilter.root)
+        setContentView(binding.root)
 
         val viewTag = FilterListAdapter<Filter.Tag>()
 
         connection += filterList.connectView(viewTag)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(listTopLeft, viewTag)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, tags)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureRecyclerView(listBinding.listTopLeft, viewTag)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, tags)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }

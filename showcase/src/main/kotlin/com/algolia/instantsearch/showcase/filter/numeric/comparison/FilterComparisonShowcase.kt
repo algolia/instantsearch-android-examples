@@ -10,19 +10,16 @@ import com.algolia.instantsearch.helper.filter.numeric.comparison.connectView
 import com.algolia.instantsearch.helper.filter.numeric.comparison.setBoundsFromFacetStatsInt
 import com.algolia.instantsearch.helper.filter.numeric.comparison.setBoundsFromFacetStatsLong
 import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.addFacet
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterComparisonBinding
 import com.algolia.search.model.Attribute
-import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.NumericOperator
-import kotlinx.android.synthetic.main.showcase_filter_comparison.*
-import kotlinx.android.synthetic.main.header_filter.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-
 
 class FilterComparisonShowcase : AppCompatActivity() {
 
@@ -40,23 +37,25 @@ class FilterComparisonShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_comparison)
+        val binding = ShowcaseFilterComparisonBinding.inflate(layoutInflater)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
+        setContentView(binding.root)
 
         searcher.query.addFacet(price)
         searcher.query.addFacet(year)
 
-        val priceView = FilterPriceView(filterComparison, price, comparisonPrice.operator)
-        val yearView = FilterYearView(filterComparison, year, comparisonYear.operator)
+        val priceView = FilterPriceView(ShowcaseFilterComparisonBinding.bind(binding.filterComparison), price, comparisonPrice.operator)
+        val yearView = FilterYearView(ShowcaseFilterComparisonBinding.bind(binding.filterComparison), year, comparisonYear.operator)
 
         connection += comparisonPrice.connectView(priceView)
         connection += comparisonYear.connectView(yearView) { year -> year?.toString() ?: "" }
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, price, year)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, price, year)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.coroutineScope.launch {
             val response = searcher.search()
@@ -65,7 +64,7 @@ class FilterComparisonShowcase : AppCompatActivity() {
                 comparisonPrice.viewModel.setBoundsFromFacetStatsLong(price, it)
                 comparisonYear.viewModel.setBoundsFromFacetStatsInt(year, it)
                 withContext(Dispatchers.Main) {
-                    inputHint.text = getInputHint(comparisonYear.viewModel.bounds.value!!)
+                    binding.inputHint.text = getInputHint(comparisonYear.viewModel.bounds.value!!)
                 }
             }
         }

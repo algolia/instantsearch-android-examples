@@ -14,16 +14,13 @@ import com.algolia.instantsearch.helper.filter.facet.connectView
 import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.SearcherForFacets
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.facets.FacetsSearcher
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFacetListSearchBinding
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.showcase_facet_list_search.*
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.include_search.*
-
 
 class FacetListSearchShowcase : AppCompatActivity() {
 
@@ -46,10 +43,12 @@ class FacetListSearchShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_facet_list_search)
+        val binding = ShowcaseFacetListSearchBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
+        setContentView(binding.root)
 
-        val index = client.initIndex(intent.indexName)
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
         val facetView = FacetListAdapter(FacetListViewHolderImpl.Factory)
         val facetPresenter = FacetListPresenterImpl(
             sortBy = listOf(FacetSortCriterion.IsRefined, FacetSortCriterion.CountDescending),
@@ -62,12 +61,12 @@ class FacetListSearchShowcase : AppCompatActivity() {
         connection += facetList.connectView(facetView, facetPresenter)
         connection += searchBox.connectView(searchBoxView)
 
-        configureToolbar(toolbar)
-        configureRecyclerView(hits, facetView)
-        configureSearchView(searchView, getString(R.string.search_brands))
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, brand)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureToolbar(binding.toolbar)
+        configureRecyclerView(binding.hits, facetView)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_brands))
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, brand)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
         searcherForFacet.searchAsync()

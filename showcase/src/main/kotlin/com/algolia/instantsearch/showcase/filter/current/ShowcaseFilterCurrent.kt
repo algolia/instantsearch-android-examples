@@ -12,11 +12,10 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterCurrentBinding
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.NumericOperator
-import kotlinx.android.synthetic.main.showcase_filter_current.*
-import kotlinx.android.synthetic.main.header_filter.*
-
 
 class ShowcaseFilterCurrent : AppCompatActivity() {
 
@@ -49,20 +48,24 @@ class ShowcaseFilterCurrent : AppCompatActivity() {
         searcher.connectFilterState(filterState)
     )
 
+    private lateinit var binding: ShowcaseFilterCurrentBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_current)
+        binding = ShowcaseFilterCurrentBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
 
-        connection += currentFiltersAll.connectView(FilterCurrentViewImpl(chipGroupAll, R.layout.filter_chip))
-        connection += currentFiltersColor.connectView(FilterCurrentViewImpl(chipGroupColors, R.layout.filter_chip))
+        connection += currentFiltersAll.connectView(FilterCurrentViewImpl(binding.chipGroupAll, R.layout.filter_chip))
+        connection += currentFiltersColor.connectView(FilterCurrentViewImpl(binding.chipGroupColors, R.layout.filter_chip))
 
         configureSearcher(searcher)
-        configureToolbar(toolbar)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, color, price, tags)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onResetThenRestoreFilters(reset, filterState, filters)
+        configureToolbar(binding.toolbar)
+        onResetThenRestoreFilters(binding.reset, filterState, filters)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, color, price, tags)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
 
         searcher.searchAsync()
     }

@@ -15,14 +15,13 @@ import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.customdata.TemplateActivity.Companion.EXTRA_CONTENT
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchInfoBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseQueryRuleCustomDataBinding
 import com.algolia.instantsearch.showcase.list.product.Product
 import com.algolia.instantsearch.showcase.list.product.ProductAdapter
 import com.algolia.search.helper.deserialize
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.android.synthetic.main.include_search.searchView
-import kotlinx.android.synthetic.main.include_search_info.*
-import kotlinx.android.synthetic.main.showcase_query_rule_custom_data.*
 
 class QueryRuleCustomDataShowcase : AppCompatActivity() {
 
@@ -31,12 +30,16 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
     private val queryRuleCustomData = QueryRuleCustomDataConnector<Banner>(searcher)
     private val connection = ConnectionHandler(searchBox, queryRuleCustomData)
 
+    private lateinit var binding: ShowcaseQueryRuleCustomDataBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_query_rule_custom_data)
+        binding = ShowcaseQueryRuleCustomDataBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        val searchBinding = IncludeSearchInfoBinding.bind(binding.searchBox.root)
 
         val adapter = ProductAdapter()
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
 
         connection += searchBox.connectView(searchBoxView)
         connection += searcher.connectHitsView(adapter) { response ->
@@ -58,11 +61,11 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
             }
         }
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(hits, adapter)
-        configureSearchView(searchView, getString(R.string.search_products))
-        configureHelp(info)
+        configureRecyclerView(binding.hits, adapter)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_products))
+        configureHelp(searchBinding.info)
 
         searcher.searchAsync()
     }
@@ -74,21 +77,21 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
     }
 
     private fun showBannerImage(model: Banner) {
-        bannerImage.visibility = View.VISIBLE
+        binding.bannerImage.visibility = View.VISIBLE
         Glide.with(this)
             .load(model.banner)
             .fitCenter()
-            .into(bannerImage)
+            .into(binding.bannerImage)
 
-        bannerImage.setOnClickListener {
+        binding.bannerImage.setOnClickListener {
             redirect(model.link, resources.getString(R.string.redirect_via_banner_tap))
         }
     }
 
     private fun showBannerText(model: Banner) {
-        bannerText.visibility = View.VISIBLE
-        bannerText.text = model.title
-        bannerText.setOnClickListener {
+        binding.bannerText.visibility = View.VISIBLE
+        binding.bannerText.text = model.title
+        binding.bannerText.setOnClickListener {
             redirect(model.link, resources.getString(R.string.redirect_via_banner_tap))
         }
     }
@@ -102,8 +105,8 @@ class QueryRuleCustomDataShowcase : AppCompatActivity() {
     }
 
     private fun noBanner() {
-        bannerImage.reset()
-        bannerText.reset()
+        binding.bannerImage.reset()
+        binding.bannerText.reset()
     }
 
     private fun View.reset() {

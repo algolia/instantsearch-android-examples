@@ -10,13 +10,12 @@ import com.algolia.instantsearch.helper.filter.state.groupAnd
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.IncludeListBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterListBinding
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
 import com.algolia.search.model.filter.NumericOperator
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.include_list.*
-import kotlinx.android.synthetic.main.showcase_filter_list.*
-
 
 class FilterListNumericShowcase : AppCompatActivity() {
 
@@ -36,20 +35,23 @@ class FilterListNumericShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_list)
+        val binding = ShowcaseFilterListBinding.inflate(layoutInflater)
+        val listBinding = IncludeListBinding.bind(binding.list.root)
+        val headerBinding = HeaderFilterBinding.bind(listBinding.headerFilter.root)
+        setContentView(binding.root)
 
         val viewNumeric = FilterListAdapter<Filter.Numeric>()
 
         connection += searcher.connectFilterState(filterState)
         connection += filterList.connectView(viewNumeric)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(listTopLeft, viewNumeric)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, price)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureRecyclerView(listBinding.listTopLeft, viewNumeric)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, price)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }

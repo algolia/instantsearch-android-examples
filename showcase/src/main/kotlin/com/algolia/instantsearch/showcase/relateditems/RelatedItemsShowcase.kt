@@ -6,7 +6,6 @@ import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.relateditems.MatchingPattern
 import com.algolia.instantsearch.helper.relateditems.connectRelatedHitsView
-import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.list.product.Product
