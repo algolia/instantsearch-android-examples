@@ -2,31 +2,32 @@ package com.algolia.instantsearch.showcase.directory
 
 import android.content.Intent
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
+import com.algolia.instantsearch.showcase.databinding.ListItemSmallBinding
 import com.algolia.search.serialize.KeyIndexName
 import com.algolia.search.serialize.KeyName
-import kotlinx.android.synthetic.main.list_item_small.view.*
-
 
 sealed class DirectoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    data class Header(val view: TextView) : DirectoryViewHolder(view) {
+    data class Header(private val binding: HeaderItemBinding) : DirectoryViewHolder(binding.root) {
 
         fun bind(item: DirectoryItem.Header) {
-            view.text = item.name
+            binding.root.text = item.name
         }
     }
 
-    data class Item(val view: View) : DirectoryViewHolder(view) {
+    data class Item(private val binding: ListItemSmallBinding) : DirectoryViewHolder(binding.root) {
 
         fun bind(item: DirectoryItem.Item) {
             val text = item.hit.highlightedName?.toSpannedString() ?: item.hit.name
+            val view = binding.root
 
-            view.itemName.text = text
+            binding.itemName.text = text
             view.setOnClickListener {
-                val intent = Intent(view.context, showcases.getValue(item.hit.objectID).java).apply {
+                val showcase = showcases.getValue(item.hit.objectID).java
+                val intent = Intent(view.context, showcase).apply {
                     putExtra(KeyIndexName, item.hit.index)
                     putExtra(KeyName, item.hit.name)
                 }

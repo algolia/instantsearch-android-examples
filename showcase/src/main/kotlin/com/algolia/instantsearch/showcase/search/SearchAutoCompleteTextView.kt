@@ -13,11 +13,12 @@ import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
-import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.client
+import com.algolia.instantsearch.showcase.configureSearcher
+import com.algolia.instantsearch.showcase.databinding.ShowcaseSearchAutocompleteBinding
 import com.algolia.instantsearch.showcase.list.movie.Movie
+import com.algolia.instantsearch.showcase.stubIndexName
 import com.algolia.search.helper.deserialize
-import kotlinx.android.synthetic.main.showcase_search_autocomplete.*
-
 
 class SearchAutoCompleteTextView : AppCompatActivity() {
 
@@ -28,15 +29,19 @@ class SearchAutoCompleteTextView : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_search_autocomplete)
+        val binding = ShowcaseSearchAutocompleteBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1)
         val hitsAdapter = HitsArrayAdapter(adapter)
-        val searchBoxView = SearchBoxAutoCompleteTextView(autoCompleteTextView)
+        val searchBoxView = SearchBoxAutoCompleteTextView(binding.autoCompleteTextView)
 
-        autoCompleteTextView.setAdapter(adapter)
+        binding.autoCompleteTextView.setAdapter(adapter)
         connection += searchBox.connectView(searchBoxView)
-        connection += searcher.connectHitsArrayAdapter(hitsAdapter, autoCompleteTextView) { response ->
+        connection += searcher.connectHitsArrayAdapter(
+            hitsAdapter,
+            binding.autoCompleteTextView
+        ) { response ->
             response.hits.deserialize(Movie.serializer()).map { it.title }
         }
 

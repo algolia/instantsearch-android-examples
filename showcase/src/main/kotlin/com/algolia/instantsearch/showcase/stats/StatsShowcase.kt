@@ -16,7 +16,6 @@ import com.algolia.instantsearch.helper.stats.connectView
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
 import com.algolia.instantsearch.showcase.databinding.ShowcaseStatsBinding
-import kotlinx.android.synthetic.main.showcase_paging.*
 
 class StatsShowcase : AppCompatActivity() {
 
@@ -28,7 +27,7 @@ class StatsShowcase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ShowcaseStatsBinding.inflate(layoutInflater)
         val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
-        setContentView(R.layout.showcase_stats)
+        setContentView(binding.root)
 
         val statsViewA = StatsTextView(binding.statsA)
         val statsViewB = StatsTextViewSpanned(binding.statsB)
@@ -49,7 +48,7 @@ class StatsShowcase : AppCompatActivity() {
         connection += stats.connectView(statsViewA, StatsPresenterImpl())
         connection += stats.connectView(statsViewB, presenter)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
         configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
         configureSearchBox(searchBinding.searchView, searcher, connection)

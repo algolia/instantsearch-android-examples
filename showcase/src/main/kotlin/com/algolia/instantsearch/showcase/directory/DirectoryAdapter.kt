@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
 import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.helper.android.inflate
+import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
+import com.algolia.instantsearch.showcase.databinding.ListItemSmallBinding
+import com.algolia.instantsearch.showcase.layoutInflater
 
 
 class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUtil), HitsView<DirectoryItem> {
@@ -19,8 +22,12 @@ class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUti
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DirectoryViewHolder {
         return when (ViewType.values()[viewType]) {
-            ViewType.Header -> DirectoryViewHolder.Header(parent.inflate<TextView>(R.layout.header_item))
-            ViewType.Item -> DirectoryViewHolder.Item(parent.inflate(R.layout.list_item_small))
+            ViewType.Header -> DirectoryViewHolder.Header(
+                HeaderItemBinding.inflate(parent.layoutInflater, parent, false)
+            )
+            ViewType.Item -> DirectoryViewHolder.Item(
+                ListItemSmallBinding.inflate(parent.layoutInflater, parent, false)
+            )
         }
     }
 
