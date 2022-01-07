@@ -1,5 +1,6 @@
 package com.algolia.instantsearch.showcase.hierarchical
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -9,6 +10,7 @@ import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalItem
 import com.algolia.instantsearch.helper.hierarchical.HierarchicalView
 import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
 
 class HierarchicalAdapter : ListAdapter<HierarchicalItem, HierarchicalViewHolder>(diffUtil),
     HierarchicalView {
@@ -16,7 +18,9 @@ class HierarchicalAdapter : ListAdapter<HierarchicalItem, HierarchicalViewHolder
     override var onSelectionChanged: Callback<String>? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HierarchicalViewHolder {
-        return HierarchicalViewHolder(parent.inflate(R.layout.list_item_selectable, false))
+        return HierarchicalViewHolder(
+            ListItemSelectableBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: HierarchicalViewHolder, position: Int) {

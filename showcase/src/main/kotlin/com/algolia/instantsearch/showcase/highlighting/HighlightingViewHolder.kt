@@ -3,26 +3,24 @@ package com.algolia.instantsearch.showcase.highlighting
 import android.graphics.Color
 import android.text.TextUtils
 import android.text.style.BackgroundColorSpan
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.buildSpannedString
 import androidx.core.text.italic
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.showcase.databinding.ListItemHighlightingBinding
+import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.list_item_highlighting.view.*
-import java.util.*
 
-
-class HighlightingViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class HighlightingViewHolder(private val binding: ListItemHighlightingBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(movie: Movie) {
-        movie.bindTitleTo(view.itemTitle)
-        movie.bindSubtitleTo(view.itemSubtitle)
-        movie.bindFooterTo(view.itemFooter)
-        movie.bindImageTo(view.itemImage)
+        movie.bindTitleTo(binding.itemTitle)
+        movie.bindSubtitleTo(binding.itemSubtitle)
+        movie.bindFooterTo(binding.itemFooter)
+        movie.bindImageTo(binding.itemImage)
     }
 
     private fun Movie.bindTitleTo(view: TextView) {

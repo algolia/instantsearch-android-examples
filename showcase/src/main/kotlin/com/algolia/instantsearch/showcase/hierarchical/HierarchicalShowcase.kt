@@ -10,9 +10,9 @@ import com.algolia.instantsearch.helper.hierarchical.connectView
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseHierarchicalBinding
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.showcase_hierarchical.*
 
 class HierarchicalShowcase : AppCompatActivity() {
 
@@ -42,18 +42,20 @@ class HierarchicalShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_hierarchical)
+        val binding = ShowcaseHierarchicalBinding.inflate(layoutInflater)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
+        setContentView(binding.root)
 
         val view = HierarchicalAdapter()
         connection += hierarchical.connectView(view, HierarchicalPresenterImpl(separator))
 
-        configureRecyclerView(hits, view)
-        configureToolbar(toolbar)
+        configureRecyclerView(binding.hits, view)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, hierarchicalCategory)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, hierarchicalCategory)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
 
         searcher.searchAsync()
     }

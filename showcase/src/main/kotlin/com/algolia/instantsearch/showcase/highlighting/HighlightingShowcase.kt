@@ -6,11 +6,10 @@ import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseHighlightingBinding
 import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.search.helper.deserialize
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_search.*
-
 
 class HighlightingShowcase : AppCompatActivity() {
 
@@ -19,7 +18,9 @@ class HighlightingShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_highlighting)
+        val binding = ShowcaseHighlightingBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        setContentView(binding.root)
 
         val adapter = HighlightingAdapter()
 
@@ -27,11 +28,11 @@ class HighlightingShowcase : AppCompatActivity() {
             response.hits.deserialize(Movie.serializer())
         }
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(hits, adapter)
-        configureSearchView(searchView, getString(R.string.search_movies))
-        configureSearchBox(searchView, searcher, connection)
+        configureRecyclerView(binding.hits, adapter)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
+        configureSearchBox(searchBinding.searchView, searcher, connection)
 
         searcher.searchAsync()
     }
