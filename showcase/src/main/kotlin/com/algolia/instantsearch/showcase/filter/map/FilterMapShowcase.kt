@@ -33,7 +33,7 @@ class FilterMapShowcase : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val binding = ShowcaseFilterMapBinding.inflate(layoutInflater)
         val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
-        setContentView(R.layout.showcase_filter_map)
+        setContentView(binding.root)
 
         val viewGender = FilterMapViewRadioGroup(binding.radioGroupGender)
 

@@ -10,12 +10,11 @@ import com.algolia.instantsearch.helper.filter.toggle.connectView
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterToggleBinding
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.filter.Filter
 import com.algolia.search.model.filter.NumericOperator
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.showcase_filter_toggle.*
-
 
 class FilterToggleShowcase : AppCompatActivity() {
 
@@ -39,22 +38,24 @@ class FilterToggleShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_toggle)
+        val binding = ShowcaseFilterToggleBinding.inflate(layoutInflater)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
+        setContentView(binding.root)
 
-        val viewCoupon = FilterToggleViewCompoundButton(switchCoupon)
-        val viewSize = FilterToggleViewCompoundButton(checkBoxSize)
-        val viewVintage = FilterToggleViewCompoundButton(checkBoxVintage)
+        val viewCoupon = FilterToggleViewCompoundButton(binding.switchCoupon)
+        val viewSize = FilterToggleViewCompoundButton(binding.checkBoxSize)
+        val viewVintage = FilterToggleViewCompoundButton(binding.checkBoxVintage)
 
         connection += toggleCoupon.connectView(viewCoupon)
         connection += toggleSize.connectView(viewSize)
         connection += toggleVintage.connectView(viewVintage)
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, promotions, size, tags)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, promotions, size, tags)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }
@@ -65,5 +66,3 @@ class FilterToggleShowcase : AppCompatActivity() {
         connection.clear()
     }
 }
-
-

@@ -12,12 +12,12 @@ import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.IncludePlusMinusBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterRatingBinding
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.filter.Filter
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.include_plus_minus.*
-import kotlinx.android.synthetic.main.showcase_filter_rating.*
 
 class RatingShowcase : AppCompatActivity() {
 
@@ -45,21 +45,24 @@ class RatingShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_rating)
+        val binding = ShowcaseFilterRatingBinding.inflate(layoutInflater)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
+        val buttonsBinding = IncludePlusMinusBinding.bind(binding.buttons.root)
+        setContentView(binding.root)
 
-        val ratingBarView = RatingBarView(ratingBar).apply {
+        val ratingBarView = RatingBarView(binding.ratingBar).apply {
             stepSize = STEP
-            plus.setOnClickListener { rating += stepSize }
-            minus.setOnClickListener { rating -= stepSize }
+            buttonsBinding.plus.setOnClickListener { rating += stepSize }
+            buttonsBinding.minus.setOnClickListener { rating -= stepSize }
         }
         connection += range.connectView(ratingBarView)
-        connection += range.connectView(RatingTextView(ratingLabel))
+        connection += range.connectView(RatingTextView(binding.ratingLabel))
 
-        configureToolbar(toolbar)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, rating)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureToolbar(binding.toolbar)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, rating)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }

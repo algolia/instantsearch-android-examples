@@ -13,10 +13,9 @@ import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.HeaderFilterBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseFilterRangeBinding
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.header_filter.*
-import kotlinx.android.synthetic.main.showcase_filter_range.*
-
 
 class FilterRangeShowcase : AppCompatActivity() {
 
@@ -41,32 +40,34 @@ class FilterRangeShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_filter_range)
+        val binding = ShowcaseFilterRangeBinding.inflate(layoutInflater)
+        val headerBinding = HeaderFilterBinding.bind(binding.headerFilter.root)
+        setContentView(binding.root)
 
-        connection += range.connectView(RangeSliderView(slider))
-        connection += range.connectView(RangeTextView(rangeLabel))
-        connection += range.connectView(BoundsTextView(boundsLabel))
+        connection += range.connectView(RangeSliderView(binding.slider))
+        connection += range.connectView(RangeTextView(binding.rangeLabel))
+        connection += range.connectView(BoundsTextView(binding.boundsLabel))
 
-        buttonChangeBounds.setOnClickListener {
+        binding.buttonChangeBounds.setOnClickListener {
             range.viewModel.bounds.value = Range(secondaryBounds)
             it.isEnabled = false
-            buttonResetBounds.isEnabled = true
+            binding.buttonResetBounds.isEnabled = true
         }
-        buttonResetBounds.setOnClickListener {
+        binding.buttonResetBounds.setOnClickListener {
             range.viewModel.bounds.value = Range(primaryBounds)
             it.isEnabled = false
-            buttonChangeBounds.isEnabled = true
+            binding.buttonChangeBounds.isEnabled = true
         }
 
-        reset.setOnClickListener {
+        binding.reset.setOnClickListener {
             filterState.notify { set(filters) }
         }
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, price)
-        onClearAllThenClearFilters(filterState, filtersClearAll, connection)
-        onErrorThenUpdateFiltersText(searcher, filtersTextView)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        onFilterChangedThenUpdateFiltersText(filterState, headerBinding.filtersTextView, price)
+        onClearAllThenClearFilters(filterState, headerBinding.filtersClearAll, connection)
+        onErrorThenUpdateFiltersText(searcher, headerBinding.filtersTextView)
+        onResponseChangedThenUpdateNbHits(searcher, headerBinding.nbHits, connection)
 
         searcher.searchAsync()
     }
@@ -77,4 +78,3 @@ class FilterRangeShowcase : AppCompatActivity() {
         connection.clear()
     }
 }
-
