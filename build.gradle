@@ -3,7 +3,7 @@ buildscript {
     ext.lifecycle_version = "2.2.0"
     ext.build_tools_version = "32.0.0"
     ext.instantsearch = '2.11.5-SNAPSHOT'
-    ext.canary = '2.8'
+    ext.canary = '2.8.1'
     ext.compose_version = '1.0.5'
     repositories {
         mavenCentral()
