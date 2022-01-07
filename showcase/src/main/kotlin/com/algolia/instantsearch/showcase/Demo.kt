@@ -13,7 +13,9 @@ import android.text.SpannedString
 import android.text.style.ForegroundColorSpan
 import android.text.style.ImageSpan
 import android.text.style.StyleSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -226,6 +228,8 @@ fun SearchView.showQueryHintIcon(
 }
 
 fun Context.dip(value: Int): Int = (value * resources.displayMetrics.density).toInt()
+
+val ViewGroup.layoutInflater: LayoutInflater get() = LayoutInflater.from(context)
 
 public fun Set<FilterGroup<*>>.highlight(
     converter: FilterGroupsConverter<Set<FilterGroup<*>>, String?> = FilterGroupsConverter.SQL.Unquoted,

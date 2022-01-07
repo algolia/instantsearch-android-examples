@@ -4,15 +4,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
-import com.algolia.instantsearch.helper.android.inflate
-import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.showcase.databinding.ListItemSmallBinding
+import com.algolia.instantsearch.showcase.layoutInflater
 import com.algolia.instantsearch.showcase.list.actor.Actor
 import com.algolia.instantsearch.showcase.list.actor.ActorViewHolderSmall
 
 class ActorsAdapter : ListAdapter<Actor, ActorViewHolderSmall>(ActorsAdapter), HitsView<Actor> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorViewHolderSmall {
-        return ActorViewHolderSmall(parent.inflate(R.layout.list_item_small))
+        return ActorViewHolderSmall(
+            ListItemSmallBinding.inflate(parent.layoutInflater, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ActorViewHolderSmall, position: Int) {

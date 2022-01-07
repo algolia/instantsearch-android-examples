@@ -11,11 +11,10 @@ import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.android.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcasePagingBinding
 import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.showcase.list.movie.MovieAdapterPaged
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_paging.*
-
 
 class PagingSingleIndexShowcase : AppCompatActivity() {
 
@@ -30,20 +29,22 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_paging)
+        val binding = ShowcasePagingBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        setContentView(binding.root)
 
         val adapter = MovieAdapterPaged()
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
 
         connection += searchBox.connectView(searchBoxView)
 
         movies.observe(this) { hits -> adapter.submitList(hits) }
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureSearchView(searchView, getString(R.string.search_movies))
-        configureRecyclerView(hits, adapter)
-        onResponseChangedThenUpdateNbHits(searcher, nbHits, connection)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
+        configureRecyclerView(binding.hits, adapter)
+        onResponseChangedThenUpdateNbHits(searcher, binding.nbHits, connection)
     }
 
     override fun onDestroy() {

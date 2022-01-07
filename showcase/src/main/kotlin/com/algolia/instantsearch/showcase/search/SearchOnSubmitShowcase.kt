@@ -4,18 +4,17 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.showcase.*
-import com.algolia.instantsearch.showcase.list.movie.Movie
-import com.algolia.instantsearch.showcase.list.movie.MovieAdapter
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searchbox.SearchMode
 import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseSearchBinding
+import com.algolia.instantsearch.showcase.list.movie.Movie
+import com.algolia.instantsearch.showcase.list.movie.MovieAdapter
 import com.algolia.search.helper.deserialize
-import kotlinx.android.synthetic.main.showcase_search.*
-import kotlinx.android.synthetic.main.include_search.*
-
 
 class SearchOnSubmitShowcase : AppCompatActivity() {
 
@@ -25,20 +24,22 @@ class SearchOnSubmitShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_search)
+        val binding = ShowcaseSearchBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        setContentView(binding.root)
 
         val adapter = MovieAdapter()
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
 
         connection += searchBox.connectView(searchBoxView)
         connection += searcher.connectHitsView(adapter) { response ->
             response.hits.deserialize(Movie.serializer())
         }
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
-        configureRecyclerView(hits, adapter)
-        configureSearchView(searchView, getString(R.string.search_movies))
+        configureRecyclerView(binding.hits, adapter)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
 
         searcher.searchAsync()
     }

@@ -3,14 +3,15 @@ package com.algolia.instantsearch.showcase.list.movie
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
-import com.algolia.instantsearch.showcase.R
-import com.algolia.instantsearch.helper.android.inflate
-
+import com.algolia.instantsearch.showcase.databinding.ListItemLargeBinding
+import com.algolia.instantsearch.showcase.layoutInflater
 
 class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(MovieDiffUtil), HitsView<Movie> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(parent.inflate(R.layout.list_item_large))
+        return MovieViewHolder(
+            ListItemLargeBinding.inflate(parent.layoutInflater, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {

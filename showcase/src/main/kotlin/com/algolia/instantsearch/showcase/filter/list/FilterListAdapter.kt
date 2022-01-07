@@ -1,7 +1,5 @@
 package com.algolia.instantsearch.showcase.filter.list
 
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,9 +8,10 @@ import com.algolia.instantsearch.core.selectable.list.SelectableItem
 import com.algolia.instantsearch.helper.filter.FilterPresenterImpl
 import com.algolia.instantsearch.helper.filter.list.FilterListView
 import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
+import com.algolia.instantsearch.showcase.layoutInflater
 import com.algolia.search.model.filter.Filter
 
-class FilterListAdapter<T: Filter> :
+class FilterListAdapter<T : Filter> :
     ListAdapter<SelectableItem<T>, FilterListViewHolder>(DiffUtilItem()),
     FilterListView<T> {
 
@@ -20,7 +19,7 @@ class FilterListAdapter<T: Filter> :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FilterListViewHolder {
         return FilterListViewHolder(
-            ListItemSelectableBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ListItemSelectableBinding.inflate(parent.layoutInflater, parent, false)
         )
     }
 
@@ -34,13 +33,19 @@ class FilterListAdapter<T: Filter> :
         submitList(items)
     }
 
-    private class DiffUtilItem<T: Filter>: DiffUtil.ItemCallback<SelectableItem<T>>() {
+    private class DiffUtilItem<T : Filter> : DiffUtil.ItemCallback<SelectableItem<T>>() {
 
-        override fun areItemsTheSame(oldItem: SelectableItem<T>, newItem: SelectableItem<T>): Boolean {
+        override fun areItemsTheSame(
+            oldItem: SelectableItem<T>,
+            newItem: SelectableItem<T>
+        ): Boolean {
             return oldItem::class == newItem::class
         }
 
-        override fun areContentsTheSame(oldItem: SelectableItem<T>, newItem: SelectableItem<T>): Boolean {
+        override fun areContentsTheSame(
+            oldItem: SelectableItem<T>,
+            newItem: SelectableItem<T>
+        ): Boolean {
             return oldItem == newItem
         }
     }

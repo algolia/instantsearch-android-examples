@@ -2,21 +2,31 @@ package com.algolia.instantsearch.showcase.list.paging
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
 import com.algolia.instantsearch.showcase.dip
-import com.algolia.instantsearch.helper.android.inflate
+import com.algolia.instantsearch.showcase.layoutInflater
 
+class PagingMultipleIndexAdapter :
+    ListAdapter<PagingMultipleIndexItem, PagingMultipleIndexViewHolder>(this) {
 
-class PagingMultipleIndexAdapter : ListAdapter<PagingMultipleIndexItem, PagingMultipleIndexViewHolder>(this) {
-
-    private enum class ViewType {
-        Header,
-        Movies,
-        Actors
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): PagingMultipleIndexViewHolder {
+        return when (ViewType.values()[viewType]) {
+            ViewType.Header -> PagingMultipleIndexViewHolder.Header(
+                HeaderItemBinding.inflate(parent.layoutInflater, parent, false)
+            )
+            ViewType.Movies -> PagingMultipleIndexViewHolder.Movies(
+                recyclerView(parent)
+            )
+            ViewType.Actors -> PagingMultipleIndexViewHolder.Actors(
+                recyclerView(parent)
+            )
+        }
     }
 
     private fun recyclerView(parent: ViewGroup): RecyclerView {
@@ -28,20 +38,6 @@ class PagingMultipleIndexAdapter : ListAdapter<PagingMultipleIndexItem, PagingMu
             it.setPadding(parent.context.dip(8), 0, parent.context.dip(8), 0)
             it.itemAnimator = null
             it.clipToPadding = false
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagingMultipleIndexViewHolder {
-        return when (ViewType.values()[viewType]) {
-            ViewType.Header -> PagingMultipleIndexViewHolder.Header(
-                parent.inflate<TextView>(R.layout.header_item)
-            )
-            ViewType.Movies -> PagingMultipleIndexViewHolder.Movies(
-                recyclerView(parent)
-            )
-            ViewType.Actors -> PagingMultipleIndexViewHolder.Actors(
-                recyclerView(parent)
-            )
         }
     }
 
@@ -63,14 +59,24 @@ class PagingMultipleIndexAdapter : ListAdapter<PagingMultipleIndexItem, PagingMu
         }.ordinal
     }
 
+    private enum class ViewType {
+        Header, Movies, Actors
+    }
+
     private companion object : DiffUtil.ItemCallback<PagingMultipleIndexItem>() {
 
-        override fun areItemsTheSame(oldItem: PagingMultipleIndexItem, newItem: PagingMultipleIndexItem): Boolean {
+        override fun areItemsTheSame(
+            oldItem: PagingMultipleIndexItem,
+            newItem: PagingMultipleIndexItem
+        ): Boolean {
             return oldItem == newItem
         }
 
         @SuppressLint("DiffUtilEquals") // all subclasses are data classes
-        override fun areContentsTheSame(oldItem: PagingMultipleIndexItem, newItem: PagingMultipleIndexItem): Boolean {
+        override fun areContentsTheSame(
+            oldItem: PagingMultipleIndexItem,
+            newItem: PagingMultipleIndexItem
+        ): Boolean {
             return oldItem == newItem
         }
     }

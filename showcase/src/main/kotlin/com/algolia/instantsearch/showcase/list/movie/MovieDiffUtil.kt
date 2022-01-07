@@ -2,7 +2,6 @@ package com.algolia.instantsearch.showcase.list.movie
 
 import androidx.recyclerview.widget.DiffUtil
 
-
 object MovieDiffUtil : DiffUtil.ItemCallback<Movie>() {
 
     override fun areItemsTheSame(

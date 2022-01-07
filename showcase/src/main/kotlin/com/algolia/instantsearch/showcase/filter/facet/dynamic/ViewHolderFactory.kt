@@ -1,6 +1,5 @@
 package com.algolia.instantsearch.showcase.filter.facet.dynamic
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,6 +11,7 @@ import com.algolia.instantsearch.helper.android.filter.facet.dynamic.DynamicFace
 import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
+import com.algolia.instantsearch.showcase.layoutInflater
 
 class ViewHolderFactory : DynamicFacetListViewHolder.Factory {
 
@@ -22,7 +22,7 @@ class ViewHolderFactory : DynamicFacetListViewHolder.Factory {
         return when (viewType) {
             ViewType.Header -> HeaderViewHolder(parent.inflate<TextView>(R.layout.header_item))
             ViewType.Item -> ItemViewHolder(
-                ListItemSelectableBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                ListItemSelectableBinding.inflate(parent.layoutInflater, parent, false)
             )
         }
     }
@@ -34,7 +34,8 @@ class ViewHolderFactory : DynamicFacetListViewHolder.Factory {
         }
     }
 
-    class ItemViewHolder(private val binding: ListItemSelectableBinding) : DynamicFacetListItemViewHolder(binding.root) {
+    class ItemViewHolder(private val binding: ListItemSelectableBinding) :
+        DynamicFacetListItemViewHolder(binding.root) {
         override fun bind(item: DynamicFacetModel.Item, onClick: View.OnClickListener?) {
             binding.selectableItemName.text = item.facet.value
             binding.selectableItemSubtitle.text = "${item.facet.count}"

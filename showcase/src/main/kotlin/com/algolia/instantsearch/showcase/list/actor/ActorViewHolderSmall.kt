@@ -1,13 +1,12 @@
 package com.algolia.instantsearch.showcase.list.actor
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.list_item_small.view.*
+import com.algolia.instantsearch.showcase.databinding.ListItemSmallBinding
 
-
-class ActorViewHolderSmall(val view: View) : RecyclerView.ViewHolder(view) {
+class ActorViewHolderSmall(val binding: ListItemSmallBinding) :
+    RecyclerView.ViewHolder(binding.root) {
 
     fun bind(actor: Actor) {
-        view.itemName.text = actor.name
+        binding.itemName.text = actor.name
     }
 }

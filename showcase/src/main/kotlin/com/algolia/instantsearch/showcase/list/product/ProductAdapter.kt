@@ -1,25 +1,23 @@
 package com.algolia.instantsearch.showcase.list.product
 
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.core.hits.HitsView
-import com.algolia.instantsearch.helper.android.inflate
-import com.algolia.instantsearch.showcase.R
+import com.algolia.instantsearch.showcase.databinding.ListItemProductBinding
+import com.algolia.instantsearch.showcase.layoutInflater
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.list_item_product.view.itemBrand
-import kotlinx.android.synthetic.main.list_item_product.view.itemImage
-import kotlinx.android.synthetic.main.list_item_product.view.itemName
-import kotlinx.android.synthetic.main.list_item_product.view.itemType
 
-class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffUtil), HitsView<Product> {
+class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(ProductDiffUtil),
+    HitsView<Product> {
 
     var callback: ((Product) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(parent.inflate(R.layout.list_item_product))
+        return ProductViewHolder(
+            ListItemProductBinding.inflate(parent.layoutInflater, parent, false)
+        )
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
@@ -34,16 +32,17 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
         submitList(hits)
     }
 
-    class ProductViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    class ProductViewHolder(private val binding: ListItemProductBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(product: Product) {
-            view.itemName.text = product.name
-            view.itemBrand.text = product.brand
-            view.itemType.text = product.type
-            Glide.with(view)
+            binding.itemName.text = product.name
+            binding.itemBrand.text = product.brand
+            binding.itemType.text = product.type
+            Glide.with(binding.root)
                 .load(product.image).placeholder(android.R.drawable.ic_media_play)
                 .centerCrop()
-                .into(view.itemImage)
+                .into(binding.itemImage)
         }
     }
 

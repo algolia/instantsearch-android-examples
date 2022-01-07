@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.helper.android.stats.StatsTextView
 import com.algolia.instantsearch.helper.android.stats.StatsTextViewSpanned
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
@@ -14,10 +13,10 @@ import com.algolia.instantsearch.helper.stats.StatsConnector
 import com.algolia.instantsearch.helper.stats.StatsPresenter
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
-import kotlinx.android.synthetic.main.showcase_paging.toolbar
-import kotlinx.android.synthetic.main.showcase_stats.*
-import kotlinx.android.synthetic.main.include_search.*
-
+import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseStatsBinding
+import kotlinx.android.synthetic.main.showcase_paging.*
 
 class StatsShowcase : AppCompatActivity() {
 
@@ -27,10 +26,12 @@ class StatsShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val binding = ShowcaseStatsBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
         setContentView(R.layout.showcase_stats)
 
-        val statsViewA = StatsTextView(statsA)
-        val statsViewB = StatsTextViewSpanned(statsB)
+        val statsViewA = StatsTextView(binding.statsA)
+        val statsViewB = StatsTextViewSpanned(binding.statsB)
         val presenter: StatsPresenter<SpannedString> = { response ->
             buildSpannedString {
                 if (response != null) {
@@ -50,8 +51,8 @@ class StatsShowcase : AppCompatActivity() {
 
         configureToolbar(toolbar)
         configureSearcher(searcher)
-        configureSearchView(searchView, getString(R.string.search_movies))
-        configureSearchBox(searchView, searcher, connection)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
+        configureSearchBox(searchBinding.searchView, searcher, connection)
 
         searcher.searchAsync()
     }

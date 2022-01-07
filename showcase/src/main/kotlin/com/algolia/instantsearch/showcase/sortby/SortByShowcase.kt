@@ -13,12 +13,11 @@ import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.client
 import com.algolia.instantsearch.showcase.configureRecyclerView
 import com.algolia.instantsearch.showcase.configureToolbar
+import com.algolia.instantsearch.showcase.databinding.ShowcaseSortByBinding
 import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.showcase.list.movie.MovieAdapter
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.IndexName
-import kotlinx.android.synthetic.main.showcase_sort_by.*
-
 
 class SortByShowcase : AppCompatActivity() {
 
@@ -36,10 +35,11 @@ class SortByShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_sort_by)
+        val binding = ShowcaseSortByBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val adapter = ArrayAdapter<String>(this, R.layout.menu_item)
-        val view = SortByViewAutocomplete(autoCompleteTextView, adapter)
+        val view = SortByViewAutocomplete(binding.autoCompleteTextView, adapter)
         val adapterMovie = MovieAdapter()
 
         connection += sortBy.connectView(view) { indexName ->
@@ -54,8 +54,8 @@ class SortByShowcase : AppCompatActivity() {
             response.hits.deserialize(Movie.serializer())
         }
 
-        configureToolbar(toolbar)
-        configureRecyclerView(hits, adapterMovie)
+        configureToolbar(binding.toolbar)
+        configureRecyclerView(binding.hits, adapterMovie)
 
         searcher.searchAsync()
     }

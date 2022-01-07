@@ -1,26 +1,26 @@
 package com.algolia.instantsearch.showcase.list.paging
 
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
+import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
 
 
 sealed class PagingMultipleIndexViewHolder(
     view: View
 ) : RecyclerView.ViewHolder(view) {
 
-    data class Header(
-        val view: TextView
-    ) : PagingMultipleIndexViewHolder(view) {
+    class Header(
+        val binding: HeaderItemBinding
+    ) : PagingMultipleIndexViewHolder(binding.root) {
 
         fun bind(item: PagingMultipleIndexItem.Header) {
-            view.text = item.name
+            binding.root.text = item.name
         }
     }
 
-    data class Movies(
+    class Movies(
         val view: RecyclerView
     ) : PagingMultipleIndexViewHolder(view) {
 
@@ -33,7 +33,7 @@ sealed class PagingMultipleIndexViewHolder(
         }
     }
 
-    data class Actors(
+    class Actors(
         val view: RecyclerView
     ) : PagingMultipleIndexViewHolder(view) {
 

@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/include_search" />
+        <include android:id="@+id/searchBox" layout="@layout/include_search" />
 
     </androidx.appcompat.widget.Toolbar>
 

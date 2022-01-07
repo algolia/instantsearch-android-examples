@@ -8,11 +8,11 @@ import com.algolia.instantsearch.helper.relateditems.MatchingPattern
 import com.algolia.instantsearch.helper.relateditems.connectRelatedHitsView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.ShowcaseRelateditemsBinding
 import com.algolia.instantsearch.showcase.list.product.Product
 import com.algolia.instantsearch.showcase.list.product.ProductAdapter
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.Attribute
-import kotlinx.android.synthetic.main.showcase_relateditems.*
 
 class RelatedItemsShowcase : AppCompatActivity() {
 
@@ -22,21 +22,22 @@ class RelatedItemsShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_relateditems)
+        val binding = ShowcaseRelateditemsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         searcher.query.hitsPerPage = 3 // Limit to 3 results
 
-        configureToolbar(toolbar)
+        configureToolbar(binding.toolbar)
         configureSearcher(searcher)
         configureSearcher(relatedItemsSearcher)
 
         val hitsAdapter = ProductAdapter()
-        configureRecyclerView(hits, hitsAdapter)
+        configureRecyclerView(binding.hits, hitsAdapter)
         connection += searcher.connectHitsView(hitsAdapter) { response ->
             response.hits.deserialize(Product.serializer())
         }
 
         val relatedItemsAdapter = ProductAdapter()
-        configureRecyclerView(relatedItems, relatedItemsAdapter)
+        configureRecyclerView(binding.relatedItems, relatedItemsAdapter)
         val matchingPatterns: List<MatchingPattern<Product>> = listOf(
             MatchingPattern(Attribute("brand"), 1, Product::brand),
             MatchingPattern(Attribute("categories"), 2, Product::categories)

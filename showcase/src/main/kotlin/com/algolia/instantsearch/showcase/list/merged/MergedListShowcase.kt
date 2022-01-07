@@ -10,16 +10,14 @@ import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.addHitsSearcher
 import com.algolia.instantsearch.helper.searcher.multi.MultiSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseMultisearchBinding
 import com.algolia.instantsearch.showcase.list.actor.Actor
 import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.showcase.list.movie.MovieAdapter
 import com.algolia.search.helper.deserialize
 import com.algolia.search.model.IndexName
 import com.algolia.search.model.search.Query
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_multisearch.*
-import kotlinx.android.synthetic.main.showcase_search.toolbar
-
 
 class MergedListShowcase : AppCompatActivity() {
 
@@ -37,11 +35,13 @@ class MergedListShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_multisearch)
+        val binding = ShowcaseMultisearchBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        setContentView(binding.root)
 
         val actorsAdapter = ActorsAdapter()
         val moviesAdapter = MovieAdapter()
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
 
         connection += searchBox.connectView(searchBoxView)
         connection += actorsSearcher.connectHitsView(actorsAdapter) { response ->
@@ -51,12 +51,12 @@ class MergedListShowcase : AppCompatActivity() {
             response.hits.deserialize(Movie.serializer())
         }
 
-        configureToolbar(toolbar)
-        configureSearchView(searchView, getString(R.string.search_movies))
-        configureTitle(title1, getString(R.string.actors))
-        configureTitle(title2, getString(R.string.movies))
-        configureRecyclerView(hits1, actorsAdapter)
-        configureRecyclerView(hits2, moviesAdapter)
+        configureToolbar(binding.toolbar)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
+        configureTitle(binding.title1, getString(R.string.actors))
+        configureTitle(binding.title2, getString(R.string.movies))
+        configureRecyclerView(binding.hits1, actorsAdapter)
+        configureRecyclerView(binding.hits2, moviesAdapter)
 
         multiSearcher.searchAsync()
     }

@@ -14,15 +14,14 @@ import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.searcher.hits.addHitsSearcher
 import com.algolia.instantsearch.helper.searcher.multi.MultiSearcher
 import com.algolia.instantsearch.showcase.*
+import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
+import com.algolia.instantsearch.showcase.databinding.ShowcaseSearchBinding
 import com.algolia.instantsearch.showcase.list.actor.Actor
 import com.algolia.instantsearch.showcase.list.actor.ActorAdapterNested
 import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.showcase.list.movie.MovieAdapterNested
 import com.algolia.search.model.IndexName
-import kotlinx.android.synthetic.main.include_search.*
-import kotlinx.android.synthetic.main.showcase_search.*
 import kotlinx.serialization.DeserializationStrategy
-
 
 class PagingMultipleIndexShowcase : AppCompatActivity() {
 
@@ -39,7 +38,9 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.showcase_search)
+        val binding = ShowcaseSearchBinding.inflate(layoutInflater)
+        val searchBinding = IncludeSearchBinding.bind(binding.searchBox.root)
+        setContentView(binding.root)
 
         val adapterActor = ActorAdapterNested()
         val adapterMovie = MovieAdapterNested()
@@ -57,13 +58,12 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
             )
         )
 
-        val searchBoxView = SearchBoxViewAppCompat(searchView)
-
+        val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
         connection += searchBox.connectView(searchBoxView)
 
-        configureToolbar(toolbar)
-        configureSearchView(searchView, getString(R.string.search_movies))
-        configureRecyclerView(hits, adapter)
+        configureToolbar(binding.toolbar)
+        configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
+        configureRecyclerView(binding.hits, adapter)
     }
 
     private fun <T> pagedLiveDataOf(
