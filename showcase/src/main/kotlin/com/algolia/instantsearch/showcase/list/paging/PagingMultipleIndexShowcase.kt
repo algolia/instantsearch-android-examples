@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.android.list.SearcherSingleIndexDataSource
+import com.algolia.instantsearch.helper.android.list.HitsSearcherDataSource
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.android.searchbox.connectView
@@ -29,7 +29,8 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
     private val moviesSearcher = multiSearcher.addHitsSearcher(IndexName("mobile_demo_movies"))
     private val actorsSearcher = multiSearcher.addHitsSearcher(IndexName("mobile_demo_actors"))
 
-    private val pagedListConfig: PagedList.Config = PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
+    private val pagedListConfig: PagedList.Config =
+        PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
     private val movies = pagedLiveDataOf(moviesSearcher, pagedListConfig, Movie.serializer())
     private val actors = pagedLiveDataOf(actorsSearcher, pagedListConfig, Actor.serializer())
 
@@ -71,7 +72,7 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
         config: PagedList.Config,
         serializer: DeserializationStrategy<T>,
     ): LiveData<PagedList<T>> {
-        val factory = SearcherSingleIndexDataSource.Factory(searcher) { it.deserialize(serializer) }
+        val factory = HitsSearcherDataSource.Factory(searcher) { it.deserialize(serializer) }
         return LivePagedListBuilder(factory, config).build()
     }
 

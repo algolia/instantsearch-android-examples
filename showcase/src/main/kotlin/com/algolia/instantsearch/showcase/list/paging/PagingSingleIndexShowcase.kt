@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.android.list.SearcherSingleIndexDataSource
+import com.algolia.instantsearch.helper.android.list.HitsSearcherDataSource
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.helper.android.searchbox.connectView
@@ -19,8 +19,9 @@ import com.algolia.instantsearch.showcase.list.movie.MovieAdapterPaged
 class PagingSingleIndexShowcase : AppCompatActivity() {
 
     private val searcher = HitsSearcher(client, stubIndexName)
-    private val dataSourceFactory =
-        SearcherSingleIndexDataSource.Factory(searcher) { it.deserialize(Movie.serializer()) }
+    private val dataSourceFactory = HitsSearcherDataSource.Factory(searcher) {
+        it.deserialize(Movie.serializer())
+    }
     private val pagedListConfig =
         PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
     private val movies = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()

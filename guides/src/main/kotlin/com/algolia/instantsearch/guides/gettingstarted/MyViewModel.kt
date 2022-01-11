@@ -7,7 +7,7 @@ import androidx.paging.PagedList
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
 import com.algolia.instantsearch.helper.android.filter.state.connectPagedList
-import com.algolia.instantsearch.helper.android.list.SearcherSingleIndexDataSource
+import com.algolia.instantsearch.helper.android.list.HitsSearcherDataSource
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
 import com.algolia.instantsearch.helper.filter.facet.FacetListPresenterImpl
@@ -34,7 +34,7 @@ class MyViewModel : ViewModel() {
     )
     val searcher = HitsSearcher(client = client, indexName = IndexName("bestbuy_promo"))
 
-    val dataSourceFactory = SearcherSingleIndexDataSource.Factory(searcher) { hit ->
+    val dataSourceFactory = HitsSearcherDataSource.Factory(searcher) { hit ->
         Product(
             hit.json.getValue("name").jsonPrimitive.content,
             hit.json["_highlightResult"]?.jsonObject
