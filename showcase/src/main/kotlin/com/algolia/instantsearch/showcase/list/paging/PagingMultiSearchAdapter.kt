@@ -1,6 +1,5 @@
 package com.algolia.instantsearch.showcase.list.paging
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,7 +8,7 @@ import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
 import com.algolia.instantsearch.showcase.dip
 import com.algolia.instantsearch.showcase.layoutInflater
 
-class PagingMultipleIndexAdapter :
+class PagingMultiSearchAdapter :
     ListAdapter<PagingMultipleIndexItem, PagingMultipleIndexViewHolder>(this) {
 
     override fun onCreateViewHolder(
@@ -72,7 +71,6 @@ class PagingMultipleIndexAdapter :
             return oldItem == newItem
         }
 
-        @SuppressLint("DiffUtilEquals") // all subclasses are data classes
         override fun areContentsTheSame(
             oldItem: PagingMultipleIndexItem,
             newItem: PagingMultipleIndexItem

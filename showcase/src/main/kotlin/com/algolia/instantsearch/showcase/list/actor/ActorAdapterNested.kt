@@ -1,12 +1,12 @@
 package com.algolia.instantsearch.showcase.list.actor
 
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.algolia.instantsearch.showcase.databinding.ListItemActorBinding
 import com.algolia.instantsearch.showcase.layoutInflater
 
-class ActorAdapterNested : PagedListAdapter<Actor, ActorViewHolder>(this) {
+class ActorAdapterNested : PagingDataAdapter<Actor, ActorViewHolder>(this) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActorViewHolder {
         return ActorViewHolder(

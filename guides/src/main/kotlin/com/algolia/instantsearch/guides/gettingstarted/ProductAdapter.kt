@@ -2,11 +2,11 @@ package com.algolia.instantsearch.guides.gettingstarted
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.algolia.instantsearch.guides.databinding.ListItemSmallBinding
 
-class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(
+class ProductAdapter : PagingDataAdapter<Product, ProductViewHolder>(
     ProductAdapter
 ) {
 

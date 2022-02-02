@@ -2,16 +2,17 @@ package com.algolia.instantsearch.showcase.loading
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+import androidx.paging.PagingConfig
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.android.list.HitsSearcherDataSource
+import com.algolia.instantsearch.helper.android.list.Paginator
+import com.algolia.instantsearch.helper.android.list.liveData
 import com.algolia.instantsearch.helper.android.loading.LoadingViewSwipeRefreshLayout
-import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.android.searchbox.connectView
+import com.algolia.instantsearch.helper.android.searchbox.connectPaginator
 import com.algolia.instantsearch.helper.loading.LoadingConnector
 import com.algolia.instantsearch.helper.loading.connectView
+import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
@@ -22,14 +23,12 @@ import com.algolia.instantsearch.showcase.list.movie.MovieAdapterPaged
 class LoadingShowcase : AppCompatActivity() {
 
     private val searcher = HitsSearcher(client, stubIndexName)
-    private val dataSourceFactory = HitsSearcherDataSource.Factory(searcher) {
-        it.deserialize(Movie.serializer())
-    }
-    private val pagedListConfig =
-        PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
-    private val movies = LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
+    private val paginator = Paginator(
+        searcher = searcher,
+        pagingConfig = PagingConfig(pageSize = 10, enablePlaceholders = false)
+    ) { hit -> hit.deserialize(Movie.serializer()) }
     private val loading = LoadingConnector(searcher)
-    private val searchBox = SearchBoxConnectorPagedList(searcher, listOf(movies))
+    private val searchBox = SearchBoxConnector(searcher)
     private val connection = ConnectionHandler(loading, searchBox)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +43,9 @@ class LoadingShowcase : AppCompatActivity() {
 
         connection += loading.connectView(view)
         connection += searchBox.connectView(searchBoxView)
-        movies.observe(this, adapter::submitList)
+        connection += searchBox.connectPaginator(paginator)
+
+        paginator.liveData.observe(this) { pagingData -> adapter.submitData(lifecycle, pagingData) }
 
         configureSearcher(searcher)
         configureToolbar(binding.toolbar)

@@ -11,8 +11,8 @@ import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.guides.databinding.FragmentProductBinding
 import com.algolia.instantsearch.helper.android.list.autoScrollToStart
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.android.searchbox.connectView
 import com.algolia.instantsearch.helper.android.stats.StatsTextView
+import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
 import com.algolia.instantsearch.helper.stats.connectView
 
@@ -37,7 +37,10 @@ class ProductFragment : Fragment() {
         val viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
 
         val adapterProduct = ProductAdapter()
-        viewModel.products.observe(viewLifecycleOwner, adapterProduct::submitList)
+
+        viewModel.products.observe(viewLifecycleOwner) { pagingData ->
+            adapterProduct.submitData(lifecycle, pagingData)
+        }
 
         binding.productList.let {
             it.itemAnimator = null

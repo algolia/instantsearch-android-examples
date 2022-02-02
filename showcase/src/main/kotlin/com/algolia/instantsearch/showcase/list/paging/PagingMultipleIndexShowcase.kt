@@ -2,15 +2,14 @@ package com.algolia.instantsearch.showcase.list.paging
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+import androidx.paging.PagingConfig
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.android.list.HitsSearcherDataSource
-import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
+import com.algolia.instantsearch.helper.android.list.Paginator
+import com.algolia.instantsearch.helper.android.list.liveData
 import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.android.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.helper.android.searchbox.connectPaginator
+import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.helper.searchbox.connectView
 import com.algolia.instantsearch.helper.searcher.hits.addHitsSearcher
 import com.algolia.instantsearch.helper.searcher.multi.MultiSearcher
 import com.algolia.instantsearch.showcase.*
@@ -21,20 +20,16 @@ import com.algolia.instantsearch.showcase.list.actor.ActorAdapterNested
 import com.algolia.instantsearch.showcase.list.movie.Movie
 import com.algolia.instantsearch.showcase.list.movie.MovieAdapterNested
 import com.algolia.search.model.IndexName
-import kotlinx.serialization.DeserializationStrategy
 
 class PagingMultipleIndexShowcase : AppCompatActivity() {
 
     private val multiSearcher = MultiSearcher(client)
     private val moviesSearcher = multiSearcher.addHitsSearcher(IndexName("mobile_demo_movies"))
     private val actorsSearcher = multiSearcher.addHitsSearcher(IndexName("mobile_demo_actors"))
-
-    private val pagedListConfig: PagedList.Config =
-        PagedList.Config.Builder().setPageSize(10).setEnablePlaceholders(false).build()
-    private val movies = pagedLiveDataOf(moviesSearcher, pagedListConfig, Movie.serializer())
-    private val actors = pagedLiveDataOf(actorsSearcher, pagedListConfig, Actor.serializer())
-
-    private val searchBox = SearchBoxConnectorPagedList(multiSearcher, listOf(movies, actors))
+    private val pagingConfig = PagingConfig(pageSize = 10, enablePlaceholders = false)
+    private val moviesPaginator = Paginator(moviesSearcher, pagingConfig) { it.deserialize(Movie.serializer()) }
+    private val actorsPaginator = Paginator(actorsSearcher, pagingConfig) { it.deserialize(Actor.serializer()) }
+    private val searchBox = SearchBoxConnector(multiSearcher)
     private val connection = ConnectionHandler(searchBox)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,10 +40,10 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
 
         val adapterActor = ActorAdapterNested()
         val adapterMovie = MovieAdapterNested()
-        val adapter = PagingMultipleIndexAdapter()
+        val adapter = PagingMultiSearchAdapter()
 
-        actors.observe(this, adapterActor::submitList)
-        movies.observe(this, adapterMovie::submitList)
+        actorsPaginator.liveData.observe(this) { adapterActor.submitData(lifecycle, it) }
+        moviesPaginator.liveData.observe(this) { adapterMovie.submitData(lifecycle, it) }
 
         adapter.submitList(
             listOf(
@@ -61,19 +56,12 @@ class PagingMultipleIndexShowcase : AppCompatActivity() {
 
         val searchBoxView = SearchBoxViewAppCompat(searchBinding.searchView)
         connection += searchBox.connectView(searchBoxView)
+        connection += searchBox.connectPaginator(moviesPaginator)
+        connection += searchBox.connectPaginator(actorsPaginator)
 
         configureToolbar(binding.toolbar)
         configureSearchView(searchBinding.searchView, getString(R.string.search_movies))
         configureRecyclerView(binding.hits, adapter)
-    }
-
-    private fun <T> pagedLiveDataOf(
-        searcher: HitsSearcher,
-        config: PagedList.Config,
-        serializer: DeserializationStrategy<T>,
-    ): LiveData<PagedList<T>> {
-        val factory = HitsSearcherDataSource.Factory(searcher) { it.deserialize(serializer) }
-        return LivePagedListBuilder(factory, config).build()
     }
 
     override fun onDestroy() {

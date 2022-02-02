@@ -1,11 +1,11 @@
 package com.algolia.instantsearch.showcase.list.movie
 
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import com.algolia.instantsearch.showcase.databinding.ListItemLargeBinding
 import com.algolia.instantsearch.showcase.layoutInflater
 
-class MovieAdapterPaged : PagedListAdapter<Movie, MovieViewHolder>(MovieDiffUtil) {
+class MovieAdapterPaged : PagingDataAdapter<Movie, MovieViewHolder>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(

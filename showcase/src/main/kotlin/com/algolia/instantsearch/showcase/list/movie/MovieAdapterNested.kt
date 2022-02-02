@@ -1,12 +1,12 @@
 package com.algolia.instantsearch.showcase.list.movie
 
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import com.algolia.instantsearch.showcase.databinding.ListItemMovieBinding
 import com.algolia.instantsearch.showcase.dip
 import com.algolia.instantsearch.showcase.layoutInflater
 
-class MovieAdapterNested : PagedListAdapter<Movie, MovieViewHolderNested>(MovieDiffUtil) {
+class MovieAdapterNested : PagingDataAdapter<Movie, MovieViewHolderNested>(MovieDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolderNested {
         val dip8 = parent.context.dip(8)

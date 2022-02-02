@@ -1,18 +1,18 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
-import com.algolia.instantsearch.helper.android.filter.state.connectPagedList
-import com.algolia.instantsearch.helper.android.list.HitsSearcherDataSource
-import com.algolia.instantsearch.helper.android.searchbox.SearchBoxConnectorPagedList
+import com.algolia.instantsearch.helper.android.filter.state.connectPaginator
+import com.algolia.instantsearch.helper.android.list.Paginator
+import com.algolia.instantsearch.helper.android.searchbox.connectPaginator
 import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
 import com.algolia.instantsearch.helper.filter.facet.FacetListPresenterImpl
 import com.algolia.instantsearch.helper.filter.facet.FacetSortCriterion
 import com.algolia.instantsearch.helper.filter.state.FilterState
+import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.helper.searcher.connectFilterState
 import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.helper.stats.StatsConnector
@@ -33,18 +33,17 @@ class MyViewModel : ViewModel() {
         LogLevel.ALL
     )
     val searcher = HitsSearcher(client = client, indexName = IndexName("bestbuy_promo"))
-
-    val dataSourceFactory = HitsSearcherDataSource.Factory(searcher) { hit ->
+    val paginator = Paginator(
+        searcher = searcher,
+        pagingConfig = PagingConfig(pageSize = 50, enablePlaceholders = false)
+    ) { hit ->
         Product(
             hit.json.getValue("name").jsonPrimitive.content,
             hit.json["_highlightResult"]?.jsonObject
         )
     }
-    val pagedListConfig =
-        PagedList.Config.Builder().setPageSize(50).setEnablePlaceholders(false).build()
-    val products: LiveData<PagedList<Product>> =
-        LivePagedListBuilder(dataSourceFactory, pagedListConfig).build()
-    val searchBox = SearchBoxConnectorPagedList(searcher, listOf(products))
+    val products = paginator.pager.liveData
+    val searchBox = SearchBoxConnector(searcher)
     val stats = StatsConnector(searcher)
 
     val filterState = FilterState()
@@ -65,7 +64,8 @@ class MyViewModel : ViewModel() {
         connection += stats
         connection += facetList
         connection += searcher.connectFilterState(filterState)
-        connection += filterState.connectPagedList(products)
+        connection += filterState.connectPaginator(paginator)
+        connection += searchBox.connectPaginator(paginator)
     }
 
     override fun onCleared() {
