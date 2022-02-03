@@ -2,7 +2,7 @@ buildscript {
     ext.kotlin_version = "1.5.31"
     ext.lifecycle_version = "2.2.0"
     ext.build_tools_version = "31.0.0"
-    ext.instantsearch = '2.11.5-SNAPSHOT'
+    ext.instantsearch = '2.11.4'
     ext.canary = '2.7'
     ext.compose_version = '1.0.5'
     repositories {
@@ -10,7 +10,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:7.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
