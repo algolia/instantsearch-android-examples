@@ -28,16 +28,16 @@ import kotlinx.serialization.json.jsonPrimitive
 class MyViewModel : ViewModel() {
 
     val client = ClientSearch(
-        ApplicationID("latency"),
-        APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"),
+        ApplicationID("LNNFEEWZVA"),
+        APIKey("200a3252844dc679d946e6a60ec60b93"),
         LogLevel.ALL
     )
-    val index = client.initIndex(IndexName("bestbuy_promo"))
+    val index = client.initIndex(IndexName("prod_cex_uk"))
     val searcher = SearcherSingleIndex(index)
 
     val dataSourceFactory = SearcherSingleIndexDataSource.Factory(searcher) { hit ->
         Product(
-            hit.json.getValue("name").jsonPrimitive.content,
+            hit.json.getValue("boxName").jsonPrimitive.content,
             hit.json["_highlightResult"]?.jsonObject
         )
     }
@@ -52,7 +52,7 @@ class MyViewModel : ViewModel() {
     val facetList = FacetListConnector(
         searcher = searcher,
         filterState = filterState,
-        attribute = Attribute("category"),
+        attribute = Attribute("stores"),
         selectionMode = SelectionMode.Single
     )
     val facetPresenter = FacetListPresenterImpl(

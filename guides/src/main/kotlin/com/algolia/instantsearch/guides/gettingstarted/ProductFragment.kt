@@ -1,6 +1,7 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,6 +55,9 @@ class ProductFragment : Fragment() {
         connection += viewModel.stats.connectView(statsView, StatsPresenterImpl())
 
         filters.setOnClickListener { (requireActivity() as GettingStartedGuide).showFacetFragment() }
+        viewModel.searcher.error.subscribe {
+            Log.e("MyViewModel", "searcher error", it)
+        }
     }
 
     override fun onDestroyView() {

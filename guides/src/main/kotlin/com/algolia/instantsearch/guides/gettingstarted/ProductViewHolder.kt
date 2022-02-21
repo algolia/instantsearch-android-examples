@@ -9,6 +9,6 @@ import kotlinx.android.synthetic.main.list_item_small.view.*
 class ProductViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun bind(product: Product) {
-        view.itemName.text = product.highlightedName?.toSpannedString() ?: product.name
+        view.itemName.text = product.highlightedName?.toSpannedString() ?: product.boxName
     }
 }

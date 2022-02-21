@@ -8,11 +8,11 @@ import kotlinx.serialization.json.JsonObject
 
 
 data class Product(
-    val name: String,
+    val boxName: String,
     override val _highlightResult: JsonObject?
 ) : Highlightable {
 
     @Transient
     public val highlightedName: HighlightedString?
-        get() = getHighlight(Attribute("name"))
+        get() = getHighlight(Attribute("boxName"))
 }

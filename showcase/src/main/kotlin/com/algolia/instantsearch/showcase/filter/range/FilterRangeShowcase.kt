@@ -13,19 +13,30 @@ import com.algolia.instantsearch.helper.filter.state.FilterState
 import com.algolia.instantsearch.helper.filter.state.filters
 import com.algolia.instantsearch.helper.searcher.SearcherSingleIndex
 import com.algolia.instantsearch.helper.searcher.connectFilterState
+import com.algolia.search.client.ClientSearch
+import com.algolia.search.model.APIKey
+import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.Attribute
+import com.algolia.search.model.IndexName
+import io.ktor.client.features.logging.*
 import kotlinx.android.synthetic.main.showcase_filter_range.*
 import kotlinx.android.synthetic.main.header_filter.*
 
 
 class FilterRangeShowcase : AppCompatActivity() {
 
-    private val searcher = SearcherSingleIndex(stubIndex)
-    private val price = Attribute("price")
+    private val client = ClientSearch(
+        ApplicationID("LNNFEEWZVA"),
+        APIKey("200a3252844dc679d946e6a60ec60b93"),
+        LogLevel.ALL
+    )
+    private val index = client.initIndex(IndexName("prod_cex_uk"))
+    private val searcher = SearcherSingleIndex(index)
+    private val price = Attribute("sellPrice")
     private val groupID = FilterGroupID(price)
-    private val primaryBounds = 0..15
-    private val secondaryBounds = 0..10
-    private val initialRange = 0..15
+    private val primaryBounds = 0..100
+    private val secondaryBounds = 0..50
+    private val initialRange = 0..100
     private val filters = filters {
         group(groupID) {
             range(price, initialRange)
@@ -61,7 +72,7 @@ class FilterRangeShowcase : AppCompatActivity() {
             filterState.notify { set(filters) }
         }
         configureToolbar(toolbar)
-        configureSearcher(searcher)
+        //configureSearcher(searcher)
         onFilterChangedThenUpdateFiltersText(filterState, filtersTextView, price)
         onClearAllThenClearFilters(filterState, filtersClearAll, connection)
         onErrorThenUpdateFiltersText(searcher, filtersTextView)

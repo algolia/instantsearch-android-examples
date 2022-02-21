@@ -36,7 +36,7 @@ class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(
             oldItem: Product,
             newItem: Product
         ): Boolean {
-            return oldItem.name == newItem.name
+            return oldItem.boxName == newItem.boxName
         }
     }
 }
