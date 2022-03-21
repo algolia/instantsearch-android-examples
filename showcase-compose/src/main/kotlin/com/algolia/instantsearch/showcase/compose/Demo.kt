@@ -11,9 +11,9 @@ import androidx.compose.ui.text.withStyle
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.searcher.Searcher
-import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
-import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.IndexNameHolder
+import com.algolia.instantsearch.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.searchbox.connectView
+import com.algolia.instantsearch.searcher.IndexNameHolder
 import com.algolia.instantsearch.showcase.compose.ui.*
 import com.algolia.search.client.ClientSearch
 import com.algolia.search.configuration.ConfigurationSearch

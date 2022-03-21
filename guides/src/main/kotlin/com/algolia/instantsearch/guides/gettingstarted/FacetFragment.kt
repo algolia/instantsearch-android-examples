@@ -10,9 +10,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.guides.databinding.FragmentFacetBinding
-import com.algolia.instantsearch.helper.android.filter.facet.FacetListAdapter
-import com.algolia.instantsearch.helper.android.list.autoScrollToStart
-import com.algolia.instantsearch.helper.filter.facet.connectView
+import com.algolia.instantsearch.android.filter.facet.FacetListAdapter
+import com.algolia.instantsearch.android.list.autoScrollToStart
+import com.algolia.instantsearch.filter.facet.connectView
 
 class FacetFragment : Fragment() {
 

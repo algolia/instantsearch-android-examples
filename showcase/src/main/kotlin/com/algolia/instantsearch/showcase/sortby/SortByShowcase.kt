@@ -5,10 +5,10 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.android.sortby.SortByViewAutocomplete
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
-import com.algolia.instantsearch.helper.sortby.SortByConnector
-import com.algolia.instantsearch.helper.sortby.connectView
+import com.algolia.instantsearch.android.sortby.SortByViewAutocomplete
+import com.algolia.instantsearch.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.sortby.SortByConnector
+import com.algolia.instantsearch.sortby.connectView
 import com.algolia.instantsearch.showcase.R
 import com.algolia.instantsearch.showcase.client
 import com.algolia.instantsearch.showcase.configureRecyclerView

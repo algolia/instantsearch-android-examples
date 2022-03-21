@@ -3,7 +3,7 @@ package com.algolia.instantsearch.showcase.list.paging
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.helper.android.list.autoScrollToStart
+import com.algolia.instantsearch.android.list.autoScrollToStart
 import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
 
 

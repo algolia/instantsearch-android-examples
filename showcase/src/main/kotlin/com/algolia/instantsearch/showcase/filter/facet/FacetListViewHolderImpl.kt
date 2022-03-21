@@ -3,8 +3,8 @@ package com.algolia.instantsearch.showcase.filter.facet
 import android.view.View
 import android.view.ViewGroup
 import com.algolia.instantsearch.core.highlighting.HighlightTokenizer
-import com.algolia.instantsearch.helper.android.filter.facet.FacetListViewHolder
-import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.filter.facet.FacetListViewHolder
+import com.algolia.instantsearch.android.highlighting.toSpannedString
 import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
 import com.algolia.instantsearch.showcase.layoutInflater
 import com.algolia.search.model.search.Facet

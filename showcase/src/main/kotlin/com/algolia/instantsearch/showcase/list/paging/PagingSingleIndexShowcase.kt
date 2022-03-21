@@ -3,14 +3,14 @@ package com.algolia.instantsearch.showcase.list.paging
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.PagingConfig
+import com.algolia.instantsearch.android.paging3.Paginator
+import com.algolia.instantsearch.android.paging3.liveData
+import com.algolia.instantsearch.android.paging3.searchbox.connectPaginator
+import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.android.list.Paginator
-import com.algolia.instantsearch.helper.android.list.liveData
-import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.android.searchbox.connectPaginator
-import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
-import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.searchbox.connectView
+import com.algolia.instantsearch.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
 import com.algolia.instantsearch.showcase.databinding.ShowcasePagingBinding
@@ -22,8 +22,7 @@ class PagingSingleIndexShowcase : AppCompatActivity() {
     private val searcher = HitsSearcher(client, stubIndexName)
     private val paginator = Paginator(
         searcher = searcher,
-        pagingConfig = PagingConfig(pageSize = 10, enablePlaceholders = false),
-        triggerSearch = { it.query?.startsWith("a") ?: false }
+        pagingConfig = PagingConfig(pageSize = 10, enablePlaceholders = false)
     ) { it.deserialize(Movie.serializer()) }
     private val searchBox = SearchBoxConnector(searcher)
     private val connection = ConnectionHandler(searchBox)

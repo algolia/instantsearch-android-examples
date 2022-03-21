@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
-import com.algolia.instantsearch.helper.tracker.HitsTracker
+import com.algolia.instantsearch.tracker.HitsTracker
 import com.algolia.instantsearch.insights.showcase.databinding.ListItemLargeBinding
 
 class ListItemAdapter(private val hitsTracker: HitsTracker) :

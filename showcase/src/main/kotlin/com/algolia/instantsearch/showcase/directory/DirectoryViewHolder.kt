@@ -3,7 +3,7 @@ package com.algolia.instantsearch.showcase.directory
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.highlighting.toSpannedString
 import com.algolia.instantsearch.showcase.databinding.HeaderItemBinding
 import com.algolia.instantsearch.showcase.databinding.ListItemSmallBinding
 import com.algolia.search.serialize.KeyIndexName

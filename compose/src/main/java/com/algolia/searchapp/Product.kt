@@ -1,7 +1,7 @@
 package com.algolia.searchapp
 
 import com.algolia.instantsearch.core.highlighting.HighlightedString
-import com.algolia.instantsearch.helper.highlighting.Highlightable
+import com.algolia.instantsearch.highlighting.Highlightable
 import com.algolia.search.model.Attribute
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject

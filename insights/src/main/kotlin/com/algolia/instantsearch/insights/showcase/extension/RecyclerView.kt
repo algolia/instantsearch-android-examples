@@ -4,7 +4,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.helper.android.list.autoScrollToStart
+import com.algolia.instantsearch.android.list.autoScrollToStart
 import com.algolia.instantsearch.insights.showcase.ListItemAdapter
 
 fun AppCompatActivity.configureRecyclerView(recyclerView: RecyclerView, adapter: ListItemAdapter) {

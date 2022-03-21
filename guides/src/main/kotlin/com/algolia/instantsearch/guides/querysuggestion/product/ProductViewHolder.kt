@@ -2,7 +2,7 @@ package com.algolia.instantsearch.guides.querysuggestion.product
 
 import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.guides.databinding.ListItemLargeBinding
-import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.highlighting.toSpannedString
 import com.bumptech.glide.Glide
 
 class ProductViewHolder(private val binding: ListItemLargeBinding) :

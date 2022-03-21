@@ -40,6 +40,7 @@ android {
 
 dependencies {
     implementation "com.algolia:instantsearch-compose:$instantsearch"
+    implementation "com.algolia:instantsearch-android-paging3:$instantsearch"
 
     implementation "androidx.compose.material:material-icons-extended:$compose_version"
     implementation "androidx.compose.ui:ui:$compose_version"

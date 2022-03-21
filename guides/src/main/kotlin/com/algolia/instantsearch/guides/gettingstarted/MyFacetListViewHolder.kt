@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.algolia.instantsearch.guides.databinding.ListItemSelectableBinding
-import com.algolia.instantsearch.helper.android.filter.facet.FacetListViewHolder
+import com.algolia.instantsearch.android.filter.facet.FacetListViewHolder
 import com.algolia.search.model.search.Facet
 
 class MyFacetListViewHolder(private val binding: ListItemSelectableBinding) :

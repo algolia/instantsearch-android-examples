@@ -2,7 +2,7 @@ package com.algolia.instantsearch.guides.querysuggestion.suggestion
 
 import android.view.View
 import com.algolia.instantsearch.core.highlighting.HighlightedString
-import com.algolia.instantsearch.helper.highlighting.Highlightable
+import com.algolia.instantsearch.highlighting.Highlightable
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.ObjectID
 import com.algolia.search.model.indexing.Indexable

@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.Callback
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
-import com.algolia.instantsearch.helper.filter.FilterPresenterImpl
-import com.algolia.instantsearch.helper.filter.list.FilterListView
+import com.algolia.instantsearch.filter.FilterPresenterImpl
+import com.algolia.instantsearch.filter.list.FilterListView
 import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
 import com.algolia.instantsearch.showcase.layoutInflater
 import com.algolia.search.model.filter.Filter

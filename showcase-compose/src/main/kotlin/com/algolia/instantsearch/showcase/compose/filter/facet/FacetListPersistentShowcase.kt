@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.facet.FacetListState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
-import com.algolia.instantsearch.helper.filter.facet.FacetListConnector
-import com.algolia.instantsearch.helper.filter.facet.connectView
-import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.filter.facet.FacetListConnector
+import com.algolia.instantsearch.filter.facet.connectView
+import com.algolia.instantsearch.filter.state.FilterState
+import com.algolia.instantsearch.searcher.connectFilterState
+import com.algolia.instantsearch.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.ui.HoloGreenDark
 import com.algolia.instantsearch.showcase.compose.ui.HoloRedDark

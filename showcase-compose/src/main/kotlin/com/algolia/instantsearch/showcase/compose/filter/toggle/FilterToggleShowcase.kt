@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.toggle.FilterToggleState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.filter.toggle.FilterToggleConnector
-import com.algolia.instantsearch.helper.filter.toggle.connectView
-import com.algolia.instantsearch.helper.searcher.connectFilterState
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.filter.state.FilterState
+import com.algolia.instantsearch.filter.toggle.FilterToggleConnector
+import com.algolia.instantsearch.filter.toggle.connectView
+import com.algolia.instantsearch.searcher.connectFilterState
+import com.algolia.instantsearch.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.component.HeaderFilter

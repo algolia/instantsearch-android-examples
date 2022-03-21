@@ -1,7 +1,7 @@
 package com.algolia.instantsearch.insights.showcase
 
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.helper.tracker.HitsTracker
+import com.algolia.instantsearch.tracker.HitsTracker
 import com.algolia.instantsearch.insights.showcase.databinding.ListItemLargeBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions

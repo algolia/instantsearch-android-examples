@@ -8,14 +8,14 @@ import com.algolia.instantsearch.compose.filter.clear.FilterClear
 import com.algolia.instantsearch.compose.item.StatsState
 import com.algolia.instantsearch.compose.item.StatsTextState
 import com.algolia.instantsearch.core.connection.ConnectionImpl
-import com.algolia.instantsearch.helper.filter.clear.FilterClearConnector
-import com.algolia.instantsearch.helper.filter.clear.connectView
-import com.algolia.instantsearch.helper.filter.state.FilterState
-import com.algolia.instantsearch.helper.filter.state.toFilterGroups
-import com.algolia.instantsearch.helper.searcher.util.SearcherForHits
-import com.algolia.instantsearch.helper.stats.StatsConnector
-import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
-import com.algolia.instantsearch.helper.stats.connectView
+import com.algolia.instantsearch.filter.clear.FilterClearConnector
+import com.algolia.instantsearch.filter.clear.connectView
+import com.algolia.instantsearch.filter.state.FilterState
+import com.algolia.instantsearch.filter.state.toFilterGroups
+import com.algolia.instantsearch.searcher.SearcherForHits
+import com.algolia.instantsearch.stats.StatsConnector
+import com.algolia.instantsearch.stats.StatsPresenterImpl
+import com.algolia.instantsearch.stats.connectView
 import com.algolia.search.model.filter.FilterGroup
 
 class HeaderFilterConnector(

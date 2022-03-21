@@ -4,7 +4,7 @@ import android.text.TextUtils
 import androidx.core.text.buildSpannedString
 import androidx.core.text.italic
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.highlighting.toSpannedString
 import com.algolia.instantsearch.showcase.databinding.ListItemLargeBinding
 import com.bumptech.glide.Glide
 

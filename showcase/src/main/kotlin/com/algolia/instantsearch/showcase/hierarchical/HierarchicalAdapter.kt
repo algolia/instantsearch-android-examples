@@ -4,8 +4,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.Callback
-import com.algolia.instantsearch.helper.hierarchical.HierarchicalItem
-import com.algolia.instantsearch.helper.hierarchical.HierarchicalView
+import com.algolia.instantsearch.hierarchical.HierarchicalItem
+import com.algolia.instantsearch.hierarchical.HierarchicalView
 import com.algolia.instantsearch.showcase.databinding.ListItemSelectableBinding
 import com.algolia.instantsearch.showcase.layoutInflater
 

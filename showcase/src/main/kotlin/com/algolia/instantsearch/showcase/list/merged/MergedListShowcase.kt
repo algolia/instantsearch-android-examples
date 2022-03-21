@@ -4,11 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
-import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.hits.addHitsSearcher
-import com.algolia.instantsearch.helper.searcher.multi.MultiSearcher
+import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
+import com.algolia.instantsearch.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.searchbox.connectView
+import com.algolia.instantsearch.searcher.hits.addHitsSearcher
+import com.algolia.instantsearch.searcher.multi.MultiSearcher
 import com.algolia.instantsearch.showcase.*
 import com.algolia.instantsearch.showcase.databinding.IncludeSearchBinding
 import com.algolia.instantsearch.showcase.databinding.ShowcaseMultisearchBinding

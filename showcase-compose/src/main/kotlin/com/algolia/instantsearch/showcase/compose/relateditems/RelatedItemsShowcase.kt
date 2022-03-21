@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.core.connection.Connection
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.relateditems.MatchingPattern
-import com.algolia.instantsearch.helper.relateditems.connectRelatedHitsView
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.relateditems.MatchingPattern
+import com.algolia.instantsearch.relateditems.connectRelatedHitsView
+import com.algolia.instantsearch.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.client
 import com.algolia.instantsearch.showcase.compose.configureSearcher
 import com.algolia.instantsearch.showcase.compose.model.Product

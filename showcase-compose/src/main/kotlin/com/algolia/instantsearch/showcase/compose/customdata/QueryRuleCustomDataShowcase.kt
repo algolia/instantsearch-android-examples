@@ -29,11 +29,11 @@ import com.algolia.instantsearch.compose.hits.HitsState
 import com.algolia.instantsearch.compose.searchbox.SearchBoxState
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.helper.customdata.QueryRuleCustomDataConnector
-import com.algolia.instantsearch.helper.searchbox.SearchBoxConnector
-import com.algolia.instantsearch.helper.searchbox.SearchMode
-import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.searcher.hits.HitsSearcher
+import com.algolia.instantsearch.customdata.QueryRuleCustomDataConnector
+import com.algolia.instantsearch.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.searchbox.SearchMode
+import com.algolia.instantsearch.searchbox.connectView
+import com.algolia.instantsearch.searcher.hits.HitsSearcher
 import com.algolia.instantsearch.showcase.compose.*
 import com.algolia.instantsearch.showcase.compose.R
 import com.algolia.instantsearch.showcase.compose.customdata.TemplateActivity.Companion.EXTRA_CONTENT

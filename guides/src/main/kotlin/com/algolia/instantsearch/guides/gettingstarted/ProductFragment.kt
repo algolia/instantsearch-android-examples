@@ -9,12 +9,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.guides.databinding.FragmentProductBinding
-import com.algolia.instantsearch.helper.android.list.autoScrollToStart
-import com.algolia.instantsearch.helper.android.searchbox.SearchBoxViewAppCompat
-import com.algolia.instantsearch.helper.android.stats.StatsTextView
-import com.algolia.instantsearch.helper.searchbox.connectView
-import com.algolia.instantsearch.helper.stats.StatsPresenterImpl
-import com.algolia.instantsearch.helper.stats.connectView
+import com.algolia.instantsearch.android.list.autoScrollToStart
+import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
+import com.algolia.instantsearch.android.stats.StatsTextView
+import com.algolia.instantsearch.searchbox.connectView
+import com.algolia.instantsearch.stats.StatsPresenterImpl
+import com.algolia.instantsearch.stats.connectView
 
 class ProductFragment : Fragment() {
 

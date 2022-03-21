@@ -12,8 +12,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.algolia.instantsearch.compose.filter.list.FilterListState
 import com.algolia.instantsearch.core.selectable.list.SelectableItem
-import com.algolia.instantsearch.helper.filter.FilterPresenter
-import com.algolia.instantsearch.helper.filter.FilterPresenterImpl
+import com.algolia.instantsearch.filter.FilterPresenter
+import com.algolia.instantsearch.filter.FilterPresenterImpl
 import com.algolia.instantsearch.showcase.compose.ui.BlueDark
 import com.algolia.instantsearch.showcase.compose.ui.ShowcaseTheme
 import com.algolia.instantsearch.showcase.compose.ui.White
