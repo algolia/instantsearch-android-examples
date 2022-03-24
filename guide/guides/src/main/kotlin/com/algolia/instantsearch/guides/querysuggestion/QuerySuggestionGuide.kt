@@ -23,6 +23,7 @@ import com.algolia.search.helper.deserialize
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
+import com.algolia.search.model.search.Query
 import io.ktor.client.features.logging.*
 
 class QuerySuggestionGuide : AppCompatActivity() {
@@ -38,6 +39,7 @@ class QuerySuggestionGuide : AppCompatActivity() {
     )
     private val suggestionSearcher = multiSearcher.addHitsSearcher(
         indexName = IndexName("instantsearch_query_suggestions"),
+        query = Query(hitsPerPage = 3)
     )
     private val searchBox = SearchBoxConnector(multiSearcher)
     private val connection = ConnectionHandler(searchBox)
@@ -55,28 +57,22 @@ class QuerySuggestionGuide : AppCompatActivity() {
 
         // Setup hits
         val productAdapter = ProductAdapter()
-        binding.products.configureRecyclerView(productAdapter)
+        binding.products.configure(productAdapter)
         connection += productSearcher.connectHitsView(productAdapter) { it.hits.deserialize(Product.serializer()) }
 
         // Setup suggestions
-        val suggestionAdapter = SuggestionAdapter {
-            searchBoxView.setText(it.query, true)
-        }
-        binding.suggestions.configureRecyclerView(suggestionAdapter)
+        val suggestionAdapter = SuggestionAdapter { searchBoxView.setText(it.query, true) }
+        binding.suggestions.configure(suggestionAdapter)
         connection += suggestionSearcher.connectHitsView(suggestionAdapter) {
+            binding.suggestionsGroup.visibility = if (it.hits.isEmpty()) View.GONE else View.VISIBLE
             it.hits.deserialize(Suggestion.serializer())
-        }
-
-        // Switch display depending search box focus
-        searchBoxView.searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
-            if (hasFocus) display(Display.Suggestions) else display(Display.Hits)
         }
 
         // initial search
         multiSearcher.searchAsync()
     }
 
-    private fun RecyclerView.configureRecyclerView(recyclerViewAdapter: RecyclerView.Adapter<*>) {
+    private fun RecyclerView.configure(recyclerViewAdapter: RecyclerView.Adapter<*>) {
         visibility = View.VISIBLE
         layoutManager = LinearLayoutManager(this@QuerySuggestionGuide)
         adapter = recyclerViewAdapter
@@ -88,16 +84,5 @@ class QuerySuggestionGuide : AppCompatActivity() {
         super.onDestroy()
         multiSearcher.cancel()
         connection.clear()
-    }
-
-    private fun display(display: Display) {
-        binding.suggestionsGroup.visibility = display.visibleIf(Display.Suggestions)
-        binding.hitsGroup.visibility = display.visibleIf(Display.Hits)
-    }
-
-    private enum class Display {
-        Suggestions, Hits;
-
-        fun visibleIf(display: Display) = if (this == display) View.VISIBLE else View.GONE
     }
 }

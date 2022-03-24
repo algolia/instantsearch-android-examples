@@ -23,7 +23,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:queryHint="Search places" />
+            app:queryHint="Search for products..." />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -82,12 +82,5 @@
         android:visibility="gone"
         app:constraint_referenced_ids="titleSuggestions,suggestions"
         tools:visibility="visible" />
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/hitsGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="titleResults,products" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
