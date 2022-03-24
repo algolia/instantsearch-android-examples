@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import com.algolia.instantsearch.core.hits.HitsView
 import com.algolia.instantsearch.guides.databinding.ListItemSuggestionBinding
 
-class SuggestionAdapter : ListAdapter<Suggestion, SuggestionViewHolder>(SuggestionAdapter),
+class SuggestionAdapter(private val onSuggestionClick: ((Suggestion) -> Unit)? = null) :
+    ListAdapter<Suggestion, SuggestionViewHolder>(SuggestionAdapter),
     HitsView<Suggestion> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SuggestionViewHolder {
@@ -17,7 +18,8 @@ class SuggestionAdapter : ListAdapter<Suggestion, SuggestionViewHolder>(Suggesti
     }
 
     override fun onBindViewHolder(holder: SuggestionViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        val item = getItem(position)
+        holder.bind(item, onSuggestionClick)
     }
 
     override fun setHits(hits: List<Suggestion>) {

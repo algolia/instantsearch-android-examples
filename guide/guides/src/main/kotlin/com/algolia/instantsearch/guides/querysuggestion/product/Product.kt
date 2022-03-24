@@ -11,8 +11,8 @@ import kotlinx.serialization.json.JsonObject
 @Serializable
 data class Product(
     val name: String,
-    val thumbnailImage: String,
-    val salePrice: String,
+    val image: String,
+    val price: Double,
     override val objectID: ObjectID,
     override val _highlightResult: JsonObject?
 ) : Indexable, Highlightable {

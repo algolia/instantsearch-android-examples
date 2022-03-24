@@ -10,10 +10,10 @@ class ProductViewHolder(private val binding: ListItemLargeBinding) :
 
     fun bind(item: Product) {
         binding.itemTitle.text = item.highlightedName?.toSpannedString() ?: item.name
-        binding.itemSubtitle.text = item.salePrice
+        binding.itemSubtitle.text = item.price.toString()
         Glide
             .with(binding.root.context)
-            .load(item.thumbnailImage)
+            .load(item.image)
             .into(binding.itemImage)
     }
 }
