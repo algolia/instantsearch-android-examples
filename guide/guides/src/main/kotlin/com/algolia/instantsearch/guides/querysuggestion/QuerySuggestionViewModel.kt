@@ -2,7 +2,6 @@ package com.algolia.instantsearch.guides.querysuggestion
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.guides.querysuggestion.suggestion.Suggestion
 import com.algolia.instantsearch.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.searcher.hits.addHitsSearcher
@@ -26,11 +25,9 @@ class QuerySuggestionViewModel : ViewModel() {
     val searchBox = SearchBoxConnector(multiSearcher)
     val suggestions = MutableLiveData<Suggestion>()
 
-    private val connection = ConnectionHandler(searchBox)
-
     override fun onCleared() {
         multiSearcher.cancel()
-        connection.clear()
+        searchBox.disconnect()
         client.close()
     }
 }
