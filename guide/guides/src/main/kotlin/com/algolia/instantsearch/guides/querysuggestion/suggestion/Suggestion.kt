@@ -1,6 +1,5 @@
 package com.algolia.instantsearch.guides.querysuggestion.suggestion
 
-import android.view.View
 import com.algolia.instantsearch.core.highlighting.HighlightedString
 import com.algolia.instantsearch.highlighting.Highlightable
 import com.algolia.search.model.Attribute
@@ -18,6 +17,4 @@ data class Suggestion(
 
     val highlightedQuery: HighlightedString?
         get() = getHighlight(Attribute("query"))
-
-    var onClickListener: View.OnClickListener? = null
 }

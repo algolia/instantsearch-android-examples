@@ -1,88 +1,62 @@
 package com.algolia.instantsearch.guides.querysuggestion
 
 import android.os.Bundle
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.android.list.autoScrollToStart
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.guides.databinding.ActivityQuerySuggestionBinding
-import com.algolia.instantsearch.guides.querysuggestion.product.Product
-import com.algolia.instantsearch.guides.querysuggestion.product.ProductAdapter
-import com.algolia.instantsearch.guides.querysuggestion.suggestion.Suggestion
-import com.algolia.instantsearch.guides.querysuggestion.suggestion.SuggestionAdapter
-import com.algolia.instantsearch.searchbox.SearchBoxConnector
+import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.querysuggestion.product.ProductFragment
+import com.algolia.instantsearch.guides.querysuggestion.suggestion.SuggestionFragment
 import com.algolia.instantsearch.searchbox.connectView
-import com.algolia.instantsearch.searcher.hits.addHitsSearcher
-import com.algolia.instantsearch.searcher.multi.MultiSearcher
-import com.algolia.search.client.ClientSearch
-import com.algolia.search.helper.deserialize
-import com.algolia.search.model.APIKey
-import com.algolia.search.model.ApplicationID
-import com.algolia.search.model.IndexName
-import com.algolia.search.model.search.Query
-import io.ktor.client.features.logging.*
 
 class QuerySuggestionGuide : AppCompatActivity() {
 
-    private val client = ClientSearch(
-        applicationID = ApplicationID("latency"),
-        apiKey = APIKey("afc3dd66dd1293e2e2736a5a51b05c0a"),
-        logLevel = LogLevel.ALL
-    )
-    private val multiSearcher = MultiSearcher(client)
-    private val productSearcher = multiSearcher.addHitsSearcher(
-        indexName = IndexName("instant_search")
-    )
-    private val suggestionSearcher = multiSearcher.addHitsSearcher(
-        indexName = IndexName("instantsearch_query_suggestions"),
-        query = Query(hitsPerPage = 3)
-    )
-    private val searchBox = SearchBoxConnector(multiSearcher)
-    private val connection = ConnectionHandler(searchBox)
-
-    private lateinit var binding: ActivityQuerySuggestionBinding
+    private val viewModel by viewModels<QuerySuggestionViewModel>()
+    private val connection = ConnectionHandler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityQuerySuggestionBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_query_suggestion)
 
         // Setup search box
-        val searchBoxView = SearchBoxViewAppCompat(binding.searchView)
-        connection += searchBox.connectView(searchBoxView)
+        val searchView = findViewById<SearchView>(R.id.searchView)
+        val searchBoxView = SearchBoxViewAppCompat(searchView)
+        connection += viewModel.searchBox.connectView(searchBoxView)
 
-        // Setup hits
-        val productAdapter = ProductAdapter()
-        binding.products.configure(productAdapter)
-        connection += productSearcher.connectHitsView(productAdapter) { it.hits.deserialize(Product.serializer()) }
-
-        // Setup suggestions
-        val suggestionAdapter = SuggestionAdapter { searchBoxView.setText(it.query, true) }
-        binding.suggestions.configure(suggestionAdapter)
-        connection += suggestionSearcher.connectHitsView(suggestionAdapter) {
-            binding.suggestionsGroup.visibility = if (it.hits.isEmpty()) View.GONE else View.VISIBLE
-            it.hits.deserialize(Suggestion.serializer())
+        searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
+            if (hasFocus) showSuggestions() else showProducts()
         }
 
-        // initial search
-        multiSearcher.searchAsync()
+        // Observe suggestions
+        viewModel.suggestions.observe(this) {
+            searchBoxView.setText(it.query, true)
+        }
+
+        showProducts()
     }
 
-    private fun RecyclerView.configure(recyclerViewAdapter: RecyclerView.Adapter<*>) {
-        visibility = View.VISIBLE
-        layoutManager = LinearLayoutManager(this@QuerySuggestionGuide)
-        adapter = recyclerViewAdapter
-        itemAnimator = null
-        autoScrollToStart(recyclerViewAdapter)
+    private fun showSuggestions() {
+        supportFragmentManager.commit {
+            replace<SuggestionFragment>(R.id.container)
+            setReorderingAllowed(true)
+            addToBackStack("suggestions") // name can be null
+        }
+    }
+
+    private fun showProducts() {
+        supportFragmentManager.commit {
+            replace<ProductFragment>(R.id.container)
+            setReorderingAllowed(true)
+            addToBackStack("products") // name can be null
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        multiSearcher.cancel()
         connection.clear()
     }
 }
