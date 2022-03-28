@@ -2,19 +2,23 @@ package com.algolia.instantsearch.guides.places
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
-import com.algolia.instantsearch.guides.databinding.ActivityPlacesBinding
-import com.algolia.instantsearch.android.list.autoScrollToStart
-import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
+import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.extension.configure
 import com.algolia.instantsearch.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.searchbox.connectView
 import com.algolia.instantsearch.searcher.SearcherPlaces
+import com.algolia.search.client.ClientPlaces
+import com.algolia.search.configuration.ConfigurationPlaces
 import com.algolia.search.model.places.Country
 import com.algolia.search.model.places.PlaceType
 import com.algolia.search.model.places.PlacesQuery
 import com.algolia.search.model.search.Language
+import io.ktor.client.features.logging.*
 
 class PlacesActivity : AppCompatActivity() {
 
@@ -24,27 +28,21 @@ class PlacesActivity : AppCompatActivity() {
         aroundLatLngViaIP = false,
         countries = listOf(Country.France)
     )
-    val searcher = SearcherPlaces(query = query, language = Language.English)
+    val client: ClientPlaces = ClientPlaces(ConfigurationPlaces(logLevel = LogLevel.ALL))
+    val searcher = SearcherPlaces(client = client, query = query, language = Language.English)
     val searchBox = SearchBoxConnector(searcher)
     val adapter = Adapter()
     val connection = ConnectionHandler(searchBox)
 
-    private lateinit var binding: ActivityPlacesBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlacesBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_places)
 
-        connection += searchBox.connectView(SearchBoxViewAppCompat(binding.searchView))
+        val searchView = findViewById<SearchView>(R.id.searchView)
+        connection += searchBox.connectView(SearchBoxViewAppCompat(searchView))
         connection += searcher.connectHitsView(adapter) { hits -> hits.hits }
 
-        binding.placesList.let {
-            it.itemAnimator = null
-            it.adapter = adapter
-            it.layoutManager = LinearLayoutManager(this)
-            it.autoScrollToStart(adapter)
-        }
+        findViewById<RecyclerView>(R.id.placesList).configure(adapter)
 
         searcher.searchAsync()
     }

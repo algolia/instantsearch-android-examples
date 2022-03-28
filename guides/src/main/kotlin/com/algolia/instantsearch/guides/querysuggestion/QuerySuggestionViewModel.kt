@@ -17,12 +17,16 @@ class QuerySuggestionViewModel : ViewModel() {
 
     private val client = ClientSearch(
         applicationID = ApplicationID("latency"),
-        apiKey = APIKey("afc3dd66dd1293e2e2736a5a51b05c0a"),
+        apiKey = APIKey("927c3fe76d4b52c5a2912973f35a3077"),
         logLevel = LogLevel.ALL
     )
     val multiSearcher = MultiSearcher(client)
-    val productSearcher = multiSearcher.addHitsSearcher(indexName = IndexName("instant_search"))
-    val suggestionSearcher = multiSearcher.addHitsSearcher(indexName = IndexName("instantsearch_query_suggestions"))
+    val productSearcher = multiSearcher.addHitsSearcher(
+        indexName = IndexName("STAGING_native_ecom_demo_products")
+    ) // TODO: native guide + guide screenshots
+    val suggestionSearcher = multiSearcher.addHitsSearcher(
+        indexName = IndexName("STAGING_native_ecom_demo_products_query_suggestions")
+    )
     val searchBox = SearchBoxConnector(multiSearcher)
     private val connection = ConnectionHandler(searchBox)
 
