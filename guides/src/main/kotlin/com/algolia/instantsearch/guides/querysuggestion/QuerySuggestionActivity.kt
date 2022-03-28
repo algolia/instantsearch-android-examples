@@ -44,7 +44,6 @@ class QuerySuggestionActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             replace<SuggestionFragment>(R.id.container)
             setReorderingAllowed(true)
-            addToBackStack("suggestions") // name can be null
         }
     }
 
@@ -53,7 +52,6 @@ class QuerySuggestionActivity : AppCompatActivity() {
         supportFragmentManager.commit {
             replace<ProductFragment>(R.id.container)
             setReorderingAllowed(true)
-            addToBackStack("products") // name can be null
         }
     }
 
