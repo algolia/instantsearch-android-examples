@@ -20,7 +20,10 @@ class SuggestionFragment : Fragment(R.layout.fragment_items) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Configure suggestions view
-        val suggestionAdapter = SuggestionAdapter { viewModel.suggestions.value = it }
+        val suggestionAdapter = SuggestionAdapter {
+            // On suggestion click, update the
+            viewModel.suggestions.value = it
+        }
         view.findViewById<RecyclerView>(R.id.items).configure(suggestionAdapter)
         connection += viewModel.suggestionSearcher.connectHitsView(suggestionAdapter) {
             it.hits.deserialize(Suggestion.serializer())

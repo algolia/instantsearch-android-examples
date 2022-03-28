@@ -34,7 +34,7 @@
             android:parentActivityName=".directory.DirectoryActivity" />
 
         <activity
-            android:name=".querysuggestion.QuerySuggestionGuide"
+            android:name=".querysuggestion.QuerySuggestionActivity"
             android:parentActivityName=".directory.DirectoryActivity" />
 
     </application>

@@ -13,7 +13,7 @@ import com.algolia.instantsearch.guides.querysuggestion.product.ProductFragment
 import com.algolia.instantsearch.guides.querysuggestion.suggestion.SuggestionFragment
 import com.algolia.instantsearch.searchbox.connectView
 
-class QuerySuggestionGuide : AppCompatActivity() {
+class QuerySuggestionActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<QuerySuggestionViewModel>()
     private val connection = ConnectionHandler()
@@ -27,18 +27,19 @@ class QuerySuggestionGuide : AppCompatActivity() {
         val searchBoxView = SearchBoxViewAppCompat(searchView)
         connection += viewModel.searchBox.connectView(searchBoxView)
 
+        // Switch fragments on search box focus
         searchView.setOnQueryTextFocusChangeListener { _, hasFocus ->
             if (hasFocus) showSuggestions() else showProducts()
         }
 
         // Observe suggestions
-        viewModel.suggestions.observe(this) {
-            searchBoxView.setText(it.query, true)
-        }
+        viewModel.suggestions.observe(this) { searchBoxView.setText(it.query, true) }
 
+        // Initially show products view
         showProducts()
     }
 
+    /** display suggestions fragment */
     private fun showSuggestions() {
         supportFragmentManager.commit {
             replace<SuggestionFragment>(R.id.container)
@@ -47,6 +48,7 @@ class QuerySuggestionGuide : AppCompatActivity() {
         }
     }
 
+    /** display products fragment */
     private fun showProducts() {
         supportFragmentManager.commit {
             replace<ProductFragment>(R.id.container)
