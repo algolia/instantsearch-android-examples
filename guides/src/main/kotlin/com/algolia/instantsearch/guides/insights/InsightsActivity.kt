@@ -10,6 +10,7 @@ import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.guides.R
 import com.algolia.instantsearch.guides.extension.configure
 import com.algolia.instantsearch.guides.insights.extension.configureSearchView
+import com.algolia.instantsearch.guides.model.Product
 import com.algolia.instantsearch.insights.sharedInsights
 import com.algolia.instantsearch.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.searchbox.SearchMode
@@ -50,7 +51,7 @@ class InsightsActivity : AppCompatActivity() {
 
         connection += searchBox.connectView(searchBoxView)
         connection += searcher.connectHitsView(adapter) { response ->
-            response.hits.deserialize(ListItem.serializer())
+            response.hits.deserialize(Product.serializer())
         }
 
         configureSearchView(searchView, resources.getString(R.string.search_items))

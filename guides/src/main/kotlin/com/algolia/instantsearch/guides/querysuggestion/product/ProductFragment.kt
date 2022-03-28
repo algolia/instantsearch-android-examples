@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.guides.R
-import com.algolia.instantsearch.guides.querysuggestion.QuerySuggestionViewModel
 import com.algolia.instantsearch.guides.extension.configure
+import com.algolia.instantsearch.guides.model.Product
+import com.algolia.instantsearch.guides.querysuggestion.QuerySuggestionViewModel
 import com.algolia.search.helper.deserialize
 
 class ProductFragment : Fragment(R.layout.fragment_items) {

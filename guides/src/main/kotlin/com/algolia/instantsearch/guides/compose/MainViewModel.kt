@@ -36,7 +36,7 @@ class MainViewModel : ViewModel() {
         APIKey("1f6fd3a6fb973cb08419fe7d288fa4db"),
         LogLevel.ALL
     )
-    val indexName = IndexName("bestbuy")
+    val indexName = IndexName("instant_search")
     val searcher = HitsSearcher(client, indexName)
 
     // Search Box
@@ -53,12 +53,12 @@ class MainViewModel : ViewModel() {
     // Filters
     val facetList = FacetListState()
     val filterState = FilterState()
-    val manufacturer = Attribute("category")
-    val searcherForFacet = FacetsSearcher(client, indexName, manufacturer)
+    val categories = Attribute("categories")
+    val searcherForFacet = FacetsSearcher(client, indexName, categories)
     val facetListConnector = FacetListConnector(
         searcher = searcherForFacet,
         filterState = filterState,
-        attribute = manufacturer,
+        attribute = categories,
         selectionMode = SelectionMode.Multiple
     )
 
