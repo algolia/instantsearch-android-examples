@@ -45,21 +45,4 @@ class ProductAdapter : ListAdapter<Product, ProductAdapter.ProductViewHolder>(Pr
                 .into(binding.itemImage)
         }
     }
-
-    object ProductDiffUtil : DiffUtil.ItemCallback<Product>() {
-
-        override fun areItemsTheSame(
-            oldItem: Product,
-            newItem: Product
-        ): Boolean {
-            return oldItem.objectID == newItem.objectID
-        }
-
-        override fun areContentsTheSame(
-            oldItem: Product,
-            newItem: Product
-        ): Boolean {
-            return oldItem == newItem
-        }
-    }
 }
