@@ -9,7 +9,7 @@ import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.hits.connectHitsView
 import com.algolia.instantsearch.guides.R
 import com.algolia.instantsearch.guides.querysuggestion.QuerySuggestionViewModel
-import com.algolia.instantsearch.guides.querysuggestion.extension.configure
+import com.algolia.instantsearch.guides.extension.configure
 import com.algolia.search.helper.deserialize
 
 class SuggestionFragment : Fragment(R.layout.fragment_items) {

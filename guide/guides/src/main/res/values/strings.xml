@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">InstantSearch V2</string>
+    <string name="app_name">Guides for InstantSearch</string>
     <string name="suggestions">Suggestions</string>
     <string name="results">Results</string>
+    <string name="buy">Buy</string>
+    <string name="search_items">Search for items</string>
 </resources>
