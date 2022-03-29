@@ -1,6 +1,7 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
@@ -8,30 +9,36 @@ import com.algolia.instantsearch.guides.R
 
 class GettingStartedGuide : AppCompatActivity() {
 
+    val viewModel: MyViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_getting_started)
-
+        setupNavigation()
         showProductFragment()
     }
 
-    fun showFacetFragment() {
+    private fun setupNavigation() {
+        viewModel.displayFilters.observe(this) {
+            showFacetFragment()
+        }
+    }
+
+    private fun showFacetFragment() {
         supportFragmentManager.commit {
-            replace<ProductFragment>(R.id.container)
-            setReorderingAllowed(true)
+            replace<FacetFragment>(R.id.container)
             addToBackStack("facet")
         }
     }
 
-    fun showProductFragment() {
+    private fun showProductFragment() {
         supportFragmentManager.commit {
             replace<ProductFragment>(R.id.container)
-            setReorderingAllowed(true)
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        supportFragmentManager.popBackStack()
+        if (supportFragmentManager.popBackStackImmediate()) return true
         return super.onSupportNavigateUp()
     }
 }

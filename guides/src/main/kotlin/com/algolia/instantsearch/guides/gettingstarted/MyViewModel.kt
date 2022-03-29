@@ -1,10 +1,11 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.paging.PagingConfig
-import androidx.paging.liveData
 import com.algolia.instantsearch.android.paging3.Paginator
 import com.algolia.instantsearch.android.paging3.filterstate.connectPaginator
+import com.algolia.instantsearch.android.paging3.liveData
 import com.algolia.instantsearch.android.paging3.searchbox.connectPaginator
 import com.algolia.instantsearch.core.connection.ConnectionHandler
 import com.algolia.instantsearch.core.selectable.list.SelectionMode
@@ -36,7 +37,6 @@ class MyViewModel : ViewModel() {
         searcher = searcher,
         pagingConfig = PagingConfig(pageSize = 50, enablePlaceholders = false)
     ) { hit -> hit.deserialize(Product.serializer()) }
-    val products = paginator.pager.liveData
     val searchBox = SearchBoxConnector(searcher)
     val stats = StatsConnector(searcher)
 
@@ -44,7 +44,7 @@ class MyViewModel : ViewModel() {
     val facetList = FacetListConnector(
         searcher = searcher,
         filterState = filterState,
-        attribute = Attribute("category"),
+        attribute = Attribute("categories"),
         selectionMode = SelectionMode.Single
     )
     val facetPresenter = FacetListPresenterImpl(
@@ -52,6 +52,8 @@ class MyViewModel : ViewModel() {
         limit = 100
     )
     val connection = ConnectionHandler()
+
+    val displayFilters = MutableLiveData<Unit>()
 
     init {
         connection += searchBox
