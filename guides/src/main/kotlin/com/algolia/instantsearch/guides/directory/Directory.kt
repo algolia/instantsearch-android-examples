@@ -5,6 +5,7 @@ import com.algolia.instantsearch.guides.gettingstarted.GettingStartedGuide
 import com.algolia.instantsearch.guides.insights.InsightsActivity
 import com.algolia.instantsearch.guides.places.PlacesActivity
 import com.algolia.instantsearch.guides.querysuggestion.QuerySuggestionActivity
+import com.algolia.instantsearch.guides.voice.VoiceSearchActivity
 import com.algolia.search.model.ObjectID
 
 val guides = mapOf(
@@ -13,5 +14,5 @@ val guides = mapOf(
     ObjectID("guide_query_suggestion") to QuerySuggestionActivity::class,
     ObjectID("guide_insights") to InsightsActivity::class,
     ObjectID("guide_compose_ui") to ComposeActivity::class,
-    ObjectID("guide_voice_search") to InsightsActivity::class,
+    ObjectID("guide_voice_search") to VoiceSearchActivity::class,
 )
