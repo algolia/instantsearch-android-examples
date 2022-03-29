@@ -13,6 +13,6 @@ val guides = mapOf(
     ObjectID("guide_places") to PlacesActivity::class,
     ObjectID("guide_query_suggestion") to QuerySuggestionActivity::class,
     ObjectID("guide_insights") to InsightsActivity::class,
-    ObjectID("guide_compose_ui") to ComposeActivity::class,
+    ObjectID("guide_declarative_ui") to ComposeActivity::class,
     ObjectID("guide_voice_search") to VoiceSearchActivity::class,
 )
