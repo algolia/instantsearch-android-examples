@@ -45,7 +45,7 @@ class Adapter : ListAdapter<PlaceLanguage, Adapter.ViewHolder>(Adapter), HitsVie
                 ?.tokenize() ?: place.county.first()
             val postCode = place.postCodeOrNull?.firstOrNull()?.let { ", $it" } ?: ""
 
-            view.findViewById<TextView>(R.id.itemImage).text =
+            view.findViewById<TextView>(R.id.itemName).text =
                 TextUtils.concat(name, ", ", county, postCode)
         }
 
