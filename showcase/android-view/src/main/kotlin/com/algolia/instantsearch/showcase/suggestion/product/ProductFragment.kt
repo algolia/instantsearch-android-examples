@@ -28,7 +28,7 @@ class ProductFragment : Fragment(R.layout.list_items) {
         }
 
         // Run initial search
-        viewModel.multiSearcher.searchAsync()
+        viewModel.productSearcher.searchAsync()
     }
 
     override fun onDestroyView() {

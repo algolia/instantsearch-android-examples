@@ -31,7 +31,7 @@ class SuggestionFragment : Fragment(R.layout.list_items) {
         }
 
         // Run initial search
-        viewModel.multiSearcher.searchAsync()
+        viewModel.suggestionSearcher.searchAsync()
     }
 
     override fun onDestroyView() {
