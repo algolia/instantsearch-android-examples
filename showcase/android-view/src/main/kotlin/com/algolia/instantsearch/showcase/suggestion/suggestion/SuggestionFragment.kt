@@ -26,12 +26,9 @@ class SuggestionFragment : Fragment(R.layout.list_items) {
             viewModel.suggestions.value = it
         }
         view.findViewById<RecyclerView>(R.id.items).configure(suggestionAdapter)
-        connection += viewModel.suggestionSearcher.connectHitsView(suggestionAdapter) {
+        connection += viewModel.suggestionSearcher.connectHitsView(suggestionAdapter, past = true) {
             it.hits.deserialize(Suggestion.serializer())
         }
-
-        // Run initial search
-        viewModel.suggestionSearcher.searchAsync()
     }
 
     override fun onDestroyView() {

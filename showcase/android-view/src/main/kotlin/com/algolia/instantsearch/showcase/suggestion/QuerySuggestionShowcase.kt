@@ -37,6 +37,9 @@ class QuerySuggestionShowcase : AppCompatActivity() {
 
         // Initially show products view
         showProducts()
+
+        // Initial request
+        viewModel.multiSearcher.searchAsync()
     }
 
     /** display suggestions fragment */

@@ -3,6 +3,7 @@ package com.algolia.instantsearch.showcase.suggestion
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.algolia.instantsearch.core.connection.ConnectionHandler
+import com.algolia.instantsearch.loading.LoadingConnector
 import com.algolia.instantsearch.searchbox.SearchBoxConnector
 import com.algolia.instantsearch.searcher.hits.addHitsSearcher
 import com.algolia.instantsearch.searcher.multi.MultiSearcher
@@ -27,8 +28,11 @@ class QuerySuggestionViewModel : ViewModel() {
     val suggestionSearcher = multiSearcher.addHitsSearcher(
         indexName = IndexName("STAGING_native_ecom_demo_products_query_suggestions")
     )
+
     val searchBox = SearchBoxConnector(multiSearcher)
-    private val connection = ConnectionHandler(searchBox)
+    val loading = LoadingConnector(multiSearcher)
+
+    private val connection = ConnectionHandler(searchBox, loading)
 
     val suggestions = MutableLiveData<Suggestion>()
 
