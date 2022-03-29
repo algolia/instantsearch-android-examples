@@ -2,32 +2,32 @@ package com.algolia.instantsearch.guides.gettingstarted
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import androidx.fragment.app.replace
 import com.algolia.instantsearch.guides.R
-import com.algolia.instantsearch.guides.databinding.ActivityGettingStartedBinding
 
 class GettingStartedGuide : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityGettingStartedBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_getting_started)
 
         showProductFragment()
     }
 
     fun showFacetFragment() {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.container, FacetFragment())
-            .addToBackStack("facet")
-            .commit()
+        supportFragmentManager.commit {
+            replace<ProductFragment>(R.id.container)
+            setReorderingAllowed(true)
+            addToBackStack("facet")
+        }
     }
 
     fun showProductFragment() {
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.container, ProductFragment())
-            .commit()
+        supportFragmentManager.commit {
+            replace<ProductFragment>(R.id.container)
+            setReorderingAllowed(true)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -1,22 +1,33 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
-import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.paging.PagingDataAdapter
-import com.algolia.instantsearch.guides.databinding.ListItemSmallBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.inflate
+import com.algolia.instantsearch.guides.R
 import com.algolia.instantsearch.guides.extension.ProductDiffUtil
+import com.algolia.instantsearch.guides.gettingstarted.ProductAdapter.ProductViewHolder
 import com.algolia.instantsearch.guides.model.Product
 
 class ProductAdapter : PagingDataAdapter<Product, ProductViewHolder>(ProductDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        return ProductViewHolder(
-            ListItemSmallBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
+        return ProductViewHolder(parent.inflate(R.layout.list_item_small))
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = getItem(position)
-        if (product != null) holder.bind(product)
+        getItem(position)?.let { holder.bind(it) }
+    }
+
+    class ProductViewHolder(val view: View) :
+        RecyclerView.ViewHolder(view) {
+
+        fun bind(product: Product) {
+            view.findViewById<TextView>(R.id.itemName).text =
+                product.highlightedName?.toSpannedString() ?: product.name
+        }
     }
 }

@@ -34,7 +34,6 @@ android {
         exclude("META-INF/*.kotlin_module")
     }
     buildFeatures {
-        viewBinding true
         compose true
     }
     composeOptions {
