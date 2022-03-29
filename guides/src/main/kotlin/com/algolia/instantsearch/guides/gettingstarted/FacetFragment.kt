@@ -1,50 +1,38 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.android.filter.facet.FacetListAdapter
 import com.algolia.instantsearch.core.connection.ConnectionHandler
+import com.algolia.instantsearch.filter.facet.connectView
 import com.algolia.instantsearch.guides.R
-import com.algolia.instantsearch.helper.android.filter.facet.FacetListAdapter
-import com.algolia.instantsearch.helper.android.list.autoScrollToStart
-import com.algolia.instantsearch.helper.filter.facet.connectView
-import kotlinx.android.synthetic.main.fragment_facet.*
+import com.algolia.instantsearch.guides.extension.configure
 
+class FacetFragment : Fragment(R.layout.fragment_facet) {
 
-class FacetFragment : Fragment() {
-
+    private val viewModel: MyViewModel by activityViewModels()
     private val connection = ConnectionHandler()
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_facet, container, false)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProvider(requireActivity())[MyViewModel::class.java]
+        setupToolbar(view)
 
         val adapterFacet = FacetListAdapter(MyFacetListViewHolder.Factory)
+        val facetList = view.findViewById<RecyclerView>(R.id.facetList)
+        connection += viewModel.facetList.connectView(adapterFacet, viewModel.facetPresenter)
 
-        facetList.let {
-            it.adapter = adapterFacet
-            it.layoutManager = LinearLayoutManager(requireContext())
-            it.autoScrollToStart(adapterFacet)
-        }
+        facetList.configure(adapterFacet)
+    }
+
+    private fun setupToolbar(view: View) {
         (requireActivity() as AppCompatActivity).let {
-            it.setSupportActionBar(toolbar)
+            it.setSupportActionBar(view.findViewById(R.id.toolbar))
             it.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-
-        connection += viewModel.facetList.connectView(adapterFacet, viewModel.facetPresenter)
     }
 
     override fun onDestroyView() {

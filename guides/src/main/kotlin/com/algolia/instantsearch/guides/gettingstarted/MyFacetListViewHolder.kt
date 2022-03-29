@@ -2,21 +2,22 @@ package com.algolia.instantsearch.guides.gettingstarted
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import com.algolia.instantsearch.android.filter.facet.FacetListViewHolder
+import com.algolia.instantsearch.android.inflate
 import com.algolia.instantsearch.guides.R
-import com.algolia.instantsearch.helper.android.filter.facet.FacetListViewHolder
-import com.algolia.instantsearch.helper.android.inflate
 import com.algolia.search.model.search.Facet
-import kotlinx.android.synthetic.main.list_item_selectable.view.*
-
 
 class MyFacetListViewHolder(view: View) : FacetListViewHolder(view) {
 
     override fun bind(facet: Facet, selected: Boolean, onClickListener: View.OnClickListener) {
         view.setOnClickListener(onClickListener)
-        view.facetCount.text = facet.count.toString()
-        view.facetCount.visibility = View.VISIBLE
-        view.icon.visibility = if (selected) View.VISIBLE else View.INVISIBLE
-        view.facetName.text = facet.value
+        val facetCount = view.findViewById<TextView>(R.id.facetCount)
+        facetCount.text = facet.count.toString()
+        facetCount.visibility = View.VISIBLE
+        view.findViewById<ImageView>(R.id.icon).visibility = if (selected) View.VISIBLE else View.INVISIBLE
+        view.findViewById<TextView>(R.id.facetName).text = facet.value
     }
 
     object Factory : FacetListViewHolder.Factory {

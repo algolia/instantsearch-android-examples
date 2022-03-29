@@ -1,6 +1,6 @@
 package com.algolia.exchange.multi.index
 
-import com.algolia.instantsearch.helper.highlighting.Highlightable
+import com.algolia.instantsearch.highlighting.Highlightable
 import com.algolia.search.model.Attribute
 import com.algolia.search.model.ObjectID
 import com.algolia.search.model.indexing.Indexable
