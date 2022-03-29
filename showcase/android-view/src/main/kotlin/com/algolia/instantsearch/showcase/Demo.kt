@@ -26,12 +26,12 @@ import androidx.core.text.bold
 import androidx.core.text.buildSpannedString
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.core.connection.ConnectionHandler
-import com.algolia.instantsearch.core.searcher.Searcher
 import com.algolia.instantsearch.android.filter.clear.FilterClearViewImpl
 import com.algolia.instantsearch.android.list.autoScrollToStart
 import com.algolia.instantsearch.android.searchbox.SearchBoxViewAppCompat
 import com.algolia.instantsearch.android.stats.StatsTextViewSpanned
+import com.algolia.instantsearch.core.connection.ConnectionHandler
+import com.algolia.instantsearch.core.searcher.Searcher
 import com.algolia.instantsearch.filter.clear.FilterClearConnector
 import com.algolia.instantsearch.filter.clear.connectView
 import com.algolia.instantsearch.filter.state.FilterGroupID
@@ -179,6 +179,16 @@ fun AppCompatActivity.configureRecyclerView(
     }
 }
 
+fun RecyclerView.configure(
+    recyclerViewAdapter: RecyclerView.Adapter<*>
+) {
+    visibility = View.VISIBLE
+    layoutManager = LinearLayoutManager(context)
+    adapter = recyclerViewAdapter
+    itemAnimator = null
+    autoScrollToStart(recyclerViewAdapter)
+}
+
 val Intent.indexName: IndexName get() = IndexName(extras!!.getString(KeyIndexName)!!)
 
 fun <R> AppCompatActivity.configureSearchBox(
@@ -244,11 +254,21 @@ public fun Set<FilterGroup<*>>.highlight(
             val string = converter(setOf(group))
 
             it.append(string)
-            it.setSpan(ForegroundColorSpan(color), begin, it.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            it.setSpan(
+                ForegroundColorSpan(color),
+                begin,
+                it.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
             if (index < size - 1) {
                 begin = it.length
                 it.append(" AND ")
-                it.setSpan(StyleSpan(Typeface.BOLD), begin, it.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                it.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    begin,
+                    it.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
             }
             begin = it.length
         }

@@ -28,6 +28,7 @@ import com.algolia.instantsearch.showcase.search.SearchAutoCompleteTextView
 import com.algolia.instantsearch.showcase.search.SearchOnSubmitShowcase
 import com.algolia.instantsearch.showcase.sortby.SortByShowcase
 import com.algolia.instantsearch.showcase.stats.StatsShowcase
+import com.algolia.instantsearch.showcase.suggestion.QuerySuggestionShowcase
 import com.algolia.search.model.ObjectID
 
 val showcases = mapOf(
@@ -60,4 +61,5 @@ val showcases = mapOf(
     ObjectID("query_rule_custom_data") to QueryRuleCustomDataShowcase::class,
     ObjectID("filter_rating") to RatingShowcase::class,
     ObjectID("dynamic_facets") to DynamicFacetShowcase::class,
+    ObjectID("query_suggestions") to QuerySuggestionShowcase::class,
 )
