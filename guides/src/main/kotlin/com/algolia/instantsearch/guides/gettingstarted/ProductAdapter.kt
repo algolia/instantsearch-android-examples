@@ -1,42 +1,33 @@
 package com.algolia.instantsearch.guides.gettingstarted
 
-import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
+import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.algolia.instantsearch.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.inflate
 import com.algolia.instantsearch.guides.R
+import com.algolia.instantsearch.guides.extension.ProductDiffUtil
+import com.algolia.instantsearch.guides.gettingstarted.ProductAdapter.ProductViewHolder
+import com.algolia.instantsearch.guides.model.Product
 
-
-class ProductAdapter : PagedListAdapter<Product, ProductViewHolder>(
-    ProductAdapter
-) {
+class ProductAdapter : PagingDataAdapter<Product, ProductViewHolder>(ProductDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_small, parent, false)
-
-        return ProductViewHolder(view)
+        return ProductViewHolder(parent.inflate(R.layout.list_item_small))
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = getItem(position)
-
-        if (product != null) holder.bind(product)
+        getItem(position)?.let { holder.bind(it) }
     }
 
-    companion object : DiffUtil.ItemCallback<Product>() {
+    class ProductViewHolder(val view: View) :
+        RecyclerView.ViewHolder(view) {
 
-        override fun areItemsTheSame(
-            oldItem: Product,
-            newItem: Product
-        ): Boolean {
-            return oldItem::class == newItem::class
-        }
-
-        override fun areContentsTheSame(
-            oldItem: Product,
-            newItem: Product
-        ): Boolean {
-            return oldItem.name == newItem.name
+        fun bind(product: Product) {
+            view.findViewById<TextView>(R.id.itemName).text =
+                product.highlightedName?.toSpannedString() ?: product.name
         }
     }
 }

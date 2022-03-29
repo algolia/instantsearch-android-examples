@@ -1,4 +1,4 @@
-include ':showcase', ':showcase-compose', ':guides', ':insights', ':compose',
+include ':showcase:android-view', ':showcase:compose', ':guides',
         ':exchange:query-suggestions', ':exchange:query-suggestions-hits',
         ':exchange:query-suggestions-recent', ':exchange:query-suggestions-categories',
         ':exchange:categories-hits', ':exchange:multi-index', ':exchange:voice-search'

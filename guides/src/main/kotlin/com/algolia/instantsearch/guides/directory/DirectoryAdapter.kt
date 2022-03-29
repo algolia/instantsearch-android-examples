@@ -1,25 +1,23 @@
 package com.algolia.instantsearch.guides.directory
 
-import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import com.algolia.instantsearch.android.inflate
 import com.algolia.instantsearch.core.hits.HitsView
 import com.algolia.instantsearch.guides.R
-import com.algolia.instantsearch.helper.android.inflate
 
-
-class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUtil), HitsView<DirectoryItem> {
+class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUtil),
+    HitsView<DirectoryItem> {
 
     private enum class ViewType {
-        Header,
-        Item
+        Header, Item
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DirectoryViewHolder {
         return when (ViewType.values()[viewType]) {
-            ViewType.Header -> DirectoryViewHolder.Header(parent.inflate<TextView>(R.layout.list_item_header))
+            ViewType.Header -> DirectoryViewHolder.Header(parent.inflate(R.layout.list_item_header) as TextView)
             ViewType.Item -> DirectoryViewHolder.Item(parent.inflate(R.layout.list_item_small))
         }
     }
@@ -56,8 +54,10 @@ class DirectoryAdapter : ListAdapter<DirectoryItem, DirectoryViewHolder>(diffUti
                 } else false
             }
 
-            @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldItem: DirectoryItem, newItem: DirectoryItem): Boolean {
+            override fun areContentsTheSame(
+                oldItem: DirectoryItem,
+                newItem: DirectoryItem
+            ): Boolean {
                 return oldItem == newItem
             }
         }

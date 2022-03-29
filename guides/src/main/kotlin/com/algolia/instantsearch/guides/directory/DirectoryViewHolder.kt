@@ -4,10 +4,9 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.algolia.instantsearch.helper.android.highlighting.toSpannedString
+import com.algolia.instantsearch.android.highlighting.toSpannedString
+import com.algolia.instantsearch.guides.R
 import com.algolia.search.serialize.KeyName
-import kotlinx.android.synthetic.main.list_item_small.view.*
-
 
 sealed class DirectoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -22,8 +21,8 @@ sealed class DirectoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: DirectoryItem.Item) {
             val text = item.hit.highlightedName?.toSpannedString() ?: item.hit.name
+            view.findViewById<TextView>(R.id.itemName).text = text
 
-            view.itemName.text = text
             view.setOnClickListener {
                 val intent = Intent(view.context, guides.getValue(item.hit.objectID).java).apply {
                     putExtra(KeyName, item.hit.name)

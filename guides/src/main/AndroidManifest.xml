@@ -3,8 +3,10 @@
     package="com.algolia.instantsearch.guides">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
     <application
+        android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,7 +36,19 @@
             android:parentActivityName=".directory.DirectoryActivity" />
 
         <activity
-            android:name=".querysuggestion.QuerySuggestionGuide"
+            android:name=".querysuggestion.QuerySuggestionActivity"
+            android:parentActivityName=".directory.DirectoryActivity" />
+
+        <activity
+            android:name=".insights.InsightsActivity"
+            android:parentActivityName=".directory.DirectoryActivity" />
+
+        <activity
+            android:name=".compose.ComposeActivity"
+            android:parentActivityName=".directory.DirectoryActivity" />
+
+        <activity
+            android:name=".voice.VoiceSearchActivity"
             android:parentActivityName=".directory.DirectoryActivity" />
 
     </application>

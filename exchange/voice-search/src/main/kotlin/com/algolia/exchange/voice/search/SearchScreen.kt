@@ -39,7 +39,7 @@ fun SearchScreen(
                 .fillMaxWidth()
                 .padding(12.dp),
             searchBoxState = searchBoxState,
-            clearIcon = {
+            trailingIcon = {
                 if (searchBoxState.query.isEmpty()) {
                     Icon(
                         modifier = Modifier.clickable(onClick = onMicClick),
